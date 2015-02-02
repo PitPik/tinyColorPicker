@@ -20,10 +20,11 @@ On all inputs with calssName 'color': <pre>$('input.color').colorPicker();</pre>
 		<option value="desktop">Desktop (no plugin)</option>
 		<option value="mobile">Mobile</option>
 		<option value="input">Input fields</option>
+		<option value="memory">Color memory spaces</option>
 		<option value="noalpha">Default without alpha</option>
 		<option value="small">Default but smaller</option>
 	</select>
-	(see index.js for more details...)
+	(see index.html for more details...)
 </p>
 <p>
 	<input class="color" value="#B6BD79" />
@@ -41,13 +42,13 @@ window.myColorPicker = $('input.color').colorPicker({
         $elm.prepend('&lt;div class="cp-disp">&lt;/div>');
     },
     cssAddon:
-        '.cp-disp{padding:10px; margin-bottom:6px; font-size:19px; height:20px; line-height:20px}' +
-        '.cp-xy-slider{width:200px; height:200px;}' +
-        '.cp-xy-cursor{width:16px; height:16px; border-width:2px; margin:-8px}' +
-        '.cp-z-slider{height:200px; width:40px;}' +
-        '.cp-z-cursor{border-width:8px; margin-top:-8px;}' +
-        '.cp-alpha{height:40px;}' +
-        '.cp-alpha-cursor{border-width: 8px; margin-left:-8px;}',
+        '.cp-disp {padding:10px; margin-bottom:6px; font-size:19px; height:20px; line-height:20px}' +
+        '.cp-xy-slider {width:200px; height:200px;}' +
+        '.cp-xy-cursor {width:16px; height:16px; border-width:2px; margin:-8px}' +
+        '.cp-z-slider {height:200px; width:40px;}' +
+        '.cp-z-cursor {border-width:8px; margin-top:-8px;}' +
+        '.cp-alpha {height:40px;}' +
+        '.cp-alpha-cursor {border-width:8px; margin-left:-8px;}',
 
     renderCallback: function($elm, toggled) {
         var colors = this.color.colors,
@@ -174,6 +175,45 @@ window.myColorPicker = $('input.color').colorPicker({
 			}
 		};
 
+		// shows memory fields
+		plugin.memory = {
+			customBG: '#222',
+			margin: '4px -2px',
+			opacity: false,
+
+			buidCallback: function($elm) {
+				var colorInstance = this.color,
+					colorPicker = this;
+
+				$elm.append('<div class="cp-memory">' +
+					'<div></div><div></div><div></div><div></div>' +
+					'<div></div><div></div><div></div><div class="cp-store">&lt;</div>').
+				on('click', '.cp-memory div', function(e) {
+					if (this.className) {
+						$(this).parent().prepend($(this).prev()).children().eq(0).
+							css('background-color', '#' + colorInstance.colors.HEX);
+					} else {
+						colorInstance.setColor($(this).css('background-color'));
+						colorPicker.render();
+					}
+				}).find('.cp-memory div').each(function() {
+					!this.className && $(this).css({background: 'rgb(' +
+						Math.round(Math.random() * 255) + ', ' +
+						Math.round(Math.random() * 255) + ', ' +
+						Math.round(Math.random() * 255) +
+					')'});
+				});
+			},
+
+			cssAddon: // could also be in a css file instead
+				'.cp-memory {margin-bottom:6px; clear:both;}' +
+				'.cp-memory div {float:left; width:17px; height:17px; margin-right:2px;' +
+					'background:rgba(0,0,0,1); text-align:center; line-height:17px;}' +
+				'.cp-memory .cp-store {width:21px; margin:0; background:none;' +
+					'border: 1px solid; border-color:#666 #222 #222 #666;' +
+					'box-sizing:border-box; font-weight:bold;}'
+		};
+
 		// the default; no extra stuff
 		plugin.desktop = {
 			customBG: '#222',
@@ -198,7 +238,7 @@ window.myColorPicker = $('input.color').colorPicker({
 
 
 
-		pluginSelect.value = type;
+		pluginSelect.value = type || 'desktop';
 		pluginSelect.onchange = function(e) {
 			location = window.location;
 
