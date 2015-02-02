@@ -2,7 +2,7 @@
 # tinyColorPicker and colors
 
 Looking for mobile first, tiny foot print, fast, scaleable, flexible and pluggable...<br>
-This 4.4KB small HSB color picker is based on a subset of [colors.js](https://github.com/PitPik/colorPicker/blob/master/colors.js) from it's big brother [colorPicker](https://github.com/PitPik/colorPicker/), supports all modern features like touch and MS pointer, GPU accelerated rendering, battery friendly requestAnimationFrame and provides a lot of hooks for developers to write plugins 
+This 4.4KB small HSB color picker is based on a subset of [colors.js](https://github.com/PitPik/colorPicker/blob/master/colors.js) from it's big brother [colorPicker](https://github.com/PitPik/colorPicker/), supports all modern features like touch and MS pointer, GPU accelerated rendering, battery friendly requestAnimationFrame and provides a lot of hooks for developers to write plugins.
 
 ##Demo
 See **demo** at [dematte.at/tinyColorPicker](http://dematte.at/tinyColorPicker)
@@ -37,7 +37,7 @@ var myColorPicker = new ColorPicker({
     doRender: true, // manipulate color ans bgColor of input field
     opacity: true, // enable / disable alpha slider
     renderCallback: function($elm, toggled) {}, // this === instance
-    buidCallback: function($elm, toggled) {}, // this === instance
+    buidCallback: function($elm) {}, // this === instance
     css: '', // replaces existing css
     cssAddon: '', // adds cdd to existing
     margin: '', // positioning margin
