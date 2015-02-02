@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<link rel="stylesheet" type="text/css" href="index.css">
+	<!-- <link rel="stylesheet" type="text/css" href="development/colorPicker.css"> -->
+	<link rel="stylesheet" type="text/css" href="development/compatibility.css">
+	<title>tiny jQuery colorPicker</title>
+</head>
+<body>
+<h1>Tiny jQuery colorPicker</h1>
+<p>Looking for mobile first, tiny foot print, fast, scaleable, flexible and pluggable...<br>
+This <strong>4.4KB</strong> small HSB color picker is based on a subset of <a href="https://github.com/PitPik/colorPicker/blob/master/colors.js">colors.js</a> from it's big brother <a href="http://dematte.at/colorPicker/">colorPicker</a>, supports all modern features like touch and MS pointer, GPU accelerated rendering, battery friendly requestAnimationFrame and provides a lot of hooks for developers to write plugins (See demo plugins below in <a href="#demo">Demo</a>).</p>
+<a name="demo" id="demo"></a>
+<h2>Demo</h2>
+On all inputs with calssName 'color': <pre>$('input.color').colorPicker();</pre>
+<p>Switch between plugins:
+	<select id="pluginSelect">
+		<option value="desktop">Desktop (no plugin)</option>
+		<option value="mobile">Mobile</option>
+		<option value="input">Input fields</option>
+		<option value="noalpha">Default without alpha</option>
+	</select>
+	(see index.js for more details...)
+</p>
+<p>
+	<input class="color" value="#B6BD79" />
+	<input class="color" value="rgb(162, 63, 3)" />
+	<input class="color" value="hsl(32, 95%, 23%)" />
+</p>
+<h2>Features</h2>
+<p>Tiny jQuery colorPicker only loads if triggered to show. It uses battery saving technologies and super fast rendering for best performance on desktop and mobile browsers.<br>
+This colorPicker is very flexible to modify and customize and there is an easy way to write plugins to extend functionality, look and feel...<br>
+As Tiny jQuery colorPicker uses <a href="https://github.com/PitPik/colorPicker/blob/master/colors.js">colors.js</a> from it's big brother <a href="http://dematte.at/colorPicker/">colorPicker</a>, it provides a clean and rich color model and API that enables flexible extending for programmers. (See <a href="https://github.com/PitPik/colorPicker">colorPicker on GitHub</a> for more details)</p>
+<p>The following snipped shows how easy it is to make plugins: use for mobile</p>
+<pre style="display: block; overflow: auto;">
+window.myColorPicker = $('input.color').colorPicker({
+    buidCallback: function($elm) {
+        $elm.prepend('&lt;div class="cp-disp">&lt;/div>');
+    },
+    cssAddon:
+        '.cp-disp{padding:10px; margin-bottom:6px; font-size:19px; height:20px; line-height:20px}' +
+        '.cp-xy-slider{width:200px; height:200px;}' +
+        '.cp-xy-cursor{width:16px; height:16px; border-width:2px; margin:-8px}' +
+        '.cp-z-slider{height:200px; width:40px;}' +
+        '.cp-z-cursor{border-width:8px; margin-top:-8px;}' +
+        '.cp-alpha{height:40px;}' +
+        '.cp-alpha-cursor{border-width: 8px; margin-left:-8px;}',
+
+    renderCallback: function($elm, toggled) {
+        var colors = this.color.colors,
+            rgb = colors.RND.rgb;
+
+        $('.cp-disp').css({
+            backgroundColor: '#' + colors.HEX,
+            color: colors.RGBLuminance > 0.22 ? '#222' : '#ddd'
+        }).text('rgba(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b +
+            ', ' + (Math.round(colors.alpha * 100) / 100) + ')');
+    }
+});
+</pre>
+<h2>API and usage</h2>
+<p>Will follow... See <a href="https://github.com/PitPik/tinyColorPicker">tinyColorPicke on GitHub</a> for now.</p>
+<!-- <script type="text/javascript" src="jquery-1.11.2.js"></script> -->
+<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+<!-- <script type="text/javascript" src="colors.js"></script> -->
+<!-- <script type="text/javascript" src="jqColorPicker.js"></script> -->
+<script type="text/javascript" src="jqColorPicker.min.js"></script>
+<script type="text/javascript">
+	(function(window, undefined){
+		'use strict';
+
+		var plugin = {},
+			pluginSelect = document.getElementById('pluginSelect'),
+			getQueryVariable = function(variable) {
+				var query = window.location.search.substring(1),
+					vars = query.split('&'),
+					pair, i;
+
+				for (i = vars.length; i--; ) {
+					pair = vars[i].split('=');
+					if(pair[0] === variable){
+						return pair[1].replace(/^\s*|\s*$/, '');
+					}
+				}
+				return(false);
+			},
+			type = getQueryVariable('type'),
+			selector = document.getElementById('pluginSelect');
+
+		// plugin for mobile use (bigger and value/color display on top)
+		plugin.mobile = {
+			customBG: '#222',
+			margin: '4px -2px',
+
+			// demo on how to make plugins... mobile support plugin
+			buidCallback: function($elm) {
+				$elm.prepend('<div class="cp-disp"></div>');
+			},
+			cssAddon: // could also be in a css file instead
+				'.cp-disp{padding:10px; margin-bottom:6px; font-size:19px; height:20px; line-height:20px}' +
+				'.cp-xy-slider{width:200px; height:200px;}' +
+				'.cp-xy-cursor{width:16px; height:16px; border-width:2px; margin:-8px}' +
+				'.cp-z-slider{height:200px; width:40px;}' +
+				'.cp-z-cursor{border-width:8px; margin-top:-8px;}' +
+				'.cp-alpha{height:40px;}' +
+				'.cp-alpha-cursor{border-width: 8px; margin-left:-8px;}',
+
+			renderCallback: function($elm, toggled) {
+				var colors = this.color.colors,
+					rgb = colors.RND.rgb;
+
+				$('.cp-disp').css({
+					backgroundColor: '#' + colors.HEX,
+					color: colors.RGBLuminance > 0.22 ? '#222' : '#ddd'
+				}).text('rgba(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b +
+					', ' + (Math.round(colors.alpha * 100) / 100) + ')');
+			}
+		};
+
+		// shows input fields for rgb and hsv; changeable
+		plugin.input = {
+			customBG: '#222',
+			margin: '4px -2px',
+
+			buidCallback: function($elm) {
+				var colorInstance = this.color,
+					colorPicker = this;
+
+				$elm.prepend('<div class="cp-panel">' +
+					'R <input type="text" class="cp-r" /><br>' +
+					'G <input type="text" class="cp-g" /><br>' +
+					'B <input type="text" class="cp-b" /><hr>' +
+					'H <input type="text" class="cp-h" /><br>' +
+					'S <input type="text" class="cp-s" /><br>' +
+					'B <input type="text" class="cp-v" />' +
+				'</div>').on('change', 'input', function(e) {
+					var value = this.value,
+						className = this.className,
+						type = className.split('-')[1],
+						color = {};
+
+					color[type] = value;
+					colorInstance.setColor(color, /(?:r|g|b)/.test(type) ? 'rgb' : 'hsv');
+					colorPicker.render();
+					this.blur();
+				});
+			},
+
+			cssAddon: // could also be in a css file instead
+				'.cp-panel {float:right; padding:0 1px 0 8px; margin-top:-1px;}' +
+				'.cp-panel, .cp-panel input {color:#bbb; font-family:monospace,' +
+					'"Courier New",Courier,mono; font-size:12px; font-weight:bold;}' +
+				'.cp-panel input {width:25px; height:12px; padding:2px 3px 1px;' +
+					'text-align:right; line-height:12px; background:transparent;' +
+					'border:1px solid; border-color:#222 #666 #666 #222;}' +
+				'.cp-panel hr {margin:0 -2px 2px; height:1px; border:0;' +
+					'background:#666; border-top:1px solid #222;}',
+
+			renderCallback: function($elm, toggled) {
+				var $panel = $('.cp-panel'),
+					colors = this.color.colors,
+					rgb = colors.RND.rgb,
+					hsv = colors.RND.hsv;
+
+				$('.cp-r', $panel).val(rgb.r);
+				$('.cp-g', $panel).val(rgb.g);
+				$('.cp-b', $panel).val(rgb.b);
+				$('.cp-h', $panel).val(hsv.h);
+				$('.cp-s', $panel).val(hsv.s);
+				$('.cp-v', $panel).val(hsv.v);
+			}
+		};
+
+		// the default; no extra stuff
+		plugin.desktop = {
+			customBG: '#222',
+			margin: '4px -2px'
+		};
+
+		// the default without alpha chanel though
+		plugin.noalpha = {
+			customBG: '#222',
+			margin: '4px -2px',
+			opacity: false
+		};
+
+
+
+		pluginSelect.value = type;
+		pluginSelect.onchange = function(e) {
+			location = window.location;
+
+			window.location = location.origin + location.pathname +
+				'?type=' + this.value + '#demo';
+		}
+
+		window.myColorPicker = $('input.color').colorPicker(
+			plugin[type] || plugin.desktop
+		);
+	})(window);
+</script>
+<a href="https://github.com/PitPik/tinyColorPicker"><img style="position: absolute; top: 0; right: 0; border: 0;" src="development/fmog.png" alt="Fork me on GitHub"></a>
+</body>
+</html>
