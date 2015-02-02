@@ -21,6 +21,7 @@ On all inputs with calssName 'color': <pre>$('input.color').colorPicker();</pre>
 		<option value="mobile">Mobile</option>
 		<option value="input">Input fields</option>
 		<option value="noalpha">Default without alpha</option>
+		<option value="small">Default but smaller</option>
 	</select>
 	(see index.js for more details...)
 </p>
@@ -184,6 +185,15 @@ window.myColorPicker = $('input.color').colorPicker({
 			customBG: '#222',
 			margin: '4px -2px',
 			opacity: false
+		};
+
+		// the default but smaller
+		plugin.small = {
+			customBG: '#222',
+			margin: '4px -2px',
+			cssAddon: // could also be in a css file instead
+				'.cp-xy-slider{width:100px; height:100px;}' +
+				'.cp-z-slider{height:100px;}'
 		};
 
 
