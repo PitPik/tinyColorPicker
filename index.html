@@ -66,15 +66,15 @@ window.myColorPicker = $('input.color').colorPicker({
 <p>Will follow... See <a href="https://github.com/PitPik/tinyColorPicker">tinyColorPicke on GitHub</a> for now.</p>
 <!-- <script type="text/javascript" src="jquery-1.11.2.js"></script> -->
 <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-<!-- <script type="text/javascript" src="colors.js"></script> -->
-<!-- <script type="text/javascript" src="jqColorPicker.js"></script> -->
-<script type="text/javascript" src="jqColorPicker.min.js"></script>
+<script type="text/javascript" src="colors.js"></script>
+<script type="text/javascript" src="jqColorPicker.js"></script>
+<!-- <script type="text/javascript" src="jqColorPicker.min.js"></script> -->
 <script type="text/javascript">
 	(function(window, undefined){
 		'use strict';
 
 		var plugin = {},
-			pluginSelect = document.getElementById('pluginSelect'),
+			$pluginSelect = $('#pluginSelect'),
 			getQueryVariable = function(variable) {
 				var query = window.location.search.substring(1),
 					vars = query.split('&'),
@@ -88,8 +88,7 @@ window.myColorPicker = $('input.color').colorPicker({
 				}
 				return(false);
 			},
-			type = getQueryVariable('type'),
-			selector = document.getElementById('pluginSelect');
+			type = getQueryVariable('type');
 
 		// plugin for mobile use (bigger and value/color display on top)
 		plugin.mobile = {
@@ -161,17 +160,15 @@ window.myColorPicker = $('input.color').colorPicker({
 					'background:#666; border-top:1px solid #222;}',
 
 			renderCallback: function($elm, toggled) {
-				var $panel = $('.cp-panel'),
-					colors = this.color.colors,
+				var colors = this.color.colors,
 					rgb = colors.RND.rgb,
-					hsv = colors.RND.hsv;
+					hsv = colors.RND.hsv,
+					modes = { r: rgb.r, g: rgb.g, b: rgb.b,
+						h: hsv.h, s: hsv.s, v: hsv.v };
 
-				$('.cp-r', $panel).val(rgb.r);
-				$('.cp-g', $panel).val(rgb.g);
-				$('.cp-b', $panel).val(rgb.b);
-				$('.cp-h', $panel).val(hsv.h);
-				$('.cp-s', $panel).val(hsv.s);
-				$('.cp-v', $panel).val(hsv.v);
+				$('input', '.cp-panel').each(function() {
+					this.value = modes[this.className.substr(3, 1)];
+				});
 			}
 		};
 
@@ -189,11 +186,13 @@ window.myColorPicker = $('input.color').colorPicker({
 					'<div></div><div></div><div></div><div></div>' +
 					'<div></div><div></div><div></div><div class="cp-store">&lt;</div>').
 				on('click', '.cp-memory div', function(e) {
+					var $this = $(this);
+
 					if (this.className) {
-						$(this).parent().prepend($(this).prev()).children().eq(0).
+						$this.parent().prepend($this.prev()).children().eq(0).
 							css('background-color', '#' + colorInstance.colors.HEX);
 					} else {
-						colorInstance.setColor($(this).css('background-color'));
+						colorInstance.setColor($this.css('background-color'));
 						colorPicker.render();
 					}
 				}).find('.cp-memory div').each(function() {
@@ -238,13 +237,13 @@ window.myColorPicker = $('input.color').colorPicker({
 
 
 
-		pluginSelect.value = type || 'desktop';
-		pluginSelect.onchange = function(e) {
+		$pluginSelect.val(type || 'desktop').
+		on('change', function(e) {
 			location = window.location;
 
-			window.location = location.origin + location.pathname +
-				'?type=' + this.value + '#demo';
-		}
+			window.location =
+				location.origin + location.pathname + '?type=' + this.value + '#demo';
+		});
 
 		window.myColorPicker = $('input.color').colorPicker(
 			plugin[type] || plugin.desktop

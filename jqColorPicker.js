@@ -6,7 +6,7 @@
 		_color,
 		_options,
 		_cache = {},
-		_$UI,
+		_$UI, _$xy_slider, _$xy_cursor, _$z_cursor , _$alpha , _$alpha_cursor,
 		_pointermove = 'touchmove mousemove pointermove',
 		_pointerup = 'touchend mouseup pointerup',
 		_GPU = false,
@@ -89,6 +89,11 @@
 			show(0, function() {
 				_GPU = _options.GPU && $(this).css('transform') === '';
 				_options.buidCallback.call(_colorPicker, $(this));
+				_$xy_slider = $('.cp-xy-slider', this);
+				_$xy_cursor = $('.cp-xy-cursor', this);
+				_$z_cursor = $('.cp-z-cursor', this);
+				_$alpha = $('.cp-alpha', this);
+				_$alpha_cursor = $('.cp-alpha-cursor', this);
 			}).hide().
 			on('touchstart mousedown pointerdown',
 				'.cp-xy-slider,.cp-z-slider,.cp-alpha', pointerdown).
@@ -164,23 +169,23 @@
 			a = alpha * _cache.alphaWidth,
 			t3d = _GPU ? 'translate3d' : '';
 
-		$('.cp-xy-slider').css({
+		_$xy_slider.css({
 			backgroundColor: 'rgb(' +
 				hueRGB.r + ',' + hueRGB.g + ',' + hueRGB.b + ')'});
-		$('.cp-xy-cursor').css({
+		_$xy_cursor.css({
 			transform: t3d + '(' + s + 'px, ' + v + 'px, 0)',
 			left: !_GPU ? s : '',
 			top: !_GPU ? v : '',
 			borderColor : colors.RGBLuminance > 0.22 ? dark : light
 		});
-		$('.cp-z-cursor').css({
+		_$z_cursor.css({
 			transform: t3d + '(0, ' + h + 'px, 0)',
 			top: !_GPU ? h : '',
 			borderLeftColor : HUEContrast,
 			borderRightColor : HUEContrast
 		});
-		$('.cp-alpha').css({backgroundColor: 'rgb(' + RGBInnerText + ')'});
-		$('.cp-alpha-cursor').css({
+		_$alpha.css({backgroundColor: 'rgb(' + RGBInnerText + ')'});
+		_$alpha_cursor.css({
 			transform: t3d + '(' + a + 'px, 0, 0)',
 			left: !_GPU ? a : '',
 			borderTopColor : alphaContrast,
