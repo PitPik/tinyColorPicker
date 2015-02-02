@@ -32,7 +32,7 @@
 			'%,#00f 33%,#0ff 50%,#0f0 67%,#ff0 83%,red 100%)}.cp-z-cursor{pos' +
 			'ition:absolute;margin-top:-4px;width:100%;border:4px solid #fff;' +
 			'border-color:transparent #fff;box-sizing:border-box}.cp-alpha{cl' +
-			'ear:left;width:100%;height:16px;margin:6px 0;background:linear-g' +
+			'ear:both;width:100%;height:16px;margin:6px 0;background:linear-g' +
 			'radient(to right,rgba(68,68,68,1)0,rgba(0,0,0,0)100%)}.cp-alpha-' +
 			'cursor{position:absolute;margin-left:-4px;height:100%;border:4px' +
 			' solid #fff;border-color:#fff transparent;box-sizing:border-box}',
