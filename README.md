@@ -9,9 +9,8 @@ See **demo** at [dematte.at/tinyColorPicker](http://dematte.at/tinyColorPicker)
 
 <img src="development/screen-shot-all.jpg" />
 
-All the WCAG 2.0 calculations for readability are also based on opacity levels of all layers<br>
-Supported color spaces are: (* also displayed as colors in realtime)<br>
-rgb, hsv(b), hsl, HEX
+All the WCAG 2.0 calculations for readability are also based on opacity levels of all layers.<br>
+Supported color spaces are: rgb, hsv(b), hsl, HEX
 
 ##colors.js
 
