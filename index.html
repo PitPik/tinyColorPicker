@@ -22,6 +22,7 @@ On all inputs with className 'color': <pre>$('input.color').colorPicker();</pre>
 		<option value="input">Input fields</option>
 		<option value="memory">Color memory spaces</option>
 		<option value="skinned">Skinned (white)</option>
+		<option value="dev_skinned">Skinned dev-tools like</option>
 		<option value="noalpha">Default without alpha</option>
 		<option value="small">Default but smaller</option>
 	</select>
@@ -244,6 +245,7 @@ window.myColorPicker = $('input.color').colorPicker({
 				'.cp-alpha{margin:4px 0;}'
 		};
 
+
 		// the default skinned and white
 		plugin.skinned = {
 			customBG: '#222',
@@ -262,7 +264,7 @@ window.myColorPicker = $('input.color').colorPicker({
 				'.cp-xy-cursor{width:12px; height:12px; margin:-6px}' +
 				'.cp-z-slider{margin-left:10px; border:1px solid #999;}' +
 				'.cp-z-cursor{border-width:5px; margin-top:-5px;}' +
-				'.cp-color-picker .cp-alpha{margin:10px 0 0; height:6px;' +
+				'.cp-color-picker .cp-alpha{margin:10px 0 0; height:6px; border-radius:6px;' +
 					'overflow:visible; border:1px solid #999; box-sizing:border-box;' +
 					'background: linear-gradient(to right, rgba(238,238,238,1) 0%,rgba(238,238,238,0) 100%);}' +
 				'.cp-alpha-cursor{background: #eee; border-radius: 100%;' +
@@ -270,6 +272,51 @@ window.myColorPicker = $('input.color').colorPicker({
 					'box-shadow:inset -2px -4px 3px #ccc}'
 		};
 
+		// skinned similar to dev tools color picker (but then way smaller and faster...)
+		plugin.dev_skinned = {
+			customBG: '#222',
+			margin: '5px -2px',
+
+			buidCallback: function($elm) {
+				$elm.append('<div class="cp-patch"></div><div class="cp-disp"></div>');
+			},
+
+			cssAddon: // could also be in a css file instead
+				'.cp-patch{float:left; padding:4px; margin:10px 0 0;' +
+					'height:14px; width: 14px; border:1px solid #aaa;}' +
+				'.cp-disp{padding:4px; margin-top:10px; font-size:12px;' +
+					'height:16px; line-height:16px; color:#333;}' +
+				'.cp-color-picker{border:1px solid #999; padding:8px;' +
+					'background:#eee; overflow:visible; border-radius:3px;}' +
+				'.cp-color-picker:after{content:""; display:block; ' +
+					'position:absolute; top:-15px; left:12px; border:8px solid #eee;' +
+					'border-color: transparent transparent #eee}' +
+				// simulate border...
+				'.cp-color-picker:before{content:""; display:block; ' +
+					'position:absolute; top:-16px; left:12px; border:8px solid #eee;' +
+					'border-color: transparent transparent #999}' +
+				'.cp-xy-slider{border:1px solid #aaa; margin-bottom:10px; width:150px; height:150px;}' +
+				'.cp-xy-slider:active{cursor:none;}' +
+				'.cp-xy-cursor{width:12px; height:12px; margin:-6px}' +
+				'.cp-z-slider{margin-left:10px; border:1px solid #aaa; height:150px; width:23px;}' +
+				'.cp-z-cursor{border-width:5px; margin-top:-5px;}' +
+				'.cp-color-picker .cp-alpha{width:152px; margin:10px 0 0; height:6px; border-radius:6px;' +
+					'overflow:visible; border:1px solid #aaa; box-sizing:border-box;' +
+					'background: linear-gradient(to right, rgba(238,238,238,1) 0%,rgba(238,238,238,0) 100%);}' +
+				'.cp-alpha-cursor{background: #eee; border-radius: 100%;' +
+					'width:14px; height:14px; margin:-5px -7px; border:1px solid #999!important;' +
+					'box-shadow:inset -2px -4px 3px #ccc}' +
+				'.cp-alpha:after{position:relative; content:"α"; color:#666; font-size:16px; position:absolute; right:-28px; top:-9px}',
+
+			renderCallback: function($elm, toggled) {
+				var colors = this.color.colors,
+					rgb = colors.RND.rgb;
+
+				$('.cp-patch').css({backgroundColor: $elm.css('backgroundColor')});
+				$('.cp-disp').text($elm.val());
+			}
+
+		};
 
 
 		$pluginSelect.val(type || 'desktop').
