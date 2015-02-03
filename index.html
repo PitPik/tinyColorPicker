@@ -21,6 +21,7 @@ On all inputs with className 'color': <pre>$('input.color').colorPicker();</pre>
 		<option value="mobile">Mobile</option>
 		<option value="input">Input fields</option>
 		<option value="memory">Color memory spaces</option>
+		<option value="skinned">Skinned (white)</option>
 		<option value="noalpha">Default without alpha</option>
 		<option value="small">Default but smaller</option>
 	</select>
@@ -241,6 +242,25 @@ window.myColorPicker = $('input.color').colorPicker({
 				'.cp-xy-slider{width:100px; height:100px; margin-bottom:3px;}' +
 				'.cp-z-slider{height:100px; margin-left:4px;}' +
 				'.cp-alpha{margin:4px 0;}'
+		};
+
+		// the default skinned and white
+		plugin.skinned = {
+			customBG: '#222',
+			margin: '5px -2px',
+			cssAddon: // could also be in a css file instead
+				'.cp-color-picker{border:2px solid #999; padding:10px; background:#eee; overflow:visible;}' +
+				'.cp-color-picker:before{content:""; display:block; ' +
+					'position:absolute; top:-16px; left:12px; border:8px solid #eee;' +
+					'border-color: transparent transparent #eee}' +
+				'.cp-xy-slider{border:1px solid #999; margin-bottom:10px;}' +
+				'.cp-xy-cursor{width:12px; height:12px; margin:-6px}' +
+				'.cp-z-slider{margin-left:10px; border:1px solid #999;}' +
+				'.cp-z-cursor{border-width:5px; margin-top:-5px;}' +
+				'.cp-color-picker .cp-alpha{margin:10px 0 0; height:6px; overflow:visible; border:1px solid #999;' +
+					'background: linear-gradient(to right, rgba(238,238,238,1) 0%,rgba(0,0,0,0) 100%);}' +
+				'.cp-alpha-cursor{background: #eee; border-radius: 100%;' +
+					'width:14px; height:14px; margin:-4px -7px; border:1px solid #666!important}'
 		};
 
 
