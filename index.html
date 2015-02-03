@@ -308,7 +308,8 @@ window.myColorPicker = $('input.color').colorPicker({
 				'.cp-alpha-cursor{background: #eee; border-radius: 100%;' +
 					'width:14px; height:14px; margin:-5px -7px; border:1px solid #999!important;' +
 					'box-shadow:inset -2px -4px 3px #ccc}' +
-				'.cp-alpha:after{position:relative; content:"α"; color:#666; font-size:16px; position:absolute; right:-26px; top:-9px}',
+				'.cp-alpha:after{position:relative; content:"α"; color:#666; font-size:16px;' +
+					'font-family:monospace; position:absolute; right:-26px; top:-8px}',
 
 			renderCallback: function($elm, toggled) {
 				var colors = this.color.colors,
