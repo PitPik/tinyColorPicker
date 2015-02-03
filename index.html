@@ -65,7 +65,7 @@ window.myColorPicker = $('input.color').colorPicker({
 <h2>API and usage</h2>
 <p>Will follow... See <a href="https://github.com/PitPik/tinyColorPicker">tinyColorPicke on GitHub</a> for now.</p>
 <!-- <script type="text/javascript" src="jquery-1.11.2.js"></script> -->
-<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
 <script type="text/javascript" src="colors.js"></script>
 <script type="text/javascript" src="jqColorPicker.js"></script>
 <!-- <script type="text/javascript" src="jqColorPicker.min.js"></script> -->
@@ -160,11 +160,11 @@ window.myColorPicker = $('input.color').colorPicker({
 					'background:#666; border-top:1px solid #222;}',
 
 			renderCallback: function($elm, toggled) {
-				var colors = this.color.colors,
-					rgb = colors.RND.rgb,
-					hsv = colors.RND.hsv,
-					modes = { r: rgb.r, g: rgb.g, b: rgb.b,
-						h: hsv.h, s: hsv.s, v: hsv.v };
+				var colors = this.color.colors.RND,
+					modes = {
+						r: colors.rgb.r, g: colors.rgb.g, b: colors.rgb.b,
+						h: colors.hsv.h, s: colors.hsv.s, v: colors.hsv.v
+					};
 
 				$('input', '.cp-panel').each(function() {
 					this.value = modes[this.className.substr(3, 1)];
@@ -180,7 +180,10 @@ window.myColorPicker = $('input.color').colorPicker({
 
 			buidCallback: function($elm) {
 				var colorInstance = this.color,
-					colorPicker = this;
+					colorPicker = this,
+					random = function(n) {
+						return Math.round(Math.random() * (n || 255));
+					};
 
 				$elm.append('<div class="cp-memory">' +
 					'<div></div><div></div><div></div><div></div>' +
@@ -196,11 +199,9 @@ window.myColorPicker = $('input.color').colorPicker({
 						colorPicker.render();
 					}
 				}).find('.cp-memory div').each(function() {
-					!this.className && $(this).css({background: 'rgb(' +
-						Math.round(Math.random() * 255) + ', ' +
-						Math.round(Math.random() * 255) + ', ' +
-						Math.round(Math.random() * 255) +
-					')'});
+					!this.className && $(this).css({background:
+						'rgb(' + random() + ', ' + random() + ', ' + random() + ')'
+					});
 				});
 			},
 
