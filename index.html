@@ -14,7 +14,7 @@
 This <strong>4.4KB</strong> small HSB color picker is based on a subset of <a href="https://github.com/PitPik/colorPicker/blob/master/colors.js">colors.js</a> from it's big brother <a href="http://dematte.at/colorPicker/">colorPicker</a>, supports all modern features like touch and MS pointer, GPU accelerated rendering, battery friendly requestAnimationFrame and provides a lot of hooks for developers to write plugins (See demo plugins below in <a href="#demo">Demo</a>).</p>
 <a name="demo" id="demo"></a>
 <h2>Demo</h2>
-On all inputs with calssName 'color': <pre>$('input.color').colorPicker();</pre>
+On all inputs with className 'color': <pre>$('input.color').colorPicker();</pre>
 <p>Switch between plugins:
 	<select id="pluginSelect">
 		<option value="desktop">Desktop (no plugin)</option>
@@ -66,9 +66,9 @@ window.myColorPicker = $('input.color').colorPicker({
 <p>Will follow... See <a href="https://github.com/PitPik/tinyColorPicker">tinyColorPicke on GitHub</a> for now.</p>
 <!-- <script type="text/javascript" src="jquery-1.11.2.js"></script> -->
 <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
-<script type="text/javascript" src="colors.js"></script>
-<script type="text/javascript" src="jqColorPicker.js"></script>
-<!-- <script type="text/javascript" src="jqColorPicker.min.js"></script> -->
+<!-- <script type="text/javascript" src="colors.js"></script> -->
+<!-- <script type="text/javascript" src="jqColorPicker.js"></script> -->
+<script type="text/javascript" src="jqColorPicker.min.js"></script>
 <script type="text/javascript">
 	(function(window, undefined){
 		'use strict';
@@ -135,7 +135,8 @@ window.myColorPicker = $('input.color').colorPicker({
 					'B <input type="text" class="cp-b" /><hr>' +
 					'H <input type="text" class="cp-h" /><br>' +
 					'S <input type="text" class="cp-s" /><br>' +
-					'B <input type="text" class="cp-v" />' +
+					'B <input type="text" class="cp-v" /><hr>' +
+					'<input type="text" class="cp-HEX" />' +
 				'</div>').on('change', 'input', function(e) {
 					var value = this.value,
 						className = this.className,
@@ -143,31 +144,36 @@ window.myColorPicker = $('input.color').colorPicker({
 						color = {};
 
 					color[type] = value;
-					colorInstance.setColor(color, /(?:r|g|b)/.test(type) ? 'rgb' : 'hsv');
+					colorInstance.setColor(type === 'HEX' ? value : color,
+						type === 'HEX' ? 'HEX' : /(?:r|g|b)/.test(type) ? 'rgb' : 'hsv');
 					colorPicker.render();
 					this.blur();
 				});
 			},
 
 			cssAddon: // could also be in a css file instead
-				'.cp-panel {float:right; padding:0 1px 0 8px; margin-top:-1px;}' +
+				'.cp-color-picker .cp-panel {line-height: 21px; float:right;' +
+					'padding:0 1px 0 8px; margin-top:-1px; overflow:visible}' +
 				'.cp-panel, .cp-panel input {color:#bbb; font-family:monospace,' +
 					'"Courier New",Courier,mono; font-size:12px; font-weight:bold;}' +
-				'.cp-panel input {width:25px; height:12px; padding:2px 3px 1px;' +
+				'.cp-panel input {width:28px; height:12px; padding:2px 3px 1px;' +
 					'text-align:right; line-height:12px; background:transparent;' +
 					'border:1px solid; border-color:#222 #666 #666 #222;}' +
 				'.cp-panel hr {margin:0 -2px 2px; height:1px; border:0;' +
-					'background:#666; border-top:1px solid #222;}',
+					'background:#666; border-top:1px solid #222;}' +
+				'.cp-panel .cp-HEX {width:44px; position:absolute; margin:1px -3px 0 -2px;}' +
+				'.cp-alpha {width:154px;}',
 
 			renderCallback: function($elm, toggled) {
 				var colors = this.color.colors.RND,
 					modes = {
 						r: colors.rgb.r, g: colors.rgb.g, b: colors.rgb.b,
-						h: colors.hsv.h, s: colors.hsv.s, v: colors.hsv.v
+						h: colors.hsv.h, s: colors.hsv.s, v: colors.hsv.v,
+						HEX: this.color.colors.HEX
 					};
 
 				$('input', '.cp-panel').each(function() {
-					this.value = modes[this.className.substr(3, 1)];
+					this.value = modes[this.className.substr(3)];
 				});
 			}
 		};
@@ -209,9 +215,8 @@ window.myColorPicker = $('input.color').colorPicker({
 				'.cp-memory {margin-bottom:6px; clear:both;}' +
 				'.cp-memory div {float:left; width:17px; height:17px; margin-right:2px;' +
 					'background:rgba(0,0,0,1); text-align:center; line-height:17px;}' +
-				'.cp-memory .cp-store {width:21px; margin:0; background:none;' +
-					'border: 1px solid; border-color:#666 #222 #222 #666;' +
-					'box-sizing:border-box; font-weight:bold;}'
+				'.cp-memory .cp-store {width:21px; margin:0; background:none; font-weight:bold;' +
+					'box-sizing:border-box; border: 1px solid; border-color: #666 #222 #222 #666;}'
 		};
 
 		// the default; no extra stuff
@@ -232,8 +237,10 @@ window.myColorPicker = $('input.color').colorPicker({
 			customBG: '#222',
 			margin: '4px -2px',
 			cssAddon: // could also be in a css file instead
-				'.cp-xy-slider{width:100px; height:100px;}' +
-				'.cp-z-slider{height:100px;}'
+				'.cp-color-picker{padding:5px 5px 0;}' +
+				'.cp-xy-slider{width:100px; height:100px; margin-bottom:3px;}' +
+				'.cp-z-slider{height:100px; margin-left:4px;}' +
+				'.cp-alpha{margin:4px 0;}'
 		};
 
 
