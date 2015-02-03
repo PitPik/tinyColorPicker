@@ -43,6 +43,7 @@
 		};
 
 	ColorPicker.prototype.render = render;
+	ColorPicker.prototype.toggle = toggle;
 
 	function extractValue(elm) {
 		return elm.value || $(elm).css('background-color') || '#fff';
@@ -251,7 +252,12 @@
 				!$(e.target).closest(_$UI).length) {
 					toggle();
 				}
-			}).on('focus', this.selector, toggle);
+			}).
+			on('focus', this.selector, toggle).
+			on('change', this.selector, function() {
+				_color.setColor(this.value);
+				$that.colorPicker.render();
+			});
 		}
 
 		this.colorPicker = _colorPicker;
