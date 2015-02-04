@@ -276,10 +276,11 @@
 
 		return this.each(function() {
 			var value = extractValue(this),
-				mode = value.split('(');
+				mode = value.split('('),
+				$elm = findElement($(this));
 			// save initial color mode and set color and bgColor
-			$(this).data('colorMode', mode[1] ? mode[0].substr(0, 3) : 'HEX');
-			options.doRender && findElement($(this)).
+			$elm.data('colorMode', mode[1] ? mode[0].substr(0, 3) : 'HEX');
+			options.doRender && $elm.
 			css({'background-color': value,
 				'color': function() {
 					return _color.setColor(value).

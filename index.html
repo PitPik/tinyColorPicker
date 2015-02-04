@@ -34,9 +34,9 @@ On all elements with className 'color': <pre>$('.color').colorPicker();</pre>
 	<input class="color" value="hsl(32, 95%, 23%)" />
 </div>
 <div class="div-toggles">
-	<div class="color" value="#44A647"><div><div></div></div></div>
-	<div class="color" value="rgb(100, 86, 70)"><div><div></div></div></div>
-	<div class="color" value="hsl(167, 29%, 68%)"><div><div></div></div></div>
+	<div class="color trigger" value="#44A647"><div><div></div></div></div>
+	<div class="color trigger" value="rgb(100, 86, 70)"><div><div></div></div></div>
+	<div class="color trigger" value="hsl(167, 29%, 68%)"><div><div></div></div></div>
 </div>
 <h2>Features</h2>
 <p>Tiny jQuery colorPicker only loads if triggered to show. It uses battery saving technologies and super fast rendering for best performance on desktop and mobile browsers.<br>
@@ -73,9 +73,9 @@ window.myColorPicker = $('input.color').colorPicker({
 <p>Will follow... See <a href="https://github.com/PitPik/tinyColorPicker">tinyColorPicke on GitHub</a> for now.</p>
 <!-- <script type="text/javascript" src="jquery-1.11.2.js"></script> -->
 <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
-<!-- <script type="text/javascript" src="colors.js"></script> -->
-<!-- <script type="text/javascript" src="jqColorPicker.js"></script> -->
-<script type="text/javascript" src="jqColorPicker.min.js"></script>
+<script type="text/javascript" src="colors.js"></script>
+<script type="text/javascript" src="jqColorPicker.js"></script>
+<!-- <script type="text/javascript" src="jqColorPicker.min.js"></script> -->
 <script type="text/javascript">
 	(function(window, undefined){
 		'use strict';
@@ -291,7 +291,14 @@ window.myColorPicker = $('input.color').colorPicker({
 			doRender: 'div div',
 
 			buidCallback: function($elm) {
+				var that = this;
+
 				$elm.append('<div class="cp-patch"><div></div></div><div class="cp-disp"></div>');
+				// $(document).on('click', '.trigger', function(e) {
+				// 	if (e.target === this && $(this).hasClass('active')) {
+				// 		that.toggle(false);
+				// 	}
+				// })
 			},
 
 			cssAddon: // could also be in a css file instead
