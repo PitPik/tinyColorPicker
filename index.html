@@ -294,11 +294,16 @@ window.myColorPicker = $('input.color').colorPicker({
 				var that = this;
 
 				$elm.append('<div class="cp-patch"><div></div></div><div class="cp-disp"></div>');
-				// $(document).on('click', '.trigger', function(e) {
-				// 	if (e.target === this && $(this).hasClass('active')) {
-				// 		that.toggle(false);
-				// 	}
-				// })
+				$('.trigger').on('click', function(e) {
+					if (e.target === this && $(this).hasClass('active')) {
+						if (typeof e.stopPropagation != "undefined") {
+							e.stopPropagation();
+						} else {
+							e.cancelBubble = true;
+						}
+						that.toggle();
+					}
+				})
 			},
 
 			cssAddon: // could also be in a css file instead
