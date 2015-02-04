@@ -14,7 +14,7 @@
 This <strong>4.4KB</strong> small HSB color picker is based on a subset of <a href="https://github.com/PitPik/colorPicker/blob/master/colors.js">colors.js</a> from it's big brother <a href="http://dematte.at/colorPicker/">colorPicker</a>, supports all modern features like touch and MS pointer, GPU accelerated rendering, battery friendly requestAnimationFrame and provides a lot of hooks for developers to write plugins (See demo plugins below in <a href="#demo">Demo</a>).</p>
 <a name="demo" id="demo"></a>
 <h2>Demo</h2>
-On all inputs with className 'color': <pre>$('input.color').colorPicker();</pre>
+On all elements with className 'color': <pre>$('.color').colorPicker();</pre>
 <p>Switch between plugins:
 	<select id="pluginSelect">
 		<option value="desktop">Desktop (no plugin)</option>
@@ -28,11 +28,16 @@ On all inputs with className 'color': <pre>$('input.color').colorPicker();</pre>
 	</select>
 	(see index.html for more details...)
 </p>
-<p>
+<div class="input-toggles">
 	<input class="color" value="#B6BD79" />
 	<input class="color" value="rgb(162, 63, 3)" />
 	<input class="color" value="hsl(32, 95%, 23%)" />
-</p>
+</div>
+<div class="div-toggles">
+	<div class="color" value="#44A647"><div><div></div></div></div>
+	<div class="color" value="rgb(100, 86, 70)"><div><div></div></div></div>
+	<div class="color" value="hsl(167, 29%, 68%)"><div><div></div></div></div>
+</div>
 <h2>Features</h2>
 <p>Tiny jQuery colorPicker only loads if triggered to show. It uses battery saving technologies and super fast rendering for best performance on desktop and mobile browsers.<br>
 This colorPicker is very flexible to modify and customize and there is an easy way to write plugins to extend functionality, look and feel...<br>
@@ -96,6 +101,7 @@ window.myColorPicker = $('input.color').colorPicker({
 		plugin.mobile = {
 			customBG: '#222',
 			margin: '4px -2px',
+			doRender: 'div div',
 
 			// demo on how to make plugins... mobile support plugin
 			buidCallback: function($elm) {
@@ -126,6 +132,7 @@ window.myColorPicker = $('input.color').colorPicker({
 		plugin.input = {
 			customBG: '#222',
 			margin: '4px -2px',
+			doRender: 'div div',
 
 			buidCallback: function($elm) {
 				var colorInstance = this.color,
@@ -184,6 +191,7 @@ window.myColorPicker = $('input.color').colorPicker({
 		plugin.memory = {
 			customBG: '#222',
 			margin: '4px -2px',
+			doRender: 'div div',
 			opacity: false,
 
 			buidCallback: function($elm) {
@@ -224,13 +232,15 @@ window.myColorPicker = $('input.color').colorPicker({
 		// the default; no extra stuff
 		plugin.desktop = {
 			customBG: '#222',
-			margin: '4px -2px'
+			margin: '4px -2px',
+			doRender: 'div div'
 		};
 
 		// the default without alpha chanel though
 		plugin.noalpha = {
 			customBG: '#222',
 			margin: '4px -2px',
+			doRender: 'div div',
 			opacity: false
 		};
 
@@ -238,6 +248,7 @@ window.myColorPicker = $('input.color').colorPicker({
 		plugin.small = {
 			customBG: '#222',
 			margin: '4px -2px',
+			doRender: 'div div',
 			cssAddon: // could also be in a css file instead
 				'.cp-color-picker{padding:5px 5px 0;}' +
 				'.cp-xy-slider{width:100px; height:100px; margin-bottom:3px;}' +
@@ -250,6 +261,7 @@ window.myColorPicker = $('input.color').colorPicker({
 		plugin.skinned = {
 			customBG: '#222',
 			margin: '5px -2px',
+			doRender: 'div div',
 			cssAddon: // could also be in a css file instead
 				'.cp-color-picker{border:1px solid #999; padding:10px;' +
 					'background:#eee; overflow:visible; border-radius:3px;}' +
@@ -276,6 +288,7 @@ window.myColorPicker = $('input.color').colorPicker({
 		plugin.dev_skinned = {
 			customBG: '#222',
 			margin: '5px -2px',
+			doRender: 'div div',
 
 			buidCallback: function($elm) {
 				$elm.append('<div class="cp-patch"><div></div></div><div class="cp-disp"></div>');
@@ -331,7 +344,7 @@ window.myColorPicker = $('input.color').colorPicker({
 			window.location = './?type=' + this.value + '#demo'
 		});
 
-		window.myColorPicker = $('input.color').colorPicker(
+		window.myColorPicker = $('.color').colorPicker(
 			plugin[type] || plugin.desktop
 		);
 	})(window);

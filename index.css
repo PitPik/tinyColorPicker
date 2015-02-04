@@ -27,3 +27,40 @@ pre {
 	border-radius: 3px;
 	width: 140px;
 }
+.div-toggles {
+	margin-top: 1em;
+}
+.div-toggles .color {
+	position: relative;
+	display: inline-block;
+	width: 40px;
+	padding: 5px;
+	height: 25px;
+	border: 1px solid #666;
+	border-radius: 2px;
+	background: #eee;
+}
+.div-toggles .color:after {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 50%;
+	right: 5px;
+	margin-top: -2px;
+	border: 5px solid;
+	border-color: #000 transparent transparent;
+}
+.div-toggles .active:after {
+	margin-top: -8px;
+	border-color: transparent transparent #000;
+}
+.div-toggles .color div {
+	display: inline-block;
+	width: 23px;
+	height: 23px;
+	background: #fff url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMAQMAAABsu86kAAAABlBMVEXMzMwAAADTMzNkAAAAAnRSTlP/AOW3MEoAAAARSURBVAjXY2D+wICG/jCgIQDPPwub2NOsgwAAAABJRU5ErkJggg==');
+}
+.div-toggles .color div div {
+	border: 1px solid #666;
+	background: #aaa;
+}

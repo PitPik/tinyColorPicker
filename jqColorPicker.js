@@ -46,12 +46,17 @@
 	ColorPicker.prototype.toggle = toggle;
 
 	function extractValue(elm) {
-		return elm.value || $(elm).css('background-color') || '#fff';
+		return elm.value || elm.getAttribute('value') ||
+			$(elm).css('background-color') || '#fff';
 	}
 
 	function resolveEventType(event) {
 		return event.originalEvent.touches ?
 			event.originalEvent.touches[0] : event;
+	}
+
+	function findElement($elm) {
+		return $($elm.find(_options.doRender)[0] || $elm[0]);
 	}
 
 	function toggle(event) {
@@ -60,7 +65,7 @@
 
 		if (event) {
 			position = $this.offset();
-			_cache.$element = $this;
+			_cache.$element = findElement($this);
 			_options.preventFocus && event.preventDefault();
 
 			(_$UI || build()).css({
@@ -69,12 +74,13 @@
 			}).show(_options.animationSpeed, function() {
 				_cache.alphaWidth = $('.cp-alpha', _$UI).width();
 				_cache.sliderWidth = $('.cp-xy-slider', _$UI).width();
-				_color.setColor(extractValue($this[0]));
-				_animate(function(){render(true)});
+				_color.setColor(extractValue(_cache.$element[0]));
+				render(true);
 			});
 		} else {
 			$(_$UI).hide(_options.animationSpeed, function() {
 				_cache.$element.blur();
+				render(false);
 			});
 		}
 	};
@@ -248,12 +254,15 @@
 			_colorPicker = new ColorPicker(options);
 
 			$document.on('touchstart mousedown pointerdown', function(e) {
-				if ($.inArray(e.target, $that) === -1 &&
-				!$(e.target).closest(_$UI).length) {
+				var $target = $(e.target);
+
+				if ($.inArray($target.closest($that.selector)[0],
+					$that) === -1 &&
+				!$target.closest(_$UI).length) {
 					toggle();
 				}
 			}).
-			on('focus', this.selector, toggle).
+			on('focus click', this.selector, toggle).
 			on('change', this.selector, function() {
 				_color.setColor(this.value);
 				$that.colorPicker.render();
@@ -267,7 +276,8 @@
 				mode = value.split('(');
 			// save initial color mode and set color and bgColor
 			$(this).data('colorMode', mode[1] ? mode[0].substr(0, 3) : 'HEX');
-			options.doRender && $(this).css({'background-color': value,
+			options.doRender && findElement($(this)).
+			css({'background-color': value,
 				'color': function() {
 					return _color.setColor(value).
 						rgbaMixBGMixCustom.luminance > 0.22 ? '#222' : '#ddd'
