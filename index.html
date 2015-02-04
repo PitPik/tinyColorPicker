@@ -73,9 +73,9 @@ window.myColorPicker = $('input.color').colorPicker({
 <p>Will follow... See <a href="https://github.com/PitPik/tinyColorPicker">tinyColorPicke on GitHub</a> for now.</p>
 <!-- <script type="text/javascript" src="jquery-1.11.2.js"></script> -->
 <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
-<!-- <script type="text/javascript" src="colors.js"></script> -->
-<!-- <script type="text/javascript" src="jqColorPicker.js"></script> -->
-<script type="text/javascript" src="jqColorPicker.min.js"></script>
+<script type="text/javascript" src="colors.js"></script>
+<script type="text/javascript" src="jqColorPicker.js"></script>
+<!-- <script type="text/javascript" src="jqColorPicker.min.js"></script> -->
 <script type="text/javascript">
 	(function(window, undefined){
 		'use strict';
@@ -330,9 +330,13 @@ window.myColorPicker = $('input.color').colorPicker({
 
 				$('.cp-patch div').css({'background-color': $elm.css('background-color')});
 				$('.cp-disp').text($elm.val());
-				if (toggled) {
+				if (toggled === true) {
 					// here you can recalculate position after showing the color picker
 					// in case it doesn't fit into view.
+					$('.color').removeClass('active');
+					$elm.closest('.color').addClass('active');
+				} else if (toggled === false) {
+					$elm.closest('.color').removeClass('active');
 				}
 			}
 

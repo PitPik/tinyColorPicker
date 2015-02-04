@@ -228,7 +228,10 @@
 		// 	_cache.$element[0].value = text;
 
 		_options.renderCallback.call(
-			_colorPicker, _cache.$element, toggled === true);
+			_colorPicker,
+			_cache.$element,
+			typeof toggled === 'boolean' ? toggled : undefined
+		);
 	}
 
 	// export as plugin to jQuery
