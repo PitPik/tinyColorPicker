@@ -195,7 +195,7 @@ window.myColorPicker = $('input.color').colorPicker({
 
 				$elm.append('<div class="cp-memory">' +
 					'<div></div><div></div><div></div><div></div>' +
-					'<div></div><div></div><div></div><div class="cp-store">&lt;</div>').
+					'<div></div><div></div><div></div><div class="cp-store">S</div>').
 				on('click', '.cp-memory div', function(e) {
 					var $this = $(this);
 
@@ -298,7 +298,7 @@ window.myColorPicker = $('input.color').colorPicker({
 					'position:absolute; top:-16px; left:12px; border:8px solid #eee;' +
 					'border-color: transparent transparent #999}' +
 				'.cp-xy-slider{border:1px solid #aaa; margin-bottom:10px; width:150px; height:150px;}' +
-				'.cp-color-picker:active{cursor:none;}' +
+				'.cp-xy-slider:active{cursor:none;}' +
 				'.cp-xy-cursor{width:12px; height:12px; margin:-6px}' +
 				'.cp-z-slider{margin-left:8px; border:1px solid #aaa; height:150px; width:24px;}' +
 				'.cp-z-cursor{border-width:5px; margin-top:-5px;}' +
@@ -315,8 +315,12 @@ window.myColorPicker = $('input.color').colorPicker({
 				var colors = this.color.colors,
 					rgb = colors.RND.rgb;
 
-				$('.cp-patch div').css({backgroundColor: $elm.css('backgroundColor')});
+				$('.cp-patch div').css({'background-color': $elm.css('background-color')});
 				$('.cp-disp').text($elm.val());
+				if (toggled) {
+					// here you can recalculate position after showing the color picker
+					// in case it doesn't fit into view.
+				}
 			}
 
 		};
