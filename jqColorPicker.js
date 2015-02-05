@@ -96,8 +96,8 @@
 			show(0, function() {
 				_GPU = _options.GPU && $(this).css('perspective') === '';
 				// _GPU = _options.GPU && 
-				// 	$('<div>').css('transform', 'matrix(1,0,0,2,0,0)')[0].
-				// 	style.cssText.replace(/2.*$/, '1,');
+				// 	$('<div>').css('transform', 'matrix(1,0,0,2,0,0)').
+				// 	css('transform').replace(/2.*$/, '1,');
 				_options.buidCallback.call(_colorPicker, $(this));
 				_$xy_slider = $('.cp-xy-slider', this);
 				_$xy_cursor = $('.cp-xy-cursor', this);
@@ -219,11 +219,13 @@
 		// 	(_GPU ? _GPU + '0,' + h + ');' :
 		// 		'top:' + h + 'px;') +
 		// 	'border-color:' + 'transparent ' + HUEContrast;
-		// _$alpha[0].style.cssText = 'background-color:' + '#' + colors.HEX;
-		// _$alpha_cursor[0].style.cssText =
-		// 	(_GPU ? _GPU + a + ', 0);' :
-		// 		'left:' + a + 'px;') +
+		// if (_options.opacity) {
+		// 	_$alpha[0].style.cssText = 'background-color:' + '#' + colors.HEX;
+		// 	_$alpha_cursor[0].style.cssText =
+		// 		(_GPU ? _GPU + a + ', 0);' :
+		// 			'left:' + a + 'px;') +
 		// 	'border-color:' + alphaContrast + ' transparent';
+		// }
 		// _options.doRender && (_cache.$element[0].style.cssText =
 		// 	'background-color:' + text +
 		// 	';color:' + (colors.rgbaMixBGMixCustom.luminance > 0.22 ? dark : light));
