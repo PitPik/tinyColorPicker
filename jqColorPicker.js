@@ -94,9 +94,10 @@
 			find('.cp-alpha').toggle(!!_options.opacity).
 			parent(). // back to $(_html)
 			show(0, function() {
-				_GPU = _options.GPU &&
-					$('<div>').css('transform', 'matrix(1,0,0,2,0,0)')[0].
-					style.cssText.replace(/2.*$/, '1,');
+				_GPU = _options.GPU && $(this).css('perspective') === '';
+				// _GPU = _options.GPU && 
+				// 	$('<div>').css('transform', 'matrix(1,0,0,2,0,0)')[0].
+				// 	style.cssText.replace(/2.*$/, '1,');
 				_options.buidCallback.call(_colorPicker, $(this));
 				_$xy_slider = $('.cp-xy-slider', this);
 				_$xy_cursor = $('.cp-xy-cursor', this);
@@ -175,59 +176,59 @@
 			h = (1 - colors.hsv.h) * _cache.sliderWidth,
 			s = colors.hsv.s * _cache.sliderWidth,
 			v = (1 - colors.hsv.v) * _cache.sliderWidth,
-			a = alpha * _cache.alphaWidth; //,
-			// t3d = _GPU ? 'translate3d' : '';
+			a = alpha * _cache.alphaWidth,
+			t3d = _GPU ? 'translate3d' : '';
 
-		// _$xy_slider.css({
-		// 	backgroundColor: 'rgb(' +
-		// 		hueRGB.r + ',' + hueRGB.g + ',' + hueRGB.b + ')'});
-		// _$xy_cursor.css({
-		// 	transform: t3d + '(' + s + 'px, ' + v + 'px, 0)',
-		// 	left: !_GPU ? s : '',
-		// 	top: !_GPU ? v : '',
-		// 	borderColor : colors.RGBLuminance > 0.22 ? dark : light
-		// });
-		// _$z_cursor.css({
-		// 	transform: t3d + '(0, ' + h + 'px, 0)',
-		// 	top: !_GPU ? h : '',
-		// 	borderColor : 'transparent ' + HUEContrast,
-		// });
-		// _$alpha.css({backgroundColor: 'rgb(' + RGBInnerText + ')'});
-		// _$alpha_cursor.css({
-		// 	transform: t3d + '(' + a + 'px, 0, 0)',
-		// 	left: !_GPU ? a : '',
-		// 	borderColor : alphaContrast + ' transparent'
-		// });
-		// _options.doRender && _cache.$element.css({
-		// 	backgroundColor : RGBAText,
-		// 	color: colors.rgbaMixBGMixCustom.luminance > 0.22 ? dark : light
-		// });
+		_$xy_slider.css({
+			backgroundColor: 'rgb(' +
+				hueRGB.r + ',' + hueRGB.g + ',' + hueRGB.b + ')'});
+		_$xy_cursor.css({
+			transform: t3d + '(' + s + 'px, ' + v + 'px, 0)',
+			left: !_GPU ? s : '',
+			top: !_GPU ? v : '',
+			borderColor : colors.RGBLuminance > 0.22 ? dark : light
+		});
+		_$z_cursor.css({
+			transform: t3d + '(0, ' + h + 'px, 0)',
+			top: !_GPU ? h : '',
+			borderColor : 'transparent ' + HUEContrast,
+		});
+		_$alpha.css({backgroundColor: 'rgb(' + RGBInnerText + ')'});
+		_$alpha_cursor.css({
+			transform: t3d + '(' + a + 'px, 0, 0)',
+			left: !_GPU ? a : '',
+			borderColor : alphaContrast + ' transparent'
+		});
+		_options.doRender && _cache.$element.css({
+			backgroundColor : text,
+			color: colors.rgbaMixBGMixCustom.luminance > 0.22 ? dark : light
+		});
 
-		// _cache.$element.val(text);
+		_cache.$element.val(text);
 
 		// faster version (more than 2.5x)... though, no jQuery (colors, ...)
 
-		_$xy_slider[0].style.cssText =
-			'background-color:' + 'rgb(' +
-				hueRGB.r + ',' + hueRGB.g + ',' + hueRGB.b + ');';
-		_$xy_cursor[0].style.cssText =
-			(_GPU ? _GPU + s + ',' + v + ');' :
-				'left:' + s + 'px;' + 'top:' + v + 'px;') +
-			'border-color:' + (colors.RGBLuminance > 0.22 ? dark : light);
-		_$z_cursor[0].style.cssText =
-			(_GPU ? _GPU + '0,' + h + ');' :
-				'top:' + h + 'px;') +
-			'border-color:' + 'transparent ' + HUEContrast;
-		_$alpha[0].style.cssText = 'background-color:' + '#' + colors.HEX;
-		_$alpha_cursor[0].style.cssText =
-			(_GPU ? _GPU + a + ', 0);' :
-				'left:' + a + 'px;') +
-			'border-color:' + alphaContrast + ' transparent';
-		_options.doRender && (_cache.$element[0].style.cssText =
-			'background-color:' + text +
-			';color:' + (colors.rgbaMixBGMixCustom.luminance > 0.22 ? dark : light));
+		// _$xy_slider[0].style.cssText =
+		// 	'background-color:' + 'rgb(' +
+		// 		hueRGB.r + ',' + hueRGB.g + ',' + hueRGB.b + ');';
+		// _$xy_cursor[0].style.cssText =
+		// 	(_GPU ? _GPU + s + ',' + v + ');' :
+		// 		'left:' + s + 'px;' + 'top:' + v + 'px;') +
+		// 	'border-color:' + (colors.RGBLuminance > 0.22 ? dark : light);
+		// _$z_cursor[0].style.cssText =
+		// 	(_GPU ? _GPU + '0,' + h + ');' :
+		// 		'top:' + h + 'px;') +
+		// 	'border-color:' + 'transparent ' + HUEContrast;
+		// _$alpha[0].style.cssText = 'background-color:' + '#' + colors.HEX;
+		// _$alpha_cursor[0].style.cssText =
+		// 	(_GPU ? _GPU + a + ', 0);' :
+		// 		'left:' + a + 'px;') +
+		// 	'border-color:' + alphaContrast + ' transparent';
+		// _options.doRender && (_cache.$element[0].style.cssText =
+		// 	'background-color:' + text +
+		// 	';color:' + (colors.rgbaMixBGMixCustom.luminance > 0.22 ? dark : light));
 		
-		_cache.$element[0].value = text;
+		// _cache.$element[0].value = text;
 
 		_options.renderCallback.call(
 			_colorPicker,
