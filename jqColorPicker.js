@@ -181,19 +181,19 @@
 				hueRGB.r + ',' + hueRGB.g + ',' + hueRGB.b + ')'});
 		_$xy_cursor.css({
 			transform: t3d + '(' + s + 'px, ' + v + 'px, 0)',
-			left: !_GPU ? s : 0,
-			top: !_GPU ? v : 0,
+			left: !_GPU ? s : '',
+			top: !_GPU ? v : '',
 			borderColor : colors.RGBLuminance > 0.22 ? dark : light
 		});
 		_$z_cursor.css({
 			transform: t3d + '(0, ' + h + 'px, 0)',
-			top: !_GPU ? h : 0,
+			top: !_GPU ? h : '',
 			borderColor : 'transparent ' + HUEContrast,
 		});
 		_$alpha.css({backgroundColor: 'rgb(' + RGBInnerText + ')'});
 		_$alpha_cursor.css({
 			transform: t3d + '(' + a + 'px, 0, 0)',
-			left: !_GPU ? a : 0,
+			left: !_GPU ? a : '',
 			borderColor : alphaContrast + ' transparent'
 		});
 		_options.doRender && _cache.$element.css({
