@@ -34,11 +34,12 @@ pre {
 	position: relative;
 	display: inline-block;
 	width: 40px;
-	padding: 5px;
+	padding: 4px;
 	height: 25px;
 	border: 1px solid #666;
 	border-radius: 2px;
 	background: #eee;
+	box-shadow: inset 0 -17px 8px rgba(0,0,0,0.3), inset 0 -4px 7px rgba(0,0,0,0.3);
 }
 .div-toggles .color:after {
 	content: "";
@@ -49,6 +50,20 @@ pre {
 	margin-top: -2px;
 	border: 5px solid;
 	border-color: #000 transparent transparent;
+}
+.div-toggles .color:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 50%;
+	right: 4px;
+	margin-top: -1px;
+	border: 5px solid;
+	border-color: #eee transparent transparent;
+}
+.div-toggles .active:before {
+	margin-top: -7px;
+	border-color: transparent transparent #eee;
 }
 .div-toggles .active:after {
 	margin-top: -8px;
@@ -62,5 +77,6 @@ pre {
 }
 .div-toggles .color div div {
 	border: 1px solid #666;
+	border-color: #666 #ccc #ccc #666;
 	background: #aaa;
 }
