@@ -218,15 +218,16 @@
 			(_GPU ? _GPU + '0,' + h + ');' :
 				'top:' + h + 'px;') +
 			'border-color:' + 'transparent ' + HUEContrast;
-		_$alpha[0].style.cssText = 'background-color:' + 'rgb(' + RGBInnerText + ')';
+		_$alpha[0].style.cssText = 'background-color:' + '#' + colors.HEX;
 		_$alpha_cursor[0].style.cssText =
 			(_GPU ? _GPU + a + ', 0);' :
 				'left:' + a + 'px;') +
 			'border-color:' + alphaContrast + ' transparent';
 		_options.doRender && (_cache.$element[0].style.cssText =
-			'background-color:' + RGBAText +
+			'background-color:' + text +
 			';color:' + (colors.rgbaMixBGMixCustom.luminance > 0.22 ? dark : light));
-			_cache.$element[0].value = text;
+		
+		_cache.$element[0].value = text;
 
 		_options.renderCallback.call(
 			_colorPicker,
