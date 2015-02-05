@@ -209,18 +209,17 @@
 		// 	'background-color:' + 'rgb(' +
 		// 		hueRGB.r + ',' + hueRGB.g + ',' + hueRGB.b + ');';
 		// _$xy_cursor[0].style.cssText =
-		// 	'transform:' + t3d + '(' + s + 'px, ' + v + 'px, 0);' +
-		// 	'left:' + (!_GPU ? s : 0) + 'px;' +
-		// 	'top:' + (!_GPU ? v : 0) + 'px;' +
+		// 	(_GPU ? 'transform:' + t3d + '(' + s + 'px, ' + v + 'px, 0);' :
+		// 		'left:' + s + 'px;' + 'top:' + v + 'px;') +
 		// 	'border-color:' + (colors.RGBLuminance > 0.22 ? dark : light);
 		// _$z_cursor[0].style.cssText =
-		// 	'transform:' + t3d + '(0, ' + h + 'px, 0);' +
-		// 	'top:' + (!_GPU ? h : 0) + 'px;' +
+		// 	(_GPU ? 'transform:' + t3d + '(0, ' + h + 'px, 0);' :
+		// 		'top:' + h + 'px;') +
 		// 	'border-color:' + 'transparent ' + HUEContrast;
 		// _$alpha[0].style.cssText = 'background-color:' + 'rgb(' + RGBInnerText + ')';
 		// _$alpha_cursor[0].style.cssText =
-		// 	'transform:' + t3d + '(' + a + 'px, 0, 0);' +
-		// 	'left:' + (!_GPU ? a : 0) + 'px;' +
+		// 	(_GPU ? 'transform:' + t3d + '(' + a + 'px, 0, 0);' :
+		// 		'left:' + a + 'px;') +
 		// 	'border-color:' + alphaContrast + ' transparent';
 		// _options.doRender && (_cache.$element[0].style.cssText =
 		// 	'background-color:' + RGBAText +
