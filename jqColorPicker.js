@@ -64,6 +64,8 @@
 			position;
 
 		if (event) {
+			// if (this.nodeName.toLowerCase() === 'input' &&
+			// 	event.type === 'click') return;
 			// _options.preventFocus && this.blur();
 			position = $this.offset();
 			_cache.$element = findElement($this);
@@ -161,7 +163,8 @@
 			HSL = colors.RND.hsl,
 			dark = '#222',
 			light = '#ddd',
-			colorMode = _cache.$element.data('colorMode'),
+			$element = _cache.$element,
+			colorMode = $element.data('colorMode'),
 			isAlpha = colors.alpha !== 1,
 			alpha = Math.round(colors.alpha * 100) / 100,
 			RGBInnerText = RGB.r + ', ' + RGB.g + ', ' + RGB.b,
@@ -199,12 +202,12 @@
 			left: !_GPU ? a : '',
 			borderColor : alphaContrast + ' transparent'
 		});
-		_options.doRender && _cache.$element.css({
+		_options.doRender && $element.css({
 			backgroundColor : text,
 			color: colors.rgbaMixBGMixCustom.luminance > 0.22 ? dark : light
 		});
 
-		_cache.$element.val(text);
+		$element.val() !== text && $element.val(text); // avoids carret jump
 
 		// faster version (more than 2.5x)... though, no jQuery (colors, ...)
 
@@ -234,7 +237,7 @@
 
 		_options.renderCallback.call(
 			_colorPicker,
-			_cache.$element,
+			$element,
 			typeof toggled === 'boolean' ? toggled : undefined
 		);
 	}
