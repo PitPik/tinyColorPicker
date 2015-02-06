@@ -261,7 +261,7 @@
 		if (!_colorPicker) { // we only want one single instance...
 			_colorPicker = new ColorPicker(options);
 
-			$document.on('touchstart mousedown pointerdown', function(e) {
+			$(document.body).on('touchstart mousedown pointerdown', function(e) {
 				var $target = $(e.target);
 
 				if ($.inArray($target.closest($that.selector)[0],

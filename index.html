@@ -25,6 +25,7 @@ On all elements with className 'color': <pre>$('.color').colorPicker();</pre>
 		<option value="dev_skinned">Skinned dev-tools like</option>
 		<option value="noalpha">Default without alpha</option>
 		<option value="small">Default but smaller</option>
+		<option value="IE8">Better IE support</option>
 	</select>
 	(see index.html for more details...)
 </p>
@@ -259,6 +260,40 @@ window.myColorPicker = $('input.color').colorPicker({
 				'.cp-z-slider{height:100px; margin-left:4px;}' +
 				'.cp-alpha{margin:4px 0;}' +
 				'.cp-xy-slider:active {cursor:none;}'
+		};
+
+		// better IE support
+		plugin.IE8 = {
+			customBG: '#222',
+			margin: '4px -2px',
+			doRender: 'div div',
+			// this demo adds divs with gradiends,... you could simply load an image as well
+			buidCallback: function($elm) {
+				var that = this;
+
+				$elm.find('.cp-z-slider').prepend(
+					'<div class="cp-r-rb"></div>' +
+					'<div class="cp-rb-b"></div>' +
+					'<div class="cp-b-bg"></div>' +
+					'<div class="cp-bg-g"></div>' +
+					'<div class="cp-g-gr"></div>' +
+					'<div class="cp-gr-r"></div>'
+				);
+			},
+			cssAddon: // could also be in a css file instead
+				'.cp-r-rb{filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=\'#ff0000\', endColorstr=\'#ff00ff\',GradientType=0 ); height:21px; width: 100%;}' +
+				'.cp-rb-b{filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=\'#FF00FF\', endColorstr=\'#0000FF\',GradientType=0 ); height:21px; width: 100%;}' +
+				'.cp-b-bg{filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=\'#0000FF\', endColorstr=\'#00FFFF\',GradientType=0 ); height:22px; width: 100%;}' +
+				'.cp-bg-g{filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=\'#00FFFF\', endColorstr=\'#00FF00\',GradientType=0 ); height:21px; width: 100%;}' +
+				'.cp-g-gr{filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=\'#00FF00\', endColorstr=\'#FFFF00\',GradientType=0 ); height:21px; width: 100%;}' +
+				'.cp-gr-r{filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=\'#FFFF00\', endColorstr=\'#FF0000\',GradientType=0 ); height:22px; width: 100%;}' +
+				'.cp-z-cursor{top:0}' +
+				'.cp-xy-slider:active {cursor:none;}',
+
+			renderCallback: function($elm, toggled) {
+				// to avoid selection
+				window.event && (window.event.returnValue = false);
+			}
 		};
 
 
