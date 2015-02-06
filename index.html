@@ -25,7 +25,7 @@ On all elements with className 'color': <pre>$('.color').colorPicker();</pre>
 		<option value="dev_skinned">Skinned dev-tools like</option>
 		<option value="noalpha">Default without alpha</option>
 		<option value="small">Default but smaller</option>
-		<option value="IE8">Better IE support</option>
+		<option value="IE8">Better IE8- support</option>
 	</select>
 	(see index.html for more details...)
 </p>
@@ -38,7 +38,15 @@ On all elements with className 'color': <pre>$('.color').colorPicker();</pre>
 	<div class="color trigger" value="#556B2F"><div><div></div></div></div>
 	<div class="color trigger" value="rgb(100, 86, 70)"><div><div></div></div></div>
 	<div class="color trigger" value="hsla(167, 29%, 68%, 0.8)"><div><div></div></div></div>
-<img id="qr" style="float: right; display: block; display: none;" src="./development/qr.png" alt="QR code for http://www.dematte.at/tinyColorPicker/?type=mobile#demo"></div>
+<img id="qr" style="float: right; display: block; display: none; margin-right: -200px;" src="./development/qr.png" alt="QR code for http://www.dematte.at/tinyColorPicker/?type=mobile#demo"></div>
+<h2>Usage</h2>
+<p>There is only one file you need to load... No images and no CSS required.</p>
+<pre style="display: block; overflow: auto;">
+&lt;script type="text/javascript" src="jqColorPicker.min.js">
+&lt;script type="text/javascript">
+    $('.color').colorPicker(); // that's it
+&lt;/script>
+</pre>
 <h2>Features</h2>
 <p>Tiny jQuery colorPicker only loads if triggered to show. It uses battery saving technologies and super fast rendering for best performance on desktop and mobile browsers.<br>
 This colorPicker is very flexible to modify and customize and there is an easy way to write plugins to extend functionality, look and feel...<br>
@@ -103,10 +111,14 @@ window.myColorPicker = $('input.color').colorPicker({
 			customBG: '#222',
 			margin: '4px -2px',
 			doRender: 'div div',
+			preventFocus: true,
 
 			// demo on how to make plugins... mobile support plugin
 			buidCallback: function($elm) {
 				$elm.prepend('<div class="cp-disp"></div>');
+				$('.color').on('click', function(e) {
+					e.preventDefault && e.preventDefault();
+				});
 			},
 			cssAddon: // could also be in a css file instead
 				'.cp-disp{padding:10px; margin-bottom:6px; font-size:19px; height:20px; line-height:20px}' +
@@ -287,7 +299,7 @@ window.myColorPicker = $('input.color').colorPicker({
 				'.cp-bg-g{filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=\'#00FFFF\', endColorstr=\'#00FF00\',GradientType=0 ); height:21px; width: 100%;}' +
 				'.cp-g-gr{filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=\'#00FF00\', endColorstr=\'#FFFF00\',GradientType=0 ); height:21px; width: 100%;}' +
 				'.cp-gr-r{filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=\'#FFFF00\', endColorstr=\'#FF0000\',GradientType=0 ); height:22px; width: 100%;}' +
-				'.cp-z-cursor{top:0}' +
+				'.cp-z-cursor{top:0;height:0;}' +
 				'.cp-xy-slider:active {cursor:none;}',
 
 			renderCallback: function($elm, toggled) {
@@ -538,8 +550,11 @@ window.myColorPicker = $('input.color').colorPicker({
 		});
 
 
-		type === 'mobile' && !/webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone/i.
-			test(window.navigator.userAgent) && $('#qr').show();
+		var isMobile = /webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone/i.
+				test(window.navigator.userAgent);
+
+		type === 'mobile' && !isMobile && $('#qr').show();
+		isMobile && $('.div-toggles').hide();
 
 		window.myColorPicker = $('.color').colorPicker(
 			plugin[type] || plugin.desktop

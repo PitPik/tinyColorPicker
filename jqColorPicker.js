@@ -64,9 +64,9 @@
 			position;
 
 		if (event) {
+			// _options.preventFocus && this.blur();
 			position = $this.offset();
 			_cache.$element = findElement($this);
-			_options.preventFocus && event.preventDefault();
 
 			(_$UI || build()).css({
 				'left': position.left, // check for space...
@@ -291,7 +291,7 @@
 					return _color.setColor(value).
 						rgbaMixBGMixCustom.luminance > 0.22 ? '#222' : '#ddd'
 				}
-			});
+			}).attr('readonly', _options.preventFocus);
 		});
 	};
 })(window.jQuery, Colors);
