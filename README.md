@@ -70,7 +70,7 @@ myColorPicker: {
     },
     __proto__: { // all methods ColorPicker uses
         render: function() {},
-        toggle: function() {}
+        toggle: function(openClose) {} // openClose: true = open; false = close
     }
 }
 ```
