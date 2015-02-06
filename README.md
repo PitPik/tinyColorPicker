@@ -60,7 +60,8 @@ myColors: {
     }
 }
 ```
-
+colors.js is a quite handy tool for color calculations/conversion (gray value, contrast and luminance, etc...). It can also calculate layer mixes between background and foreground colors and therefore make calculations about readability (WCAG 2.0 standard).
+If you need more complex calculations or more color spaces, use the version from https://github.com/PitPik/colorPicker. It supports also cmy, cmyk, XYZ and Lab.
 ```javascript
 myColorPicker: {
     color: { // instance of Color inside colorPicker
