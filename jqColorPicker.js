@@ -287,14 +287,15 @@
 				mode = value.split('('),
 				$elm = findElement($(this));
 			// save initial color mode and set color and bgColor
-			$elm.data('colorMode', mode[1] ? mode[0].substr(0, 3) : 'HEX');
+			$elm.data('colorMode', mode[1] ? mode[0].substr(0, 3) : 'HEX').
+			attr('readonly', _options.preventFocus);
 			options.doRender && $elm.
 			css({'background-color': value,
 				'color': function() {
 					return _color.setColor(value).
 						rgbaMixBGMixCustom.luminance > 0.22 ? '#222' : '#ddd'
 				}
-			}).attr('readonly', _options.preventFocus);
+			});
 		});
 	};
 })(window.jQuery, Colors);
