@@ -163,6 +163,7 @@ window.myColorPicker = $('input.color').colorPicker({
 			cssAddon: // could also be in a css file instead
 				'.cp-color-picker .cp-panel {line-height: 21px; float:right;' +
 					'padding:0 1px 0 8px; margin-top:-1px; overflow:visible}' +
+				'.cp-xy-slider:active {cursor:none;}' +
 				'.cp-panel, .cp-panel input {color:#bbb; font-family:monospace,' +
 					'"Courier New",Courier,mono; font-size:12px; font-weight:bold;}' +
 				'.cp-panel input {width:28px; height:12px; padding:2px 3px 1px;' +
@@ -223,6 +224,7 @@ window.myColorPicker = $('input.color').colorPicker({
 
 			cssAddon: // could also be in a css file instead
 				'.cp-memory {margin-bottom:6px; clear:both;}' +
+				'.cp-xy-slider:active {cursor:none;}' +
 				'.cp-memory div {float:left; width:17px; height:17px; margin-right:2px;' +
 					'background:rgba(0,0,0,1); text-align:center; line-height:17px;}' +
 				'.cp-memory .cp-store {width:21px; margin:0; background:none; font-weight:bold;' +
@@ -233,7 +235,8 @@ window.myColorPicker = $('input.color').colorPicker({
 		plugin.desktop = {
 			customBG: '#222',
 			margin: '4px -2px',
-			doRender: 'div div'
+			doRender: 'div div',
+			cssAddon:'.cp-xy-slider:active {cursor:none;}'
 		};
 
 		// the default without alpha chanel though
@@ -241,6 +244,7 @@ window.myColorPicker = $('input.color').colorPicker({
 			customBG: '#222',
 			margin: '4px -2px',
 			doRender: 'div div',
+			cssAddon:'.cp-xy-slider:active {cursor:none;}',
 			opacity: false
 		};
 
@@ -253,7 +257,8 @@ window.myColorPicker = $('input.color').colorPicker({
 				'.cp-color-picker{padding:5px 5px 0;}' +
 				'.cp-xy-slider{width:100px; height:100px; margin-bottom:3px;}' +
 				'.cp-z-slider{height:100px; margin-left:4px;}' +
-				'.cp-alpha{margin:4px 0;}'
+				'.cp-alpha{margin:4px 0;}' +
+				'.cp-xy-slider:active {cursor:none;}'
 		};
 
 
@@ -272,6 +277,7 @@ window.myColorPicker = $('input.color').colorPicker({
 				'.cp-color-picker:before{content:""; display:block; ' +
 					'position:absolute; top:-16px; left:12px; border:8px solid #eee;' +
 					'border-color: transparent transparent #999}' +
+				'.cp-xy-slider:active {cursor:none;}' +
 				'.cp-xy-slider{border:1px solid #999; margin-bottom:10px;}' +
 				'.cp-xy-cursor{width:12px; height:12px; margin:-6px}' +
 				'.cp-z-slider{margin-left:10px; border:1px solid #999;}' +
@@ -434,7 +440,7 @@ window.myColorPicker = $('input.color').colorPicker({
 				var that = this;
 
 				$elm.append('<div class="cp-patch"><div></div></div><div class="cp-disp"></div>');
-				$('.trigger').on('click', function(e) {
+				$('.trigger').parent().on('click', '.trigger', function(e) {
 					if (e.target === this && $(this).hasClass('active')) {
 						e.cancelBubble = true;
 						e.stopPropagation && e.stopPropagation();
@@ -453,14 +459,14 @@ window.myColorPicker = $('input.color').colorPicker({
 				'.cp-color-picker{border:1px solid #999; padding:8px; box-shadow:5px 5px 16px rgba(0,0,0,0.4);' +
 					'background:#eee; overflow:visible; border-radius:3px;}' +
 				'.cp-color-picker:after{content:""; display:block; ' +
-					'position:absolute; top:-15px; left:8px; border:8px solid #eee;' +
+					'position:absolute; top:-8px; left:8px; border:8px solid #eee; border-width: 0px 8px 8px;' +
 					'border-color: transparent transparent #eee}' +
 				// simulate border...
 				'.cp-color-picker:before{content:""; display:block; ' +
-					'position:absolute; top:-16px; left:8px; border:8px solid #eee;' +
+					'position:absolute; top:-9px; left:8px; border:8px solid #eee; border-width: 0px 8px 8px;' +
 					'border-color: transparent transparent #999}' +
 				'.cp-xy-slider{border:1px solid #aaa; margin-bottom:10px; width:150px; height:150px;}' +
-				'.cp-xy-slider:active{cursor:none;}' +
+				'.cp-xy-slider:active {cursor:none;}' +
 				'.cp-xy-cursor{width:12px; height:12px; margin:-6px}' +
 				'.cp-z-slider{margin-left:8px; border:1px solid #aaa; height:150px; width:24px;}' +
 				'.cp-z-cursor{border-width:5px; margin-top:-5px;}' +
@@ -496,7 +502,9 @@ window.myColorPicker = $('input.color').colorPicker({
 			window.location = './?type=' + this.value + '#demo'
 		});
 
-		type === 'mobile' && $('#qr').show();
+
+		type === 'mobile' && !/webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone/i.
+			test(window.navigator.userAgent) && $('#qr').show();
 
 		window.myColorPicker = $('.color').colorPicker(
 			plugin[type] || plugin.desktop
