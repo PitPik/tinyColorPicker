@@ -207,7 +207,7 @@
 			color: colors.rgbaMixBGMixCustom.luminance > 0.22 ? dark : light
 		});
 
-		$element.val() !== text && $element.val(text); // avoids carret jump
+		toggled !== true && $element.val(text); // avoids carret jump
 
 		// faster version (more than 2.5x)... though, no jQuery (colors, ...)
 
