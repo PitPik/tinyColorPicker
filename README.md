@@ -12,6 +12,14 @@ See **demo** at [dematte.at/tinyColorPicker](http://dematte.at/tinyColorPicker)
 All the WCAG 2.0 calculations for readability are also based on opacity levels of all layers.<br>
 Supported color spaces are: rgb, hsv(b), hsl, HEX
 
+## Usage
+
+```javascript
+<script type="text/javascript" src="jqColorPicker.min.js">
+<script type="text/javascript">
+    $('.color').colorPicker(); // that's it
+</script>
+```
 ##colors.js
 
 ```javascript
@@ -29,7 +37,7 @@ Colors({ // all options have a default value...
 colorPicker uses an instance of Colors and passes the options to it, so some values are the same...
 
 ```javascript
-ColorPicker({
+$('.color').colorPicker({
     color: ..., // see Colors...
     customBG: '#FFF' // see Colors...
     animationSpeed: 150, // toggle animation speed
