@@ -37,7 +37,7 @@ On all elements with className 'color': <pre>$('.color').colorPicker();</pre>
 	<div class="color trigger" value="#556B2F"><div><div></div></div></div>
 	<div class="color trigger" value="rgb(100, 86, 70)"><div><div></div></div></div>
 	<div class="color trigger" value="hsla(167, 29%, 68%, 0.8)"><div><div></div></div></div>
-</div>
+<img id="qr" style="float: right; display: block; display: none;" src="./development/qr.png" alt="QR code for http://www.dematte.at/tinyColorPicker/?type=mobile#demo"></div>
 <h2>Features</h2>
 <p>Tiny jQuery colorPicker only loads if triggered to show. It uses battery saving technologies and super fast rendering for best performance on desktop and mobile browsers.<br>
 This colorPicker is very flexible to modify and customize and there is an easy way to write plugins to extend functionality, look and feel...<br>
@@ -73,9 +73,9 @@ window.myColorPicker = $('input.color').colorPicker({
 <p>Will follow... See <a href="https://github.com/PitPik/tinyColorPicker">tinyColorPicke on GitHub</a> for now.</p>
 <!-- <script type="text/javascript" src="jquery-1.11.2.js"></script> -->
 <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
-<script type="text/javascript" src="colors.js"></script>
-<script type="text/javascript" src="jqColorPicker.js"></script>
-<!-- <script type="text/javascript" src="jqColorPicker.min.js"></script> -->
+<!-- <script type="text/javascript" src="colors.js"></script> -->
+<!-- <script type="text/javascript" src="jqColorPicker.js"></script> -->
+<script type="text/javascript" src="jqColorPicker.min.js"></script>
 <script type="text/javascript">
 	(function(window, undefined){
 		'use strict';
@@ -495,6 +495,8 @@ window.myColorPicker = $('input.color').colorPicker({
 		on('change', function(e) {
 			window.location = './?type=' + this.value + '#demo'
 		});
+
+		type === 'mobile' && $('#qr').show();
 
 		window.myColorPicker = $('.color').colorPicker(
 			plugin[type] || plugin.desktop

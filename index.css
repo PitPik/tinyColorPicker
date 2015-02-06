@@ -80,3 +80,6 @@ pre {
 	border-color: #666 #ccc #ccc #666;
 	background: #aaa;
 }
+.cp-xy-slider:active { /* general */
+	cursor:none;
+}

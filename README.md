@@ -36,12 +36,12 @@ ColorPicker({
     GPU: true, // use transform: translate3d
     doRender: true, // manipulate color ans bgColor of input field
     opacity: true, // enable / disable alpha slider
-    renderCallback: function($elm, toggled) {}, // this === instance
-    buidCallback: function($elm) {}, // this === instance
+    renderCallback: function($elm, toggled) {}, // this === instance; $elm: the input field;toggle === true -> just appeared; false -> opposite; else -> is rendering on pointer move
+    buidCallback: function($elm) {}, // this === instance; $elm: the UI
     css: '', // replaces existing css
-    cssAddon: '', // adds cdd to existing
-    margin: '', // positioning margin
-    preventFocus: false // prevent default on focus of input fields
+    cssAddon: '', // adds css to existing
+    margin: '', // positioning margin (can also be set in cssAddon)
+    preventFocus: false // prevents default on focus of input fields
 });
 ```
 
