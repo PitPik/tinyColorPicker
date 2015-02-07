@@ -265,7 +265,7 @@
 
 		_instance = _instance ? _instance.add(this) : this;
 		_selector += (_selector ? ', ' : '') + this.selector;
-		this.colorPicker = _colorPicker ||
+		_instance.colorPicker = _colorPicker ||
 			(_colorPicker = new ColorPicker(options));
 
  		$(options.body).off('.a').
