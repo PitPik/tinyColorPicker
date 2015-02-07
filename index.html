@@ -3,16 +3,21 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="Description" content="tiny ColorPicker is a small (10.0KB, 4.5KB gZip) but very advanced jQuery color picker and color conversion / calculation tool that supports the following color spaces: rgb, hsv, hsl, hex,  but also  alpha, WCAG 2.0 readability standards (based on opacity levels of all layers), contrast, color similarity, grayscale, 2-layer or 3-layer overlap mix, etc..." />
+    <meta name="Keywords" content="ColorPicker, color picker, color chooser, color, picker, javaScript, jquery, colors, rgb, hsv, hsl, hex, alpha, WCAG 2.0, grayscale, contrast, readability, realtime, retina, high resolution" />
+    <meta name="author" content="Peter Dematté" />
+    <meta http-equiv="language" content="en" />
 	<link rel="stylesheet" type="text/css" href="index.css">
 	<!-- <link rel="stylesheet" type="text/css" href="development/colorPicker.css"> -->
 	<link rel="stylesheet" type="text/css" href="development/compatibility.css">
 	<title>tiny jQuery colorPicker</title>
 </head>
 <body>
+<div id="content-wrapper">
 <h1>Tiny jQuery colorPicker</h1>
 <p>Looking for mobile first, tiny foot print, fast, scaleable, flexible and pluggable...<br>
 This <strong>4.5KB</strong> small HSB color picker is based on a subset of <a href="https://github.com/PitPik/colorPicker/blob/master/colors.js">colors.js</a> from it's big brother <a href="http://dematte.at/colorPicker/">colorPicker</a>, supports all modern features like touch and MS pointer, GPU accelerated rendering, battery friendly requestAnimationFrame and provides a lot of hooks for developers to write plugins (See demo plugins below in <a href="#demo">Demo</a>).</p>
-<a name="demo" id="demo"></a>
+<a name="demo" id="demo" class="a-inline"></a>
 <h2>Demo</h2>
 On all elements with className 'color': <pre>$('.color').colorPicker();</pre>
 <p>Switch between plugins:
@@ -48,7 +53,7 @@ On all elements with className 'color': <pre>$('.color').colorPicker();</pre>
 &lt;/script>
 </pre>
 <h2>Features</h2>
-<p>Tiny jQuery colorPicker only loads if triggered to show. It uses battery saving technologies and super fast rendering for best performance on desktop and mobile browsers.<br>
+<p>Tiny jQuery colorPicker only loads if triggered to show. It uses battery saving technologies, super fast rendering for best performance on desktop and mobile browsers and renders perfectly smooth on retina and high resolution displays.<br>
 This colorPicker is very flexible to modify and customize and there is an easy way to write plugins to extend functionality, look and feel...<br>
 As Tiny jQuery colorPicker uses <a href="https://github.com/PitPik/colorPicker/blob/master/colors.js">colors.js</a> from it's big brother <a href="http://dematte.at/colorPicker/">colorPicker</a>, it provides a clean and rich color model and API that enables flexible extending for programmers. (See <a href="https://github.com/PitPik/colorPicker">colorPicker on GitHub</a> for more details)</p>
 <p>The following snipped shows how easy it is to make plugins: use for mobile</p>
@@ -79,7 +84,8 @@ window.myColorPicker = $('input.color').colorPicker({
 });
 </pre>
 <h2>API and usage</h2>
-<p>Will follow... See <a href="https://github.com/PitPik/tinyColorPicker">tinyColorPicke on GitHub</a> for now.</p>
+<p>Will follow... See <a href="https://github.com/PitPik/tinyColorPicker">tinyColorPicker on GitHub</a> for now.</p>
+</div>
 <!-- <script type="text/javascript" src="jquery-1.11.2.js"></script> -->
 <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
 <!-- <script type="text/javascript" src="colors.js"></script> -->
@@ -562,6 +568,6 @@ window.myColorPicker = $('input.color').colorPicker({
 		);
 	})(window);
 </script>
-<a href="https://github.com/PitPik/tinyColorPicker"><img style="position: absolute; top: 0; right: 0; border: 0;" src="development/fmog.png" alt="Fork me on GitHub"></a>
+<a class="a-inline" href="https://github.com/PitPik/tinyColorPicker"><img style="position: absolute; top: 0; right: 0; border: 0;" src="development/fmog.png" alt="Fork me on GitHub"></a>
 </body>
 </html>

@@ -254,7 +254,8 @@
 			customBG: '#FFF',
 			opacity: true,
 			renderCallback: noop,
-			buidCallback: noop
+			buidCallback: noop,
+			body: document.body
 			// css: '',
 			// cssAddon: '',
 			// margin: '',
@@ -264,7 +265,7 @@
 		if (!_colorPicker) { // we only want one single instance...
 			_colorPicker = new ColorPicker(options);
 
-			$(document.body).on('touchstart mousedown pointerdown', function(e) {
+			$(options.body).on('touchstart mousedown pointerdown', function(e) {
 				var $target = $(e.target);
 
 				if ($.inArray($target.closest($that.selector)[0],

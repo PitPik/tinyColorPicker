@@ -49,7 +49,8 @@ $('.color').colorPicker({
     css: '', // replaces existing css
     cssAddon: '', // adds css to existing
     margin: '', // positioning margin (can also be set in cssAddon)
-    preventFocus: false // prevents default on focus of input fields
+    preventFocus: false // prevents default on focus of input fields,
+    body: document.body // the element where the events are attached to (touchstart, mousedown, pointerdown, focus, click, change)
 });
 ```
 
