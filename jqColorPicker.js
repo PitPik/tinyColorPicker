@@ -170,10 +170,10 @@
 			isAlpha = colors.alpha !== 1,
 			alpha = Math.round(colors.alpha * 100) / 100,
 			RGBInnerText = RGB.r + ', ' + RGB.g + ', ' + RGB.b,
-			RGBAText = 'rgba(' + RGBInnerText + ', ' + alpha + ')',
 			text = (colorMode === 'HEX' && !isAlpha ? '#' + colors.HEX :
 				colorMode === 'rgb' || (colorMode === 'HEX' && isAlpha) ?
-				(!isAlpha ? 'rgb(' + RGBInnerText + ')' : RGBAText) :
+				(!isAlpha ? 'rgb(' + RGBInnerText + ')' :
+					'rgba(' + RGBInnerText + ', ' + alpha + ')') :
 				('hsl' + (isAlpha ? 'a(' : '(') + HSL.h + ', ' + HSL.s + '%, ' +
 					HSL.l + '%' + (isAlpha ? ', ' + alpha : '') + ')')),
 			HUEContrast = colors.HUELuminance > 0.22 ? dark : light,
@@ -248,8 +248,6 @@
 	$.fn.colorPicker = function(options) {
 		var noop = function(){};
 
-		_instance = _instance ? _instance.add(this) : this;
-
  		options = $.extend({
 			animationSpeed: 150,
 			GPU: true,
@@ -265,7 +263,10 @@
 			// preventFocus: false
 		}, options);
 
+		_instance = _instance ? _instance.add(this) : this;
 		_selector += (_selector ? ', ' : '') + this.selector;
+		this.colorPicker = _colorPicker ||
+			(_colorPicker = new ColorPicker(options));
 
  		$(options.body).off('.a').
  		on('touchstart.a mousedown.a pointerdown.a', function(e) {
@@ -282,9 +283,6 @@
 			_color.setColor(this.value);
 			_instance.colorPicker.render();
 		});
-
-		this.colorPicker = _colorPicker ||
-			(_colorPicker = new ColorPicker(options));
 
 		return this.each(function() {
 			var value = extractValue(this),
