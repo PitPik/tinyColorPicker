@@ -2,10 +2,12 @@
 	'use strict';
 
 	var $document = $(document),
+		_instance,
 		_colorPicker,
 		_color,
 		_options,
 		_cache = {},
+		_selector = '',
 		_$UI, _$xy_slider, _$xy_cursor, _$z_cursor , _$alpha , _$alpha_cursor,
 		_pointermove = 'touchmove mousemove pointermove',
 		_pointerup = 'touchend mouseup pointerup',
@@ -207,7 +209,7 @@
 			color: colors.rgbaMixBGMixCustom.luminance > 0.22 ? dark : light
 		});
 
-		toggled !== true && $element.val(text); // avoids carret jump
+		$element.val() !== text && $element.val(text); // avoids carret jump
 
 		// faster version (more than 2.5x)... though, no jQuery (colors, ...)
 
@@ -244,8 +246,9 @@
 
 	// export as plugin to jQuery
 	$.fn.colorPicker = function(options) {
-		var $that = this,
-			noop = function(){};
+		var noop = function(){};
+
+		_instance = _instance ? _instance.add(this) : this;
 
  		options = $.extend({
 			animationSpeed: 150,
@@ -261,27 +264,27 @@
 			// margin: '',
 			// preventFocus: false
 		}, options);
- 
-		if (!_colorPicker) { // we only want one single instance...
-			_colorPicker = new ColorPicker(options);
 
-			$(options.body).on('touchstart mousedown pointerdown', function(e) {
-				var $target = $(e.target);
+		_selector += (_selector ? ', ' : '') + this.selector;
 
-				if ($.inArray($target.closest($that.selector)[0],
-					$that) === -1 &&
-				!$target.closest(_$UI).length) {
-					toggle();
-				}
-			}).
-			on('focus click', this.selector, toggle).
-			on('change', this.selector, function() {
-				_color.setColor(this.value);
-				$that.colorPicker.render();
-			});
-		}
+ 		$(options.body).off('.a').
+ 		on('touchstart.a mousedown.a pointerdown.a', function(e) {
+			var $target = $(e.target);
 
-		this.colorPicker = _colorPicker;
+			if ($.inArray($target.closest(_selector)[0],
+				_instance) === -1 &&
+			!$target.closest(_$UI).length) {
+				toggle();
+			}
+		}).
+		on('focus.a click.a', _selector, toggle).
+		on('change.a', _selector, function() {
+			_color.setColor(this.value);
+			_instance.colorPicker.render();
+		});
+
+		this.colorPicker = _colorPicker ||
+			(_colorPicker = new ColorPicker(options));
 
 		return this.each(function() {
 			var value = extractValue(this),

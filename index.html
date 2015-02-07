@@ -40,9 +40,9 @@ On all elements with className 'color': <pre>$('.color').colorPicker();</pre>
 	<input class="color" value="hsl(32, 95%, 23%)" />
 </div>
 <div class="div-toggles">
-	<div class="color trigger" value="#556B2F"><div><div></div></div></div>
-	<div class="color trigger" value="rgb(100, 86, 70)"><div><div></div></div></div>
-	<div class="color trigger" value="hsla(167, 29%, 68%, 0.8)"><div><div></div></div></div>
+	<div class="trigger" value="#556B2F"><div><div></div></div></div>
+	<div class="trigger" value="rgb(100, 86, 70)"><div><div></div></div></div>
+	<div class="trigger" value="hsla(167, 29%, 68%, 0.8)"><div><div></div></div></div>
 <img id="qr" style="float: right; display: block; display: none; margin-right: -200px;" src="./development/qr.png" alt="QR code for http://www.dematte.at/tinyColorPicker/?type=mobile#demo"></div>
 <h2>Usage</h2>
 <p>There is only one file you need to load... No images and no CSS required.</p>
@@ -542,10 +542,10 @@ window.myColorPicker = $('input.color').colorPicker({
 				if (toggled === true) {
 					// here you can recalculate position after showing the color picker
 					// in case it doesn't fit into view.
-					$('.color').removeClass('active');
-					$elm.closest('.color').addClass('active');
+					$('.trigger').removeClass('active');
+					$elm.closest('.trigger').addClass('active');
 				} else if (toggled === false) {
-					$elm.closest('.color').removeClass('active');
+					$elm.closest('.trigger').removeClass('active');
 				}
 			}
 		};
@@ -566,6 +566,7 @@ window.myColorPicker = $('input.color').colorPicker({
 		window.myColorPicker = $('.color').colorPicker(
 			plugin[type] || plugin.desktop
 		);
+		$('.trigger').colorPicker();
 	})(window);
 </script>
 <a class="a-inline" href="https://github.com/PitPik/tinyColorPicker"><img style="position: absolute; top: 0; right: 0; border: 0;" src="development/fmog.png" alt="Fork me on GitHub"></a>
