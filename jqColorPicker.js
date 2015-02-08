@@ -8,7 +8,7 @@
 		_options,
 		_selector = '',
 
-		_$element,
+		_$trigger,
 		_$UI, _$xy_slider, _$xy_cursor, _$z_cursor , _$alpha , _$alpha_cursor,
 
 		_pointermove = 'touchmove mousemove pointermove',
@@ -46,8 +46,10 @@
 			_options = _color.options;
 		};
 
-	ColorPicker.prototype.render = render;
-	ColorPicker.prototype.toggle = toggle;
+	ColorPicker.prototype = {
+		render: render,
+		toggle: toggle
+	}
 
 	function extractValue(elm) {
 		return elm.value || elm.getAttribute('value') ||
@@ -69,7 +71,7 @@
 
 		if (event) {
 			position = $this.offset();
-			_$element = findElement($this);
+			_$trigger = findElement($this);
 
 			(_$UI || build()).css({
 				'left': position.left, // check for space...
@@ -78,12 +80,12 @@
 				_$alpha._width = _$alpha.width();
 				_$xy_slider._width = _$xy_slider.width();
 				_$xy_slider._height = _$xy_slider.height();
-				_color.setColor(extractValue(_$element[0]));
+				_color.setColor(extractValue(_$trigger[0]));
 				render(true);
 			});
 		} else {
 			$(_$UI).hide(_options.animationSpeed, function() {
-				_$element.blur();
+				_$trigger.blur();
 				render(false);
 			});
 		}
@@ -105,15 +107,16 @@
 			}).hide().
 			on('touchstart mousedown pointerdown',
 				'.cp-xy-slider,.cp-z-slider,.cp-alpha', pointerdown).
-			appendTo(document.body);
+			appendTo('body');
 	}
 
 	function pointerdown(e) {
-		var action = this.className.replace('cp-', '').replace('-', '_');
+		var action = this.className.
+				replace(/cp-(.*?)(?:\s*|$)/, '$1').replace('-', '_');
 
 		e.preventDefault();
 
-		_$element.origin = $(this).offset();
+		_$trigger._offset = $(this).offset();
 		(action = action === 'xy_slider' ? xy_slider :
 			action === 'z_slider' ? z_slider : alpha)(e);
 
@@ -126,8 +129,8 @@
 
 	function xy_slider(event) {
 		var e = resolveEventType(event),
-			x = e.pageX - _$element.origin.left,
-			y = e.pageY - _$element.origin.top;
+			x = e.pageX - _$trigger._offset.left,
+			y = e.pageY - _$trigger._offset.top;
 
 		_color.setColor({
 			s: x / _$xy_slider._width * 100,
@@ -137,7 +140,7 @@
 	}
 
 	function z_slider(event) {
-		var z = resolveEventType(event).pageY - _$element.origin.top,
+		var z = resolveEventType(event).pageY - _$trigger._offset.top,
 			hsv = _color.colors.hsv;
 
 		_color.setColor({h: 360 - (z / _$xy_slider._height * 360)}, 'hsv');
@@ -145,7 +148,7 @@
 	}
 
 	function alpha(event) {
-		var x = resolveEventType(event).pageX - _$element.origin.left,
+		var x = resolveEventType(event).pageX - _$trigger._offset.left,
 			alpha = x / _$alpha._width;
 
 		_color.setColor({}, 'rgb', alpha > 1 ? 1 : alpha < 0 ? 0 : alpha);
@@ -159,7 +162,7 @@
 			HSL = colors.RND.hsl,
 			dark = '#222',
 			light = '#ddd',
-			colorMode = _$element.data('colorMode'),
+			colorMode = _$trigger.data('colorMode'),
 			isAlpha = colors.alpha !== 1,
 			alpha = Math.round(colors.alpha * 100) / 100,
 			RGBInnerText = RGB.r + ', ' + RGB.g + ', ' + RGB.b,
@@ -197,16 +200,16 @@
 			left: !_GPU ? a : '',
 			borderColor : alphaContrast + ' transparent'
 		});
-		_options.doRender && _$element.css({
+		_options.doRender && _$trigger.css({
 			backgroundColor : text,
 			color: colors.rgbaMixBGMixCustom.luminance > 0.22 ? dark : light
 		});
 
-		_$element.val() !== text && _$element.val(text);
+		_$trigger.val() !== text && _$trigger.val(text);
 
 		_options.renderCallback.call(
 			_colorPicker,
-			_$element,
+			_$trigger,
 			typeof toggled === 'boolean' ? toggled : undefined
 		);
 	}
