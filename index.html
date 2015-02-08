@@ -8,9 +8,11 @@
     <meta name="author" content="Peter Dematté" />
     <meta http-equiv="language" content="en" />
 	<link rel="stylesheet" type="text/css" href="index.css">
+	<link rel="shortcut icon" type="image/x-icon" href="development/favicon.ico">
+	<link rel="icon" type="image/x-icon" href="development/favicon.ico">
 	<!-- <link rel="stylesheet" type="text/css" href="development/colorPicker.css"> -->
 	<link rel="stylesheet" type="text/css" href="development/compatibility.css">
-	<title>tiny jQuery colorPicker</title>
+	<title>tiny jQuery color picker</title>
 </head>
 <body>
 <div id="content-wrapper">
@@ -28,6 +30,7 @@ On all elements with className 'color': <pre>$('.color').colorPicker();</pre>
 		<option value="memory">Color memory spaces</option>
 		<option value="skinned">Skinned (white)</option>
 		<option value="dev_skinned">Skinned dev-tools like</option>
+		<option value="dev_skinned_hh">Skinned dev-tools small height</option>
 		<option value="noalpha">Default without alpha</option>
 		<option value="small">Default but smaller</option>
 		<option value="IE8">Better IE8- support</option>
@@ -86,11 +89,14 @@ window.myColorPicker = $('input.color').colorPicker({
 <h2>API and usage</h2>
 <p>Will follow... See <a href="https://github.com/PitPik/tinyColorPicker">tinyColorPicker on GitHub</a> for now.</p>
 </div>
+
+
+
 <!-- <script type="text/javascript" src="jquery-1.11.2.js"></script> -->
 <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
-<!-- <script type="text/javascript" src="colors.js"></script> -->
-<!-- <script type="text/javascript" src="jqColorPicker.js"></script> -->
-<script type="text/javascript" src="jqColorPicker.min.js"></script>
+<script type="text/javascript" src="colors.js"></script>
+<script type="text/javascript" src="jqColorPicker.js"></script>
+<!-- <script type="text/javascript" src="jqColorPicker.min.js"></script> -->
 <script type="text/javascript">
 	(function(window, undefined){
 		'use strict';
@@ -550,6 +556,11 @@ window.myColorPicker = $('input.color').colorPicker({
 			}
 		};
 
+		plugin.dev_skinned_hh = $.extend(plugin.dev_skinned,
+			{cssAddon: plugin.dev_skinned.cssAddon +
+				'.cp-xy-slider{height:100px}' +
+				'.cp-z-slider{height:100px}'});
+
 
 		$pluginSelect.val(type || 'desktop').
 		on('change', function(e) {
@@ -567,8 +578,19 @@ window.myColorPicker = $('input.color').colorPicker({
 			plugin[type] || plugin.desktop
 		);
 		$('.trigger').colorPicker();
+		// $('pre').colorPicker({doRender: false});
 	})(window);
 </script>
 <a class="a-inline" href="https://github.com/PitPik/tinyColorPicker"><img style="position: absolute; top: 0; right: 0; border: 0;" src="development/fmog.png" alt="Fork me on GitHub"></a>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-16695391-6', 'auto');
+  ga('send', 'pageview');
+
+</script>
 </body>
 </html>
