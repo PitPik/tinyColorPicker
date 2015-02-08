@@ -6,9 +6,11 @@
 		_colorPicker,
 		_color,
 		_options,
-		_cache = {},
 		_selector = '',
+
+		_$element,
 		_$UI, _$xy_slider, _$xy_cursor, _$z_cursor , _$alpha , _$alpha_cursor,
+
 		_pointermove = 'touchmove mousemove pointermove',
 		_pointerup = 'touchend mouseup pointerup',
 		_GPU = false,
@@ -66,47 +68,39 @@
 			position;
 
 		if (event) {
-			// if (this.nodeName.toLowerCase() === 'input' &&
-			// 	event.type === 'click') return;
-			// _options.preventFocus && this.blur();
 			position = $this.offset();
-			_cache.$element = findElement($this);
+			_$element = findElement($this);
 
 			(_$UI || build()).css({
 				'left': position.left, // check for space...
 				'top': position.top + $this.outerHeight(true)
 			}).show(_options.animationSpeed, function() {
-				_cache.alphaWidth = $('.cp-alpha', _$UI).width();
-				_cache.sliderWidth = $('.cp-xy-slider', _$UI).width();
-				_color.setColor(extractValue(_cache.$element[0]));
+				_$alpha._width = _$alpha.width();
+				_$xy_slider._width = _$xy_slider.width();
+				_$xy_slider._height = _$xy_slider.height();
+				_color.setColor(extractValue(_$element[0]));
 				render(true);
 			});
 		} else {
 			$(_$UI).hide(_options.animationSpeed, function() {
-				_cache.$element.blur();
+				_$element.blur();
 				render(false);
 			});
 		}
 	};
 
 	function build() {
-		// CSS
 		$('head').append('<style type="text/css">' +
 			(_options.css || _css) + (_options.cssAddon || '') + '</style>');
-		// HTML
+
 		return _$UI = $(_html).css({'margin': _options.margin}).
-			find('.cp-alpha').toggle(!!_options.opacity).
-			parent(). // back to $(_html)
 			show(0, function() {
 				_GPU = _options.GPU && $(this).css('perspective') === '';
-				// _GPU = _options.GPU && 
-				// 	$('<div>').css('transform', 'matrix(1,0,0,2,0,0)').
-				// 	css('transform').replace(/2.*$/, '1,');
 				_options.buidCallback.call(_colorPicker, $(this));
 				_$xy_slider = $('.cp-xy-slider', this);
 				_$xy_cursor = $('.cp-xy-cursor', this);
 				_$z_cursor = $('.cp-z-cursor', this);
-				_$alpha = $('.cp-alpha', this);
+				_$alpha = $('.cp-alpha', this).toggle(!!_options.opacity);
 				_$alpha_cursor = $('.cp-alpha-cursor', this);
 			}).hide().
 			on('touchstart mousedown pointerdown',
@@ -119,7 +113,7 @@
 
 		e.preventDefault();
 
-		_cache.elementOrigin = $(this).offset();
+		_$element.origin = $(this).offset();
 		(action = action === 'xy_slider' ? xy_slider :
 			action === 'z_slider' ? z_slider : alpha)(e);
 
@@ -132,27 +126,27 @@
 
 	function xy_slider(event) {
 		var e = resolveEventType(event),
-			x = e.pageX - _cache.elementOrigin.left,
-			y = e.pageY - _cache.elementOrigin.top;
+			x = e.pageX - _$element.origin.left,
+			y = e.pageY - _$element.origin.top;
 
 		_color.setColor({
-			s: x / _cache.sliderWidth * 100,
-			v: 100 - (y / _cache.sliderWidth * 100)
+			s: x / _$xy_slider._width * 100,
+			v: 100 - (y / _$xy_slider._height * 100)
 		}, 'hsv');
 		_animate(render);
 	}
 
 	function z_slider(event) {
-		var z = resolveEventType(event).pageY - _cache.elementOrigin.top,
+		var z = resolveEventType(event).pageY - _$element.origin.top,
 			hsv = _color.colors.hsv;
 
-		_color.setColor({h: 360 - (z / _cache.sliderWidth * 360)}, 'hsv');
+		_color.setColor({h: 360 - (z / _$xy_slider._height * 360)}, 'hsv');
 		_animate(render);
 	}
 
 	function alpha(event) {
-		var x = resolveEventType(event).pageX - _cache.elementOrigin.left,
-			alpha = x / _cache.alphaWidth;
+		var x = resolveEventType(event).pageX - _$element.origin.left,
+			alpha = x / _$alpha._width;
 
 		_color.setColor({}, 'rgb', alpha > 1 ? 1 : alpha < 0 ? 0 : alpha);
 		_animate(render);
@@ -165,8 +159,7 @@
 			HSL = colors.RND.hsl,
 			dark = '#222',
 			light = '#ddd',
-			$element = _cache.$element,
-			colorMode = $element.data('colorMode'),
+			colorMode = _$element.data('colorMode'),
 			isAlpha = colors.alpha !== 1,
 			alpha = Math.round(colors.alpha * 100) / 100,
 			RGBInnerText = RGB.r + ', ' + RGB.g + ', ' + RGB.b,
@@ -178,10 +171,10 @@
 					HSL.l + '%' + (isAlpha ? ', ' + alpha : '') + ')')),
 			HUEContrast = colors.HUELuminance > 0.22 ? dark : light,
 			alphaContrast = colors.rgbaMixBlack.luminance > 0.22 ? dark : light,
-			h = (1 - colors.hsv.h) * _cache.sliderWidth,
-			s = colors.hsv.s * _cache.sliderWidth,
-			v = (1 - colors.hsv.v) * _cache.sliderWidth,
-			a = alpha * _cache.alphaWidth,
+			h = (1 - colors.hsv.h) * _$xy_slider._height,
+			s = colors.hsv.s * _$xy_slider._width,
+			v = (1 - colors.hsv.v) * _$xy_slider._height,
+			a = alpha * _$alpha._width,
 			t3d = _GPU ? 'translate3d' : '';
 
 		_$xy_slider.css({
@@ -204,47 +197,20 @@
 			left: !_GPU ? a : '',
 			borderColor : alphaContrast + ' transparent'
 		});
-		_options.doRender && $element.css({
+		_options.doRender && _$element.css({
 			backgroundColor : text,
 			color: colors.rgbaMixBGMixCustom.luminance > 0.22 ? dark : light
 		});
 
-		$element.val() !== text && $element.val(text); // avoids carret jump
-
-		// faster version (more than 2.5x)... though, no jQuery (colors, ...)
-
-		// _$xy_slider[0].style.cssText =
-		// 	'background-color:' + 'rgb(' +
-		// 		hueRGB.r + ',' + hueRGB.g + ',' + hueRGB.b + ');';
-		// _$xy_cursor[0].style.cssText =
-		// 	(_GPU ? _GPU + s + ',' + v + ');' :
-		// 		'left:' + s + 'px;' + 'top:' + v + 'px;') +
-		// 	'border-color:' + (colors.RGBLuminance > 0.22 ? dark : light);
-		// _$z_cursor[0].style.cssText =
-		// 	(_GPU ? _GPU + '0,' + h + ');' :
-		// 		'top:' + h + 'px;') +
-		// 	'border-color:' + 'transparent ' + HUEContrast;
-		// if (_options.opacity) {
-		// 	_$alpha[0].style.cssText = 'background-color:' + '#' + colors.HEX;
-		// 	_$alpha_cursor[0].style.cssText =
-		// 		(_GPU ? _GPU + a + ', 0);' :
-		// 			'left:' + a + 'px;') +
-		// 	'border-color:' + alphaContrast + ' transparent';
-		// }
-		// _options.doRender && (_cache.$element[0].style.cssText =
-		// 	'background-color:' + text +
-		// 	';color:' + (colors.rgbaMixBGMixCustom.luminance > 0.22 ? dark : light));
-		
-		// _cache.$element[0].value = text;
+		_$element.val() !== text && _$element.val(text);
 
 		_options.renderCallback.call(
 			_colorPicker,
-			$element,
+			_$element,
 			typeof toggled === 'boolean' ? toggled : undefined
 		);
 	}
 
-	// export as plugin to jQuery
 	$.fn.colorPicker = function(options) {
 		var noop = function(){};
 
@@ -288,7 +254,7 @@
 			var value = extractValue(this),
 				mode = value.split('('),
 				$elm = findElement($(this));
-			// save initial color mode and set color and bgColor
+
 			$elm.data('colorMode', mode[1] ? mode[0].substr(0, 3) : 'HEX').
 			attr('readonly', _options.preventFocus);
 			options.doRender && $elm.
