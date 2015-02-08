@@ -75,7 +75,7 @@
 
 			(_$UI || build()).css({
 				'left': position.left, // check for space...
-				'top': position.top + $this.outerHeight(true)
+				'top': position.top + $this.outerHeight()
 			}).show(_options.animationSpeed, function() {
 				_$alpha._width = _$alpha.width();
 				_$xy_slider._width = _$xy_slider.width();
@@ -192,7 +192,7 @@
 		_$z_cursor.css({
 			transform: t3d + '(0, ' + h + 'px, 0)',
 			top: !_GPU ? h : '',
-			borderColor : 'transparent ' + HUEContrast,
+			borderColor : 'transparent ' + HUEContrast
 		});
 		_$alpha.css({backgroundColor: 'rgb(' + RGBInnerText + ')'});
 		_$alpha_cursor.css({
