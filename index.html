@@ -556,7 +556,7 @@ window.myColorPicker = $('input.color').colorPicker({
 			}
 		};
 
-		plugin.dev_skinned_hh = $.extend(plugin.dev_skinned,
+		plugin.dev_skinned_hh = $.extend({}, plugin.dev_skinned,
 			{cssAddon: plugin.dev_skinned.cssAddon +
 				'.cp-xy-slider{height:100px}' +
 				'.cp-z-slider{height:100px}'});
