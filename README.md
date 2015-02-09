@@ -49,6 +49,7 @@ $('.color').colorPicker({
     css: '', // replaces existing css
     cssAddon: '', // adds css to existing
     margin: '', // positioning margin (can also be set in cssAddon)
+    scrollResize: true // toggle for reposition colorPicker on window.resize/scroll
     preventFocus: false // prevents default on focus of input fields,
     body: document.body // the element where the events are attached to (touchstart, mousedown, pointerdown, focus, click, change)
 });
@@ -73,6 +74,7 @@ colors.js is a quite handy tool for color calculations/conversion (gray value, c
 If you need more complex calculations or more color spaces, use the version from https://github.com/PitPik/colorPicker. It supports also cmy, cmyk, XYZ and Lab.
 ```javascript
 myColorPicker: {
+    $trigger: ... // jQuery object of active trigger or null if none active
     color: { // instance of Color inside colorPicker
         colors: { all kinds of color values... see later},
         options: { all the options you set or that are set as default... },

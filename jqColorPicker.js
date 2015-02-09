@@ -66,12 +66,12 @@
 
 	function toggle(event) {
 		var $this = $(this),
-			position,
+			position = $this.offset(),
 			$window = $(window);
 
 		if (event) {
-			position = $this.offset();
 			_$trigger = findElement($this);
+			_colorPicker.$trigger = $this;
 
 			(_$UI || build()).css({
 				'left': !(_$UI[0]._right = position.left + _$UI[0]._width >
@@ -93,6 +93,7 @@
 		} else {
 			$(_$UI).hide(_options.animationSpeed, function() {
 				_$trigger.blur();
+				_colorPicker.$trigger = null;
 				preRender(false);
 			});
 		}
@@ -252,13 +253,20 @@
 			opacity: true,
 			renderCallback: noop,
 			buidCallback: noop,
-			body: document.body
+			body: document.body,
+			scrollResize: true
 			// css: '',
 			// cssAddon: '',
 			// margin: '',
 			// preventFocus: false
 		}, options);
 
+		!_colorPicker && options.scrollResize && $(window).
+		on('resize scroll', function() {
+			if (_colorPicker.$trigger) {
+				_colorPicker.toggle.call(_colorPicker.$trigger[0], true);
+			}
+		});
 		_instance = _instance ? _instance.add(this) : this;
 		_instance.colorPicker = _colorPicker ||
 			(_colorPicker = new ColorPicker(options));
