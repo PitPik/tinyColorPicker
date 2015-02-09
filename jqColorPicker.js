@@ -208,6 +208,11 @@
 		toggled !== undefined ? render(toggled) : _animate(render);
 	}
 
+	// As _animate() is actually requestAnimationFrame(), render() gets called
+	// decoupled from any pointer action (whenever the browser decides to do
+	// so) as an event. preRender() is coupled to toggle() and all pointermove
+	// actions; that's where all the calculations happen. render() can now be
+	// called without extra calculations which results in faster rendering.
 	function render(toggled) {
 		_$xy_slider.css(_$xy_slider._css);
 		_$xy_cursor.css(_$xy_cursor._css);
@@ -244,9 +249,9 @@
 		}, options);
 
 		_instance = _instance ? _instance.add(this) : this;
-		_selector += (_selector ? ', ' : '') + this.selector;
 		_instance.colorPicker = _colorPicker ||
 			(_colorPicker = new ColorPicker(options));
+		_selector += (_selector ? ', ' : '') + this.selector;
 
  		$(options.body).off('.a').
  		on('touchstart.a mousedown.a pointerdown.a', function(e) {
