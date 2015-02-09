@@ -77,12 +77,11 @@
 				'left': !(_$UI[0]._right = position.left + _$UI[0]._width >
 					$window.scrollLeft() + $window.width() ? 4 : '') ?
 					position.left : '',
-				'top': !(_$UI[0]._bottom = position.top + $this.outerHeight() +
-					_$UI[0]._height > $window.scrollTop() + $window.height() ?
-					-$window.scrollTop() + 4 : '') ?
-					position.top + $this.outerHeight() : '',
 				'right': _$UI[0]._right,
-				'bottom': _$UI[0]._bottom
+				'top': (_$UI[0]._top = position.top + $this.outerHeight()) -
+					((_$UI[0]._top = _$UI[0]._top + _$UI[0]._height -
+					($window.scrollTop() + $window.height())) > 0 ?
+					_$UI[0]._top + 8 : 0)
 			}).show(_options.animationSpeed, function() {
 				_$alpha._width = _$alpha.width();
 				_$xy_slider._width = _$xy_slider.width();
