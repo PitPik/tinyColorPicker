@@ -18,7 +18,7 @@
 <div id="content-wrapper">
 <h1>Tiny jQuery colorPicker</h1>
 <p>Looking for mobile first, tiny foot print, fast, scaleable, flexible and pluggable...<br>
-This <strong>4.5KB</strong> small HSB color picker is based on a subset of <a href="https://github.com/PitPik/colorPicker/blob/master/colors.js">colors.js</a> from it's big brother <a href="http://dematte.at/colorPicker/">colorPicker</a>, supports all modern features like touch and MS pointer, GPU accelerated rendering, battery friendly requestAnimationFrame and provides a lot of hooks for developers to write plugins (See demo plugins below in <a href="#demo">Demo</a>).</p>
+This <strong>4.7KB</strong> small HSB color picker is based on a subset of <a href="https://github.com/PitPik/colorPicker/blob/master/colors.js">colors.js</a> from it's big brother <a href="http://dematte.at/colorPicker/">colorPicker</a>, supports all modern features like touch and MS pointer, GPU accelerated rendering, battery friendly requestAnimationFrame and provides a lot of hooks for developers to write plugins (See demo plugins below in <a href="#demo">Demo</a>).</p>
 <a name="demo" id="demo" class="a-inline"></a>
 <h2>Demo</h2>
 On all elements with className 'color': <pre>$('.color').colorPicker();</pre>
@@ -30,7 +30,7 @@ On all elements with className 'color': <pre>$('.color').colorPicker();</pre>
 		<option value="memory">Color memory spaces</option>
 		<option value="skinned">Skinned (white)</option>
 		<option value="dev_skinned">Skinned dev-tools like</option>
-		<option value="dev_skinned_hh">Skinned dev-tools small height</option>
+		<option value="dev_skinned_hh">Skinned dev-tools 3:2</option>
 		<option value="noalpha">Default without alpha</option>
 		<option value="small">Default but smaller</option>
 		<option value="IE8">Better IE8- support</option>
@@ -56,7 +56,7 @@ On all elements with className 'color': <pre>$('.color').colorPicker();</pre>
 &lt;/script>
 </pre>
 <h2>Features</h2>
-<p>Tiny jQuery colorPicker only loads if triggered to show. It uses battery saving technologies, super fast rendering for best performance on desktop and mobile browsers and renders perfectly smooth on retina and high resolution displays.<br>
+<p>Tiny jQuery colorPicker only loads into memory if triggered to show and auto repositiones inside view-port if it doesn't fit. It uses battery saving technologies, super fast rendering for best performance on desktop and mobile browsers and renders perfectly smooth on retina and high resolution displays.<br>
 This colorPicker is very flexible to modify and customize and there is an easy way to write plugins to extend functionality, look and feel...<br>
 As Tiny jQuery colorPicker uses <a href="https://github.com/PitPik/colorPicker/blob/master/colors.js">colors.js</a> from it's big brother <a href="http://dematte.at/colorPicker/">colorPicker</a>, it provides a clean and rich color model and API that enables flexible extending for programmers. (See <a href="https://github.com/PitPik/colorPicker">colorPicker on GitHub</a> for more details)</p>
 <p>The following snipped shows how easy it is to make plugins: use for mobile</p>
@@ -94,9 +94,9 @@ window.myColorPicker = $('input.color').colorPicker({
 
 <!-- <script type="text/javascript" src="jquery-1.11.2.js"></script> -->
 <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
-<script type="text/javascript" src="colors.js"></script>
-<script type="text/javascript" src="jqColorPicker.js"></script>
-<!-- <script type="text/javascript" src="jqColorPicker.min.js"></script> -->
+<!-- <script type="text/javascript" src="colors.js"></script> -->
+<!-- <script type="text/javascript" src="jqColorPicker.js"></script> -->
+<script type="text/javascript" src="jqColorPicker.min.js"></script>
 <script type="text/javascript">
 	(function(window, undefined){
 		'use strict';
@@ -121,7 +121,7 @@ window.myColorPicker = $('input.color').colorPicker({
 		// plugin for mobile use (bigger and value/color display on top)
 		plugin.mobile = {
 			customBG: '#222',
-			margin: '4px -2px',
+			margin: '4px -2px 0',
 			doRender: 'div div',
 			preventFocus: true,
 			animationSpeed: 0,
@@ -157,7 +157,7 @@ window.myColorPicker = $('input.color').colorPicker({
 		// shows input fields for rgb and hsv; changeable
 		plugin.input = {
 			customBG: '#222',
-			margin: '4px -2px',
+			margin: '4px -2px 0',
 			doRender: 'div div',
 
 			buidCallback: function($elm) {
@@ -217,7 +217,7 @@ window.myColorPicker = $('input.color').colorPicker({
 		// shows memory fields
 		plugin.memory = {
 			customBG: '#222',
-			margin: '4px -2px',
+			margin: '4px -2px 0',
 			doRender: 'div div',
 			opacity: false,
 
@@ -260,7 +260,7 @@ window.myColorPicker = $('input.color').colorPicker({
 		// the default; no extra stuff
 		plugin.desktop = {
 			customBG: '#222',
-			margin: '4px -2px',
+			margin: '4px -2px 0',
 			doRender: 'div div',
 			cssAddon:'.cp-xy-slider:active {cursor:none;}'
 		};
@@ -268,7 +268,7 @@ window.myColorPicker = $('input.color').colorPicker({
 		// the default without alpha chanel though
 		plugin.noalpha = {
 			customBG: '#222',
-			margin: '4px -2px',
+			margin: '4px -2px 0',
 			doRender: 'div div',
 			cssAddon:'.cp-xy-slider:active {cursor:none;}',
 			opacity: false
@@ -277,7 +277,7 @@ window.myColorPicker = $('input.color').colorPicker({
 		// the default but smaller
 		plugin.small = {
 			customBG: '#222',
-			margin: '4px -2px',
+			margin: '4px -2px 0',
 			doRender: 'div div',
 			cssAddon: // could also be in a css file instead
 				'.cp-color-picker{padding:5px 5px 0;}' +
@@ -290,7 +290,7 @@ window.myColorPicker = $('input.color').colorPicker({
 		// better IE support
 		plugin.IE8 = {
 			customBG: '#222',
-			margin: '4px -2px',
+			margin: '4px -2px 0',
 			doRender: 'div div',
 			// this demo adds divs with gradiends,... you could simply load an image as well
 			buidCallback: function($elm) {
@@ -325,7 +325,7 @@ window.myColorPicker = $('input.color').colorPicker({
 		// the default skinned and white
 		plugin.skinned = {
 			customBG: '#222',
-			margin: '5px -2px',
+			margin: '5px -2px 0',
 			doRender: 'div div',
 			cssAddon: // could also be in a css file instead
 				'.cp-color-picker{border:1px solid #999; padding:10px;' +
@@ -353,7 +353,7 @@ window.myColorPicker = $('input.color').colorPicker({
 		// skinned similar to dev tools color picker (but then way smaller and faster...)
 		plugin.dev_skinned = {
 			customBG: '#222',
-			margin: '5px 0px',
+			margin: '5px 0 0',
 			doRender: 'div div',
 			colorNames: {
 				'191970': 'midnightblue',
@@ -578,7 +578,7 @@ window.myColorPicker = $('input.color').colorPicker({
 			plugin[type] || plugin.desktop
 		);
 		$('.trigger').colorPicker();
-		// $('pre').colorPicker({doRender: false});
+		$('pre').colorPicker({doRender: false});
 	})(window);
 </script>
 <a class="a-inline" href="https://github.com/PitPik/tinyColorPicker"><img style="position: absolute; top: 0; right: 0; border: 0;" src="development/fmog.png" alt="Fork me on GitHub"></a>

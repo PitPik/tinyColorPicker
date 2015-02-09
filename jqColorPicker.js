@@ -66,21 +66,30 @@
 
 	function toggle(event) {
 		var $this = $(this),
-			position;
+			position,
+			$window = $(window);
 
 		if (event) {
 			position = $this.offset();
 			_$trigger = findElement($this);
 
-			(_$UI || build()).css({
-				'left': position.left, // check for space...
-				'top': position.top + $this.outerHeight()
-			}).show(_options.animationSpeed, function() {
+			(_$UI || build()).show(_options.animationSpeed, function() {
 				_$alpha._width = _$alpha.width();
 				_$xy_slider._width = _$xy_slider.width();
 				_$xy_slider._height = _$xy_slider.height();
 				_color.setColor(extractValue(_$trigger[0]));
+
 				preRender(true);
+			}).css({
+				'left': !(_$UI[0]._right = position.left + _$UI[0]._width >
+					$window.scrollLeft() + $window.width() ? 4 : '') ?
+					position.left : '',
+				'top': !(_$UI[0]._bottom = position.top + $this.outerHeight() +
+					_$UI[0]._height > $window.scrollTop() + $window.height() ?
+					-$window.scrollTop() + 4 : '') ?
+					position.top + $this.outerHeight() : '',
+				'right': _$UI[0]._right,
+				'bottom': _$UI[0]._bottom
 			});
 		} else {
 			$(_$UI).hide(_options.animationSpeed, function() {
@@ -95,18 +104,21 @@
 			(_options.css || _css) + (_options.cssAddon || '') + '</style>');
 
 		return _$UI = $(_html).css({'margin': _options.margin}).
+			appendTo('body').
 			show(0, function() {
 				_GPU = _options.GPU && $(this).css('perspective') === '';
-				_options.buidCallback.call(_colorPicker, $(this));
 				_$xy_slider = $('.cp-xy-slider', this);
 				_$xy_cursor = $('.cp-xy-cursor', this);
 				_$z_cursor = $('.cp-z-cursor', this);
 				_$alpha = $('.cp-alpha', this).toggle(!!_options.opacity);
 				_$alpha_cursor = $('.cp-alpha-cursor', this);
+				_options.buidCallback.call(_colorPicker, $(this));
+				this._width = this.offsetWidth;
+				this._height = this.offsetHeight;
 			}).hide().
 			on('touchstart mousedown pointerdown',
-				'.cp-xy-slider,.cp-z-slider,.cp-alpha', pointerdown).
-			appendTo('body');
+				'.cp-xy-slider,.cp-z-slider,.cp-alpha', pointerdown)
+			;
 	}
 
 	function pointerdown(e) {
