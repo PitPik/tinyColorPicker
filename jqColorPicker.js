@@ -73,14 +73,7 @@
 			position = $this.offset();
 			_$trigger = findElement($this);
 
-			(_$UI || build()).show(_options.animationSpeed, function() {
-				_$alpha._width = _$alpha.width();
-				_$xy_slider._width = _$xy_slider.width();
-				_$xy_slider._height = _$xy_slider.height();
-				_color.setColor(extractValue(_$trigger[0]));
-
-				preRender(true);
-			}).css({
+			(_$UI || build()).css({
 				'left': !(_$UI[0]._right = position.left + _$UI[0]._width >
 					$window.scrollLeft() + $window.width() ? 4 : '') ?
 					position.left : '',
@@ -90,6 +83,13 @@
 					position.top + $this.outerHeight() : '',
 				'right': _$UI[0]._right,
 				'bottom': _$UI[0]._bottom
+			}).show(_options.animationSpeed, function() {
+				_$alpha._width = _$alpha.width();
+				_$xy_slider._width = _$xy_slider.width();
+				_$xy_slider._height = _$xy_slider.height();
+				_color.setColor(extractValue(_$trigger[0]));
+
+				preRender(true);
 			});
 		} else {
 			$(_$UI).hide(_options.animationSpeed, function() {
