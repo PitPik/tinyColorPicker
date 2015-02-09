@@ -26,20 +26,19 @@
 			'tica,sans-serif;font-size:12px;font-weight:400;cursor:default;bo' +
 			'rder-radius:5px}.cp-color-picker>div{position:relative;overflow:' +
 			'hidden}.cp-xy-slider{float:left;height:128px;width:128px;margin-' +
-			'bottom:6px;background:linear-gradient(to right,rgba(255,255,255,' +
-			'1)0,rgba(255,255,255,0)100%)}.cp-white{height:100%;width:100%;ba' +
-			'ckground:linear-gradient(to bottom,rgba(0,0,0,0)0,rgba(0,0,0,1)1' +
-			'00%)}.cp-xy-cursor{position:absolute;top:0;width:10px;height:10p' +
-			'x;margin:-5px;border:1px solid #fff;border-radius:100%;box-sizin' +
-			'g:border-box}.cp-z-slider{float:right;margin-left:6px;height:128' +
-			'px;width:20px;background:linear-gradient(to bottom,red 0,#f0f 17' +
-			'%,#00f 33%,#0ff 50%,#0f0 67%,#ff0 83%,red 100%)}.cp-z-cursor{pos' +
-			'ition:absolute;margin-top:-4px;width:100%;border:4px solid #fff;' +
-			'border-color:transparent #fff;box-sizing:border-box}.cp-alpha{cl' +
-			'ear:both;width:100%;height:16px;margin:6px 0;background:linear-g' +
-			'radient(to right,rgba(68,68,68,1)0,rgba(0,0,0,0)100%)}.cp-alpha-' +
-			'cursor{position:absolute;margin-left:-4px;height:100%;border:4px' +
-			' solid #fff;border-color:#fff transparent;box-sizing:border-box}',
+			'bottom:6px;background:linear-gradient(to right,#FFF,rgba(255,255' +
+			',255,0))}.cp-white{height:100%;width:100%;background:linear-grad' +
+			'ient(rgba(0,0,0,0),#000)}.cp-xy-cursor{position:absolute;top:0;w' +
+			'idth:10px;height:10px;margin:-5px;border:1px solid #fff;border-r' +
+			'adius:100%;box-sizing:border-box}.cp-z-slider{float:right;margin' +
+			'-left:6px;height:128px;width:20px;background:linear-gradient(red' +
+			' 0,#f0f 17%,#00f 33%,#0ff 50%,#0f0 67%,#ff0 83%,red 100%)}.cp-z-' +
+			'cursor{position:absolute;margin-top:-4px;width:100%;border:4px s' +
+			'olid #fff;border-color:transparent #fff;box-sizing:border-box}.c' +
+			'p-alpha{clear:both;width:100%;height:16px;margin:6px 0;backgroun' +
+			'd:linear-gradient(to right,#444),rgba(0,0,0,0))}.cp-alpha-cursor' +
+			'{position:absolute;margin-left:-4px;height:100%;border:4px solid' +
+			' #fff;border-color:#fff transparent;box-sizing:border-box}',
 
 		ColorPicker = function(options) {
 			_color = this.color = new Colors(options);
@@ -47,7 +46,7 @@
 		};
 
 	ColorPicker.prototype = {
-		render: render,
+		render: preRender,
 		toggle: toggle
 	}
 
@@ -81,12 +80,12 @@
 				_$xy_slider._width = _$xy_slider.width();
 				_$xy_slider._height = _$xy_slider.height();
 				_color.setColor(extractValue(_$trigger[0]));
-				render(true);
+				preRender(true);
 			});
 		} else {
 			$(_$UI).hide(_options.animationSpeed, function() {
 				_$trigger.blur();
-				render(false);
+				preRender(false);
 			});
 		}
 	};
@@ -136,7 +135,7 @@
 			s: x / _$xy_slider._width * 100,
 			v: 100 - (y / _$xy_slider._height * 100)
 		}, 'hsv');
-		_animate(render);
+		preRender();
 	}
 
 	function z_slider(event) {
@@ -144,7 +143,7 @@
 			hsv = _color.colors.hsv;
 
 		_color.setColor({h: 360 - (z / _$xy_slider._height * 360)}, 'hsv');
-		_animate(render);
+		preRender();
 	}
 
 	function alpha(event) {
@@ -152,10 +151,10 @@
 			alpha = x / _$alpha._width;
 
 		_color.setColor({}, 'rgb', alpha > 1 ? 1 : alpha < 0 ? 0 : alpha);
-		_animate(render);
+		preRender();
 	}
 
-	function render(toggled) {
+	function preRender(toggled) {
 		var colors = _color.colors,
 			hueRGB = colors.hueRGB,
 			RGB = colors.RND.rgb,
@@ -180,32 +179,44 @@
 			a = alpha * _$alpha._width,
 			t3d = _GPU ? 'translate3d' : '';
 
-		_$xy_slider.css({
+		_$xy_slider._css = {
 			backgroundColor: 'rgb(' +
-				hueRGB.r + ',' + hueRGB.g + ',' + hueRGB.b + ')'});
-		_$xy_cursor.css({
+				hueRGB.r + ',' + hueRGB.g + ',' + hueRGB.b + ')'};
+		_$xy_cursor._css = {
 			transform: t3d + '(' + s + 'px, ' + v + 'px, 0)',
 			left: !_GPU ? s : '',
 			top: !_GPU ? v : '',
 			borderColor : colors.RGBLuminance > 0.22 ? dark : light
-		});
-		_$z_cursor.css({
+		};
+		_$z_cursor._css = {
 			transform: t3d + '(0, ' + h + 'px, 0)',
 			top: !_GPU ? h : '',
 			borderColor : 'transparent ' + HUEContrast
-		});
-		_$alpha.css({backgroundColor: 'rgb(' + RGBInnerText + ')'});
-		_$alpha_cursor.css({
+		};
+		_$alpha._css = {backgroundColor: 'rgb(' + RGBInnerText + ')'};
+		_$alpha_cursor._css = {
 			transform: t3d + '(' + a + 'px, 0, 0)',
 			left: !_GPU ? a : '',
 			borderColor : alphaContrast + ' transparent'
-		});
-		_options.doRender && _$trigger.css({
+		};
+		_$trigger._css = {
 			backgroundColor : text,
 			color: colors.rgbaMixBGMixCustom.luminance > 0.22 ? dark : light
-		});
+		};
+		_$trigger.text = _$trigger.val() !== text ? text : '';
 
-		_$trigger.val() !== text && _$trigger.val(text);
+		toggled !== undefined ? render(toggled) : _animate(render);
+	}
+
+	function render(toggled) {
+		_$xy_slider.css(_$xy_slider._css);
+		_$xy_cursor.css(_$xy_cursor._css);
+		_$z_cursor.css(_$z_cursor._css);
+		_$alpha.css(_$alpha._css);
+		_$alpha_cursor.css(_$alpha_cursor._css);
+
+		_options.doRender && _$trigger.css(_$trigger._css);
+		_$trigger.text && _$trigger.val(_$trigger.text);
 
 		_options.renderCallback.call(
 			_colorPicker,
