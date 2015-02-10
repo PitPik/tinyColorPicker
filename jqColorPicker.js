@@ -112,7 +112,7 @@
 				'box-sizing': 'border-box'}).
 			appendTo('body').
 			show(0, function() {
-				_GPU = _options.GPU && $(this).css('perspective') === '';
+				_GPU = _options.GPU && $(this).css('perspective') !== undefined;
 				_$xy_slider = $('.cp-xy-slider', this);
 				_$xy_cursor = $('.cp-xy-cursor', this);
 				_$z_cursor = $('.cp-z-cursor', this);
@@ -123,8 +123,7 @@
 				this._height = this.offsetHeight;
 			}).hide().
 			on('touchstart mousedown pointerdown',
-				'.cp-xy-slider,.cp-z-slider,.cp-alpha', pointerdown)
-			;
+				'.cp-xy-slider,.cp-z-slider,.cp-alpha', pointerdown);
 	}
 
 	function pointerdown(e) {
@@ -195,25 +194,25 @@
 			s = colors.hsv.s * _$xy_slider._width,
 			v = (1 - colors.hsv.v) * _$xy_slider._height,
 			a = alpha * _$alpha._width,
-			t3d = _GPU ? 'translate3d' : '';
+			translate3d = _GPU ? 'translate3d' : '';
 
 		_$xy_slider._css = {
 			backgroundColor: 'rgb(' +
 				hueRGB.r + ',' + hueRGB.g + ',' + hueRGB.b + ')'};
 		_$xy_cursor._css = {
-			transform: t3d + '(' + s + 'px, ' + v + 'px, 0)',
+			transform: translate3d + '(' + s + 'px, ' + v + 'px, 0)',
 			left: !_GPU ? s : '',
 			top: !_GPU ? v : '',
 			borderColor : colors.RGBLuminance > 0.22 ? dark : light
 		};
 		_$z_cursor._css = {
-			transform: t3d + '(0, ' + h + 'px, 0)',
+			transform: translate3d + '(0, ' + h + 'px, 0)',
 			top: !_GPU ? h : '',
 			borderColor : 'transparent ' + HUEContrast
 		};
 		_$alpha._css = {backgroundColor: 'rgb(' + RGBInnerText + ')'};
 		_$alpha_cursor._css = {
-			transform: t3d + '(' + a + 'px, 0, 0)',
+			transform: translate3d + '(' + a + 'px, 0, 0)',
 			left: !_GPU ? a : '',
 			borderColor : alphaContrast + ' transparent'
 		};
