@@ -67,22 +67,27 @@
 	function toggle(event) {
 		var $this = $(this),
 			position = $this.offset(),
-			$window = $(window);
+			$window = $(window),
+			gap = _options.gap;
 
 		if (event) {
 			_$trigger = findElement($this);
 			_colorPicker.$trigger = $this;
 
 			(_$UI || build()).css({
-				'left': !(_$UI[0]._right = position.left + _$UI[0]._width >
-					$window.scrollLeft() + $window.width() ? 4 : '') ?
-					position.left : '',
-				'right': _$UI[0]._right,
+				'width': _$UI[0]._width,
+				'left': (_$UI[0]._left = position.left) -
+					((_$UI[0]._left = _$UI[0]._left + _$UI[0]._width -
+					($window.scrollLeft() + $window.width())) + gap > 0 ?
+					_$UI[0]._left + gap : 0),
 				'top': (_$UI[0]._top = position.top + $this.outerHeight()) -
 					((_$UI[0]._top = _$UI[0]._top + _$UI[0]._height -
-					($window.scrollTop() + $window.height())) > 0 ?
-					_$UI[0]._top + 8 : 0)
+					($window.scrollTop() + $window.height())) + gap > 0 ?
+					_$UI[0]._top + gap : 0)
 			}).show(_options.animationSpeed, function() {
+				if (event === true) {
+					return;
+				}
 				_$alpha._width = _$alpha.width();
 				_$xy_slider._width = _$xy_slider.width();
 				_$xy_slider._height = _$xy_slider.height();
@@ -103,7 +108,8 @@
 		$('head').append('<style type="text/css">' +
 			(_options.css || _css) + (_options.cssAddon || '') + '</style>');
 
-		return _$UI = $(_html).css({'margin': _options.margin}).
+		return _$UI = $(_html).css({'margin': _options.margin,
+				'box-sizing': 'border-box'}).
 			appendTo('body').
 			show(0, function() {
 				_GPU = _options.GPU && $(this).css('perspective') === '';
@@ -254,7 +260,8 @@
 			renderCallback: noop,
 			buidCallback: noop,
 			body: document.body,
-			scrollResize: true
+			scrollResize: true,
+			gap: 4
 			// css: '',
 			// cssAddon: '',
 			// margin: '',

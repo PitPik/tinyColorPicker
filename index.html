@@ -94,9 +94,9 @@ window.myColorPicker = $('input.color').colorPicker({
 
 <!-- <script type="text/javascript" src="jquery-1.11.2.js"></script> -->
 <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
-<script type="text/javascript" src="colors.js"></script>
-<script type="text/javascript" src="jqColorPicker.js"></script>
-<!-- <script type="text/javascript" src="jqColorPicker.min.js"></script> -->
+<!-- <script type="text/javascript" src="colors.js"></script> -->
+<!-- <script type="text/javascript" src="jqColorPicker.js"></script> -->
+<script type="text/javascript" src="jqColorPicker.min.js"></script>
 <script type="text/javascript">
 	(function(window, undefined){
 		'use strict';
@@ -187,6 +187,7 @@ window.myColorPicker = $('input.color').colorPicker({
 			},
 
 			cssAddon: // could also be in a css file instead
+				'.cp-color-picker{width:226px;}' +
 				'.cp-color-picker .cp-panel {line-height: 21px; float:right;' +
 					'padding:0 1px 0 8px; margin-top:-1px; overflow:visible}' +
 				'.cp-xy-slider:active {cursor:none;}' +
@@ -198,7 +199,7 @@ window.myColorPicker = $('input.color').colorPicker({
 				'.cp-panel hr {margin:0 -2px 2px; height:1px; border:0;' +
 					'background:#666; border-top:1px solid #222;}' +
 				'.cp-panel .cp-HEX {width:44px; position:absolute; margin:1px -3px 0 -2px;}' +
-				'.cp-alpha {width:154px;}',
+				'.cp-alpha {width:155px;}',
 
 			renderCallback: function($elm, toggled) {
 				var colors = this.color.colors.RND,
