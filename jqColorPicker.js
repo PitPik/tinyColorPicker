@@ -75,7 +75,7 @@
 			_colorPicker.$trigger = $this;
 
 			(_$UI || build()).css({
-				'width': _$UI[0]._width,
+				// 'width': _$UI[0]._width,
 				'left': (_$UI[0]._left = position.left) -
 					((_$UI[0]._left = _$UI[0]._left + _$UI[0]._width -
 					($window.scrollLeft() + $window.width())) + gap > 0 ?
@@ -108,8 +108,7 @@
 		$('head').append('<style type="text/css">' +
 			(_options.css || _css) + (_options.cssAddon || '') + '</style>');
 
-		return _$UI = $(_html).css({'margin': _options.margin,
-				'box-sizing': 'border-box'}).
+		return _$UI = $(_html).css({'margin': _options.margin}).
 			appendTo('body').
 			show(0, function() {
 				_GPU = _options.GPU && $(this).css('perspective') !== undefined;
@@ -119,6 +118,9 @@
 				_$alpha = $('.cp-alpha', this).toggle(!!_options.opacity);
 				_$alpha_cursor = $('.cp-alpha-cursor', this);
 				_options.buidCallback.call(_colorPicker, $(this));
+				$(this).prepend('<div>').children().eq(0).css('width',
+					$(this).children().eq(0).width() // stabilizer
+				);
 				this._width = this.offsetWidth;
 				this._height = this.offsetHeight;
 			}).hide().
