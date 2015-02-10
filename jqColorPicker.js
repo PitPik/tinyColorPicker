@@ -36,9 +36,9 @@
 			'cursor{position:absolute;margin-top:-4px;width:100%;border:4px s' +
 			'olid #fff;border-color:transparent #fff;box-sizing:border-box}.c' +
 			'p-alpha{clear:both;width:100%;height:16px;margin:6px 0;backgroun' +
-			'd:linear-gradient(to right,#444),rgba(0,0,0,0))}.cp-alpha-cursor' +
-			'{position:absolute;margin-left:-4px;height:100%;border:4px solid' +
-			' #fff;border-color:#fff transparent;box-sizing:border-box}',
+			'd:linear-gradient(to right,#444,rgba(0,0,0,0))}.cp-alpha-cursor{' +
+			'position:absolute;margin-left:-4px;height:100%;border:4px solid ' +
+			'#fff;border-color:#fff transparent;box-sizing:border-box}',
 
 		ColorPicker = function(options) {
 			_color = this.color = new Colors(options);
