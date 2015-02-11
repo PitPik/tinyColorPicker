@@ -31,7 +31,7 @@ $('.color').colorPicker({
     customBG: '#FFF' // see Colors...
     animationSpeed: 150, // toggle animation speed
     GPU: true, // use transform: translate3d
-    doRender: true, // manipulate color ans bgColor of input field
+    doRender: true | 'selector', // manipulate color and bgColor of input field (on certain elements if selector)
     opacity: true, // enable / disable alpha slider
     renderCallback: function($elm, toggled) {}, // this === instance; $elm: the input field;toggle === true -> just appeared; false -> opposite; else -> is rendering on pointer move
     // toggled true/false can for example be used to check if the $elm has a certain className and then hide alpha,...
