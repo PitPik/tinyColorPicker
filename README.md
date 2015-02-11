@@ -20,18 +20,7 @@ Supported color spaces are: rgb, hsv(b), hsl, HEX
     $('.color').colorPicker(); // that's it
 </script>
 ```
-##colors.js
 
-```javascript
-Colors({ // all options have a default value...
-    color: 'rgba(204, 82, 37, 0.8)', // initial color (#RGB, RGB, #RRGGBB, RRGGBB, rgb(r, g, b), ...)
-    grey: {r: 0.298954, g: 0.586434, b: 0.114612}, // CIE-XYZ 1931
-    luminance: {r: 0.2126, g: 0.7152, b: 0.0722}, // W3C 2.0
-    valueRanges: {rgb: {r: [0, 255], g: [0, 255], b: [0, 255]}, hsv:...}, // skip ranges if no conversion required
-    customBG: '#808080' // the solid bgColor behind the chosen bgColor (saved color)
-    convertCallback: function(colors, type){}, // callback function after color convertion for further calculations...
-});
-```
 ##jqColorPicker.js
 
 colorPicker uses an instance of Colors and passes the options to it, so some values are the same...
@@ -45,6 +34,7 @@ $('.color').colorPicker({
     doRender: true, // manipulate color ans bgColor of input field
     opacity: true, // enable / disable alpha slider
     renderCallback: function($elm, toggled) {}, // this === instance; $elm: the input field;toggle === true -> just appeared; false -> opposite; else -> is rendering on pointer move
+    // toggled true/false can for example be used to check if the $elm has a certain className and then hide alpha,...
     buidCallback: function($elm) {}, // this === instance; $elm: the UI
     css: '', // replaces existing css
     cssAddon: '', // adds css to existing
@@ -53,6 +43,20 @@ $('.color').colorPicker({
     gap: 4 // gap to right and bottom edge of view port if repositioned to fit
     preventFocus: false // prevents default on focus of input fields,
     body: document.body // the element where the events are attached to (touchstart, mousedown, pointerdown, focus, click, change)
+});
+```
+##colors.js
+
+This section only shows the options for color.js. They are picked up automatically if set in $('.color').colorPicker
+
+```javascript
+Colors({ // all options have a default value...
+    color: 'rgba(204, 82, 37, 0.8)', // initial color (#RGB, RGB, #RRGGBB, RRGGBB, rgb(r, g, b), ...)
+    grey: {r: 0.298954, g: 0.586434, b: 0.114612}, // CIE-XYZ 1931
+    luminance: {r: 0.2126, g: 0.7152, b: 0.0722}, // W3C 2.0
+    valueRanges: {rgb: {r: [0, 255], g: [0, 255], b: [0, 255]}, hsv:...}, // skip ranges if no conversion required
+    customBG: '#808080' // the solid bgColor behind the chosen bgColor (saved color)
+    convertCallback: function(colors, type){}, // callback function after color convertion for further calculations...
 });
 ```
 
