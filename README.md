@@ -80,6 +80,7 @@ If you need more complex calculations or more color spaces, use the version from
 ```javascript
 myColorPicker: {
     $trigger: ... // jQuery object of active trigger or null if none active
+    $UI: ... // jQuery object of the colorPicker HTML element
     color: { // instance of Color inside colorPicker
         colors: { all kinds of color values... see later},
         options: { all the options you set or that are set as default... },
