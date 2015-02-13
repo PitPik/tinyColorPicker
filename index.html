@@ -29,6 +29,7 @@ On all elements with className 'color': <pre>$('.color').colorPicker();</pre>
 		<option value="input">Input fields</option>
 		<option value="memory">Color memory spaces</option>
 		<option value="skinned">Skinned (white)</option>
+		<option value="skinned_sa">Skinned, selective alpha</option>
 		<option value="dev_skinned">Skinned dev-tools like</option>
 		<option value="dev_skinned_hh">Skinned dev-tools 3:2</option>
 		<option value="noalpha">Default without alpha</option>
@@ -38,9 +39,9 @@ On all elements with className 'color': <pre>$('.color').colorPicker();</pre>
 	(see index.html for more details...)
 </p>
 <div class="input-toggles">
-	<input class="color" value="#B6BD79" />
-	<input class="color" value="rgb(162, 63, 3)" />
-	<input class="color" value="hsl(32, 95%, 23%)" />
+	<input class="color no-alpha" value="#B6BD79" />
+	<input class="color no-alpha" value="rgb(162, 63, 3)" />
+	<input class="color no-alpha" value="hsl(32, 95%, 23%)" />
 </div>
 <div class="div-toggles">
 	<div class="trigger" value="#556B2F"><div><div></div></div></div>
@@ -329,7 +330,7 @@ window.myColorPicker = $('input.color').colorPicker({
 			margin: '5px -2px 0',
 			doRender: 'div div',
 			cssAddon: // could also be in a css file instead
-				'.cp-color-picker{border:1px solid #999; padding:10px;' +
+				'.cp-color-picker{border:1px solid #999; padding:10px 10px 0;' +
 					'background:#eee; overflow:visible; border-radius:3px;}' +
 				'.cp-color-picker:after{content:""; display:block; ' +
 					'position:absolute; top:-15px; left:12px; border:8px solid #eee;' +
@@ -346,10 +347,19 @@ window.myColorPicker = $('input.color').colorPicker({
 				'.cp-color-picker .cp-alpha{margin:10px 0 0; height:6px; border-radius:6px;' +
 					'overflow:visible; border:1px solid #999; box-sizing:border-box;' +
 					'background: linear-gradient(to right, rgba(238,238,238,1) 0%,rgba(238,238,238,0) 100%);}' +
+				'.cp-color-picker .cp-alpha{margin:10px 0}' +
 				'.cp-alpha-cursor{background: #eee; border-radius: 100%;' +
 					'width:14px; height:14px; margin:-5px -7px; border:1px solid #666!important;' +
 					'box-shadow:inset -2px -4px 3px #ccc}'
 		};
+
+		// the default skinned and white
+		plugin.skinned_sa = $.extend({}, plugin.skinned, {
+			renderCallback: function($elm, toggled) {
+				if (typeof toggled === 'boolean') {
+					$('.cp-alpha', this.$UI).css('display', $elm.hasClass('no-alpha') ? 'none' : '')
+				}
+			}});
 
 		// skinned similar to dev tools color picker (but then way smaller and faster...)
 		plugin.dev_skinned = {
@@ -564,7 +574,9 @@ window.myColorPicker = $('input.color').colorPicker({
 		plugin.dev_skinned_hh = $.extend({}, plugin.dev_skinned,
 			{cssAddon: plugin.dev_skinned.cssAddon +
 				'.cp-xy-slider{height:100px}' +
-				'.cp-z-slider{height:100px}'});
+				'.cp-z-slider{height:100px}' +
+				'.cp-xy-slider, .cp-patch, .cp-z-slider{box-shadow: inset 1px 1px 8px rgba(0,0,0,.15),' +
+					' inset -1px -1px 6px rgba(0,0,0,.15);'});
 
 
 		$pluginSelect.val(type || 'desktop').

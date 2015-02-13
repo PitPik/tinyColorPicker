@@ -108,7 +108,8 @@
 		$('head').append('<style type="text/css">' +
 			(_options.css || _css) + (_options.cssAddon || '') + '</style>');
 
-		return _$UI = $(_html).css({'margin': _options.margin}).
+		return _colorPicker.$UI = _$UI =
+			$(_html).css({'margin': _options.margin}).
 			appendTo('body').
 			show(0, function() {
 				_GPU = _options.GPU && $(this).css('perspective') !== undefined;
