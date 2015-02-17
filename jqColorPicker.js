@@ -133,7 +133,8 @@
 		var action = this.className.
 				replace(/cp-(.*?)(?:\s*|$)/, '$1').replace('-', '_');
 
-		e.preventDefault();
+		e.preventDefault && e.preventDefault();
+		e.returnValue = false;
 
 		_$trigger._offset = $(this).offset();
 		(action = action === 'xy_slider' ? xy_slider :
