@@ -35,7 +35,7 @@ $('.color').colorPicker({
     opacity: true, // enable / disable alpha slider
     renderCallback: function($elm, toggled) {}, // this === instance; $elm: the input field;toggle === true -> just appeared; false -> opposite; else -> is rendering on pointer move
     // toggled true/false can for example be used to check if the $elm has a certain className and then hide alpha,...
-    buidCallback: function($elm) {}, // this === instance; $elm: the UI
+    buildCallback: function($elm) {}, // this === instance; $elm: the UI
     css: '', // replaces existing css
     cssAddon: '', // adds css to existing
     margin: '', // positioning margin (can also be set in cssAddon)

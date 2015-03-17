@@ -118,7 +118,7 @@
 				_$z_cursor = $('.cp-z-cursor', this);
 				_$alpha = $('.cp-alpha', this).toggle(!!_options.opacity);
 				_$alpha_cursor = $('.cp-alpha-cursor', this);
-				_options.buidCallback.call(_colorPicker, $(this));
+				_options.buildCallback.call(_colorPicker, $(this));
 				$(this).prepend('<div>').children().eq(0).css('width',
 					$(this).children().eq(0).width() // stabilizer
 				);
@@ -261,7 +261,7 @@
 			customBG: '#FFF',
 			opacity: true,
 			renderCallback: noop,
-			buidCallback: noop,
+			buildCallback: noop,
 			body: document.body,
 			scrollResize: true,
 			gap: 4
@@ -294,7 +294,7 @@
 		}).
 		on('focus.a click.a', _selector, toggle).
 		on('change.a', _selector, function() {
-			_color.setColor(this.value);
+			_color.setColor(this.value || 'rgb');
 			_instance.colorPicker.render();
 		});
 

@@ -63,7 +63,7 @@ As Tiny jQuery colorPicker uses <a href="https://github.com/PitPik/colorPicker/b
 <p>The following snipped shows how easy it is to make plugins: use for mobile</p>
 <pre style="display: block; overflow: auto;">
 window.myColorPicker = $('input.color').colorPicker({
-    buidCallback: function($elm) {
+    buildCallback: function($elm) {
         $elm.prepend('&lt;div class="cp-disp">&lt;/div>');
     },
     cssAddon:
@@ -95,9 +95,9 @@ window.myColorPicker = $('input.color').colorPicker({
 
 <!-- <script type="text/javascript" src="jquery-1.11.2.js"></script> -->
 <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
-<!-- <script type="text/javascript" src="colors.js"></script> -->
-<!-- <script type="text/javascript" src="jqColorPicker.js"></script> -->
-<script type="text/javascript" src="jqColorPicker.min.js"></script>
+<script type="text/javascript" src="colors.js"></script>
+<script type="text/javascript" src="jqColorPicker.js"></script>
+<!-- <script type="text/javascript" src="jqColorPicker.min.js"></script> -->
 <script type="text/javascript">
 	(function(window, undefined){
 		'use strict';
@@ -128,7 +128,7 @@ window.myColorPicker = $('input.color').colorPicker({
 			animationSpeed: 0,
 
 			// demo on how to make plugins... mobile support plugin
-			buidCallback: function($elm) {
+			buildCallback: function($elm) {
 				$elm.prepend('<div class="cp-disp"></div>');
 				$('.color').on('click', function(e) {
 					e.preventDefault && e.preventDefault();
@@ -161,7 +161,7 @@ window.myColorPicker = $('input.color').colorPicker({
 			margin: '4px -2px 0',
 			doRender: 'div div',
 
-			buidCallback: function($elm) {
+			buildCallback: function($elm) {
 				var colorInstance = this.color,
 					colorPicker = this;
 
@@ -223,7 +223,7 @@ window.myColorPicker = $('input.color').colorPicker({
 			doRender: 'div div',
 			opacity: false,
 
-			buidCallback: function($elm) {
+			buildCallback: function($elm) {
 				var colorInstance = this.color,
 					colorPicker = this,
 					random = function(n) {
@@ -295,7 +295,7 @@ window.myColorPicker = $('input.color').colorPicker({
 			margin: '4px -2px 0',
 			doRender: 'div div',
 			// this demo adds divs with gradiends,... you could simply load an image as well
-			buidCallback: function($elm) {
+			buildCallback: function($elm) {
 				var that = this;
 
 				$elm.find('.cp-z-slider').prepend(
@@ -507,7 +507,7 @@ window.myColorPicker = $('input.color').colorPicker({
 				'9ACD32': 'yellowgreen'
 			},
 
-			buidCallback: function($elm) {
+			buildCallback: function($elm) {
 				var that = this;
 
 				$elm.append('<div class="cp-patch"><div></div></div><div class="cp-disp"></div>');
