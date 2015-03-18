@@ -137,6 +137,7 @@
 		e.returnValue = false;
 
 		_$trigger._offset = $(this).offset();
+		_$trigger._hasValue = _$trigger[0].hasAttribute('value');
 		(action = action === 'xy_slider' ? xy_slider :
 			action === 'z_slider' ? z_slider : alpha)(e);
 
@@ -199,7 +200,8 @@
 			v = (1 - colors.hsv.v) * _$xy_slider._height,
 			a = alpha * _$alpha._width,
 			translate3d = _GPU ? 'translate3d' : '',
-			hasNoValue = _$trigger.val() === '' && typeof toggled === 'boolean';
+			hasNoValue = _$trigger.hasValue &&
+				_$trigger.val() === '' && toggled !== undefined;
 
 		_$xy_slider._css = {
 			backgroundColor: 'rgb(' +
