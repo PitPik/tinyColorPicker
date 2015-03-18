@@ -294,8 +294,8 @@
 		}).
 		on('focus.a click.a', _selector, toggle).
 		on('change.a', _selector, function() {
-			_color.setColor(this.value || 'rgb');
-			_instance.colorPicker.render();
+			_color.setColor(this.value || '#FFF');
+			_instance.colorPicker.render(true);
 		});
 
 		return this.each(function() {
