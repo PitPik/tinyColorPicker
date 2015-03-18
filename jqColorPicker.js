@@ -198,7 +198,8 @@
 			s = colors.hsv.s * _$xy_slider._width,
 			v = (1 - colors.hsv.v) * _$xy_slider._height,
 			a = alpha * _$alpha._width,
-			translate3d = _GPU ? 'translate3d' : '';
+			translate3d = _GPU ? 'translate3d' : '',
+			hasNoValue = _$trigger.val() === '' && typeof toggled === 'boolean';
 
 		_$xy_slider._css = {
 			backgroundColor: 'rgb(' +
@@ -221,10 +222,11 @@
 			borderColor : alphaContrast + ' transparent'
 		};
 		_$trigger._css = {
-			backgroundColor : text,
-			color: colors.rgbaMixBGMixCustom.luminance > 0.22 ? dark : light
+			backgroundColor : hasNoValue ? '' : text,
+			color: hasNoValue ? '' :
+				colors.rgbaMixBGMixCustom.luminance > 0.22 ? dark : light
 		};
-		_$trigger.text = _$trigger.val() !== text ? text : '';
+		_$trigger.text = hasNoValue ? '' : _$trigger.val() !== text ? text : '';
 
 		toggled !== undefined ? render(toggled) : _animate(render);
 	}
