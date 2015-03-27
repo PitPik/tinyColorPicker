@@ -199,8 +199,9 @@
 			v = (1 - colors.hsv.v) * _$xy_slider._height,
 			a = alpha * _$alpha._width,
 			translate3d = _GPU ? 'translate3d' : '',
+			triggerValue = _$trigger.val(),
 			hasNoValue = _$trigger[0].hasAttribute('value') &&
-				_$trigger.val() === '' && toggled !== undefined;
+				triggerValue === '' && toggled !== undefined;
 
 		_$xy_slider._css = {
 			backgroundColor: 'rgb(' +
@@ -227,7 +228,7 @@
 			color: hasNoValue ? '' :
 				colors.rgbaMixBGMixCustom.luminance > 0.22 ? dark : light
 		};
-		_$trigger.text = hasNoValue ? '' : _$trigger.val() !== text ? text : '';
+		_$trigger.text = hasNoValue ? '' : triggerValue !== text ? text : '';
 
 		toggled !== undefined ? render(toggled) : _animate(render);
 	}
@@ -317,4 +318,4 @@
 			});
 		});
 	};
-})(window.jQuery, Colors);
+})(jQuery, Colors);
