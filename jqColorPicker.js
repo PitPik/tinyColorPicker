@@ -112,15 +112,17 @@
 			$(_html).css({'margin': _options.margin}).
 			appendTo('body').
 			show(0, function() {
-				_GPU = _options.GPU && $(this).css('perspective') !== undefined;
+				var $this = $(this);
+
+				_GPU = _options.GPU && $this.css('perspective') !== undefined;
 				_$xy_slider = $('.cp-xy-slider', this);
 				_$xy_cursor = $('.cp-xy-cursor', this);
 				_$z_cursor = $('.cp-z-cursor', this);
 				_$alpha = $('.cp-alpha', this).toggle(!!_options.opacity);
 				_$alpha_cursor = $('.cp-alpha-cursor', this);
-				_options.buildCallback.call(_colorPicker, $(this));
-				$(this).prepend('<div>').children().eq(0).css('width',
-					$(this).children().eq(0).width() // stabilizer
+				_options.buildCallback.call(_colorPicker, $this);
+				$this.prepend('<div>').children().eq(0).css('width',
+					$this.children().eq(0).width() // stabilizer
 				);
 				this._width = this.offsetWidth;
 				this._height = this.offsetHeight;
