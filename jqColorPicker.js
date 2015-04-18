@@ -11,8 +11,9 @@
 		_$trigger,
 		_$UI, _$xy_slider, _$xy_cursor, _$z_cursor , _$alpha , _$alpha_cursor,
 
-		_pointermove = 'touchmove mousemove pointermove',
-		_pointerup = 'touchend mouseup pointerup',
+		_pointermove = 'touchmove.a mousemove.a pointermove.a',
+		_pointerdown = 'touchstart.a mousedown.a pointerdown.a',
+		_pointerup = 'touchend.a mouseup.a pointerup.a',
 		_GPU = false,
 		_animate = window.requestAnimationFrame ||
 			window.webkitRequestAnimationFrame || function(cb){cb()},
@@ -127,7 +128,7 @@
 				this._width = this.offsetWidth;
 				this._height = this.offsetHeight;
 			}).hide().
-			on('touchstart mousedown pointerdown',
+			on(_pointerdown,
 				'.cp-xy-slider,.cp-z-slider,.cp-alpha', pointerdown);
 	}
 
@@ -289,7 +290,7 @@
 		_selector += (_selector ? ', ' : '') + this.selector;
 
  		$(options.body).off('.a').
- 		on('touchstart.a mousedown.a pointerdown.a', function(e) {
+ 		on(_pointerdown, function(e) {
 			var $target = $(e.target);
 
 			if ($.inArray($target.closest(_selector)[0],
