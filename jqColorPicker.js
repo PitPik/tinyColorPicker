@@ -57,8 +57,10 @@
 	}
 
 	function resolveEventType(event) {
-		return event.originalEvent.touches ?
+		event = event.originalEvent.touches ?
 			event.originalEvent.touches[0] : event;
+
+		return event.originalEvent ? event.originalEvent : event;
 	}
 
 	function findElement($elm) {
