@@ -57,8 +57,8 @@
 	}
 
 	function resolveEventType(event) {
-		event = event.originalEvent.touches ?
-			event.originalEvent.touches[0] : event;
+		event = event.originalEvent && event.originalEvent.touches ?
+ 			event.originalEvent.touches[0] : event;
 
 		return event.originalEvent ? event.originalEvent : event;
 	}
@@ -149,7 +149,7 @@
 	}
 
 	function pointerup(e) {
-		$document.off(_pointermove).off(_pointerup);
+		$document.off('.a');
 	}
 
 	function xy_slider(event) {
@@ -281,7 +281,7 @@
 		}, options);
 
 		!_colorPicker && options.scrollResize && $(window).
-		on('resize scroll', function() {
+		on('resize.a scroll.a', function() {
 			if (_colorPicker.$trigger) {
 				_colorPicker.toggle.call(_colorPicker.$trigger[0], true);
 			}
@@ -323,4 +323,12 @@
 			});
 		});
 	};
+
+	$.fn.colorPicker.destroy = function() {
+		$(_colorPicker.color.options.body).off('.a');
+		_colorPicker.toggle(false);
+		_instance = null;
+		_selector = '';
+	}
+
 })(jQuery, Colors);
