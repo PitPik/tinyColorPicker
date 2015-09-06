@@ -1,4 +1,4 @@
-(function(window, undefined){
+(function(window, $, undefined){
 	'use strict';
 
 	var plugin = {},
@@ -495,4 +495,4 @@
 	);
 	$('.trigger').colorPicker();
 	$('pre').colorPicker({doRender: false});
-})(window);
+})(window, jQuery);

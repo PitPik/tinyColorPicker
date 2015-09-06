@@ -49,7 +49,7 @@
 	ColorPicker.prototype = {
 		render: preRender,
 		toggle: toggle
-	}
+	};
 
 	function extractValue(elm) {
 		return elm.value || elm.getAttribute('value') ||
@@ -105,7 +105,7 @@
 				preRender(false);
 			});
 		}
-	};
+	}
 
 	function build() {
 		$('head').append('<style type="text/css">' +
@@ -142,14 +142,17 @@
 		e.returnValue = false;
 
 		_$trigger._offset = $(this).offset();
+
 		(action = action === 'xy_slider' ? xy_slider :
 			action === 'z_slider' ? z_slider : alpha)(e);
+		preRender();
 
-		$document.on(_pointerup, pointerup).on(_pointermove, action);
-	}
-
-	function pointerup(e) {
-		$document.off('.a');
+		$document.on(_pointerup, function(e) {
+			$document.off('.a');
+		}).on(_pointermove, function(e) {
+			action(e);
+			preRender();
+		});
 	}
 
 	function xy_slider(event) {
@@ -161,23 +164,19 @@
 			s: x / _$xy_slider._width * 100,
 			v: 100 - (y / _$xy_slider._height * 100)
 		}, 'hsv');
-		preRender();
 	}
 
 	function z_slider(event) {
-		var z = resolveEventType(event).pageY - _$trigger._offset.top,
-			hsv = _color.colors.hsv;
+		var z = resolveEventType(event).pageY - _$trigger._offset.top;
 
 		_color.setColor({h: 360 - (z / _$xy_slider._height * 360)}, 'hsv');
-		preRender();
 	}
 
 	function alpha(event) {
 		var x = resolveEventType(event).pageX - _$trigger._offset.left,
 			alpha = x / _$alpha._width;
 
-		_color.setColor({}, 'rgb', alpha > 1 ? 1 : alpha < 0 ? 0 : alpha);
-		preRender();
+		_color.setColor({}, 'rgb', alpha);
 	}
 
 	function preRender(toggled) {
@@ -295,9 +294,8 @@
  		on(_pointerdown, function(e) {
 			var $target = $(e.target);
 
-			if ($.inArray($target.closest(_selector)[0],
-				_instance) === -1 &&
-			!$target.closest(_$UI).length) {
+			if ($.inArray($target.closest(_selector)[0], _instance) === -1 &&
+				!$target.closest(_$UI).length) {
 				toggle();
 			}
 		}).
@@ -313,9 +311,9 @@
 				$elm = findElement($(this));
 
 			$elm.data('colorMode', mode[1] ? mode[0].substr(0, 3) : 'HEX').
-			attr('readonly', _options.preventFocus);
-			options.doRender && $elm.
-			css({'background-color': value,
+				attr('readonly', _options.preventFocus);
+			options.doRender &&
+			$elm.css({'background-color': value,
 				'color': function() {
 					return _color.setColor(value).
 						rgbaMixBGMixCustom.luminance > 0.22 ? '#222' : '#ddd'
@@ -329,6 +327,6 @@
 		_colorPicker.toggle(false);
 		_instance = null;
 		_selector = '';
-	}
+	};
 
 })(jQuery, Colors);
