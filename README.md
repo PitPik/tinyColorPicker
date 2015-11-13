@@ -59,7 +59,8 @@ renderCallback: function($elm, toggled) {
     }
 }
 ```
-Here you can fire events if necessary or check for a className or data attribute on $elm to see if there is a hint for hiding the opacity slider: ```this.$UI.find('.cp-alpha').toggle(!$elm.hasClass('no-alpha'));```
+Here you can fire events if necessary or check for a className or data attribute on $elm to see if there is a hint for hiding the opacity slider:
+```this.$UI.find('.cp-alpha').toggle(!$elm.hasClass('no-alpha'));```
 
 ##colors.js
 
