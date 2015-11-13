@@ -46,6 +46,21 @@ $('.color').colorPicker({
     body: document.body // the element where the events are attached to (touchstart, mousedown, pointerdown, focus, click, change)
 });
 ```
+####Some tips
+
+The renderCallback can be used as openCallback and closeCallback:
+
+```javascript
+renderCallback: function($elm, toggled) {
+    if (toggled === true) { // simple, lightweight check
+        // ... like an open callback
+    } else if (toggled === false) {
+        // ... like a close callback
+    }
+}
+```
+Here you can fire events if necessary or check for a className or data attribute on $elm to see if there is a hint for hiding the opacity slider: ```this.$UI.find('.cp-alpha').toggle(!$elm.hasClass('no-alpha'));```
+
 ##colors.js
 
 This section only shows the options for color.js. They are picked up automatically if set in $('.color').colorPicker
