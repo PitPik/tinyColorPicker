@@ -1,4 +1,4 @@
-;(function($, Colors, undefined){
+;(function(window, $, Colors, undefined){
 	'use strict';
 
 	var $document = $(document),
@@ -15,6 +15,7 @@
 		_pointerdown = 'touchstart.a mousedown.a pointerdown.a',
 		_pointerup = 'touchend.a mouseup.a pointerup.a',
 		_GPU = false,
+		_round = Math.round,
 		_animate = window.requestAnimationFrame ||
 			window.webkitRequestAnimationFrame || function(cb){cb()},
 		_html = '<div class="cp-color-picker"><div class="cp-z-slider"><div c' +
@@ -75,6 +76,8 @@
 
 		if (event) {
 			_$trigger = findElement($this);
+			_$trigger._colorMode = _$trigger.data('colorMode');
+
 			_colorPicker.$trigger = $this;
 
 			(_$UI || build()).css({
@@ -186,9 +189,9 @@
 			HSL = colors.RND.hsl,
 			dark = '#222',
 			light = '#ddd',
-			colorMode = _$trigger.data('colorMode'),
+			colorMode = _$trigger._colorMode,
 			isAlpha = colors.alpha !== 1,
-			alpha = Math.round(colors.alpha * 100) / 100,
+			alpha = _round(colors.alpha * 100) / 100,
 			RGBInnerText = RGB.r + ', ' + RGB.g + ', ' + RGB.b,
 			text = (colorMode === 'HEX' && !isAlpha ? '#' + colors.HEX :
 				colorMode === 'rgb' || (colorMode === 'HEX' && isAlpha) ?
@@ -203,7 +206,7 @@
 			v = (1 - colors.hsv.v) * _$xy_slider._height,
 			a = alpha * _$alpha._width,
 			translate3d = _GPU ? 'translate3d' : '',
-			triggerValue = _$trigger.val(),
+			triggerValue = _$trigger[0].value,
 			hasNoValue = _$trigger[0].hasAttribute('value') &&
 				triggerValue === '' && toggled !== undefined;
 
@@ -299,7 +302,7 @@
 				toggle();
 			}
 		}).
-		on('focus.a click.a', _selector, toggle).
+		on('focusin.a click.a', _selector, toggle).
 		on('change.a', _selector, function() {
 			_color.setColor(this.value || '#FFF');
 			_instance.colorPicker.render(true);
@@ -329,4 +332,4 @@
 		_selector = '';
 	};
 
-})(jQuery, Colors);
+})(window, jQuery, Colors);
