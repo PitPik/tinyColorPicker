@@ -1,4 +1,12 @@
-;(function(window, $, Colors, undefined){
+(function (factory) {
+	if (typeof define === 'function' && define.amd) {
+		define(['jquery', './colors'], function (jQuery, Colors) {
+			return factory(window, jQuery, Colors);
+		});
+	} else {
+		factory(window, jQuery, Colors);
+	}
+}(function(window, $, Colors, undefined){
 	'use strict';
 
 	var $document = $(document),
@@ -332,4 +340,5 @@
 		_selector = '';
 	};
 
-})(window, jQuery, Colors);
+	return $;
+}));

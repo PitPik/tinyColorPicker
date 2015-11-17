@@ -1,4 +1,12 @@
-;(function(window, undefined){
+(function (factory) {
+	if (typeof define === 'function' && define.amd) {
+		define([], function () {
+			return factory(window);
+		});
+	} else {
+		window.Colors = factory(window);
+	}
+}(function(window, undefined){
 	"use strict"
 
 	var _valueRanges = {
@@ -15,7 +23,7 @@
 		grey = {r: 0.298954, g: 0.586434, b: 0.114612}, // CIE-XYZ 1931
 		luminance = {r: 0.2126, g: 0.7152, b: 0.0722}, // W3C 2.0
 
-		Colors = window.Colors = function(options) {
+		Colors = function(options) {
 			this.colors = {RND: {}};
 			this.options = {
 				color: 'rgba(204, 82, 37, 0.8)', // init value(s)...
@@ -39,7 +47,7 @@
 			}
 			customBG = _options.customBG;
 			_options.customBG = (typeof customBG === 'string') ? ColorConverter.txt2color(customBG).rgb : customBG;
-			_colors = setColor(THIS.colors, _options.color, undefined, true); // THIS.colors = _colors = 
+			_colors = setColor(THIS.colors, _options.color, undefined, true); // THIS.colors = _colors =
 		},
 		focusInstance = function(THIS) {
 			if (_instance !== THIS) {
@@ -170,7 +178,7 @@
 			alpha = colors.alpha,
 			luminance = 'luminance',
 			background = colors.background,
-			rgbaMixBlack, rgbaMixWhite, rgbaMixCustom, 
+			rgbaMixBlack, rgbaMixWhite, rgbaMixCustom,
 			rgbaMixBG, rgbaMixBGMixBlack, rgbaMixBGMixWhite, rgbaMixBGMixCustom;
 
 		rgbaMixBlack = mixColors(rgb, {r: 0, g: 0, b: 0}, alpha, 1);
@@ -415,4 +423,6 @@
 		// return Math.max(min, Math.min(max, value)); // faster??
 		return (value > max ? max : value < min ? min : value);
 	}
-})(window);
+
+	return Colors;
+}));
