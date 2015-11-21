@@ -478,9 +478,84 @@
 				' inset -1px -1px 6px rgba(0,0,0,.15);'});
 
 
+
+	plugin.dev_skinned_rgb = {
+		customBG: '#222',
+		margin: '5px 0 0',
+		doRender: 'div div',
+		colorNames: plugin.dev_skinned.colorNames,
+		buildCallback: function($elm) {
+			var that = this;
+			var currentRGB = '';
+			var $currentSlider = $();
+			var currentOffset = {};
+			var $window = $(window);
+			var mouseMove = function(e) { // don't render here. Just setColor;
+				var color = {};
+
+				color[currentRGB] = (e.pageX - currentOffset.left) / that.currentWidth * 255;
+				that.color.setColor(color, 'rgb', that.color.colors.alpha);
+				that.render();
+			};
+
+			$elm.append(
+				'<div class="cp-rgb-r"><div class="cp-rgb-r-cursor"></div></div>' +
+				'<div class="cp-rgb-g"><div class="cp-rgb-g-cursor"></div></div>' +
+				'<div class="cp-rgb-b"><div class="cp-rgb-b-cursor"></div></div>' +
+				'<div class="cp-patch"><div></div></div><div class="cp-disp"></div>');
+
+			this.$cursorR = $elm.find('.cp-rgb-r-cursor'); // caching for render renderCallback
+			this.$cursorG = $elm.find('.cp-rgb-g-cursor');
+			this.$cursorB = $elm.find('.cp-rgb-b-cursor');
+
+			$elm.on('mousedown', '.cp-rgb-r-cursor, .cp-rgb-g-cursor, .cp-rgb-b-cursor', function(e) {
+				$currentSlider = $(this);
+				currentRGB = this.className.replace(/cp-rgb-(\D){1}-cursor/, "$1");
+				currentOffset = $currentSlider.parent().offset();
+				that.currentWidth = $currentSlider.parent()[0].clientWidth;
+				$window.on('mousemove.rgb', mouseMove);
+				e.preventDefault && e.preventDefault();
+				return false;
+			});
+			$window.on('mouseup', function(e) {
+				$window.off('mousemove.rgb');
+			});
+		},
+
+		cssAddon: plugin.dev_skinned.cssAddon.replace('152px; margin:10px 0 0', '152px; margin:12px 0 0').
+		replace(
+			'.cp-alpha{', '.cp-alpha, div.cp-rgb-r, div.cp-rgb-g, div.cp-rgb-b{' +
+			'overflow: visible;').
+		replace(
+			'.cp-alpha-cursor{', '.cp-alpha-cursor, .cp-rgb-r-cursor, .cp-rgb-g-cursor, .cp-rgb-b-cursor{' +
+			'box-sizing: border-box; position: absolute;').
+		replace(
+			'.cp-alpha:after{', '.cp-alpha:after, .cp-rgb-r:after, .cp-rgb-g:after, .cp-rgb-b:after{') +
+		
+			'.cp-rgb-r:after{content:"R";}.cp-rgb-g:after{content:"G";}.cp-rgb-b:after{content:"B";}' +
+			'div.cp-rgb-r{background:linear-gradient(to right, rgba(220,220,220,1) 0%,rgba(255,0,0,1) 100%);}' +
+			'div.cp-rgb-g{background:linear-gradient(to right, rgba(220,220,220,1) 0%,rgba(0,255,0,1) 100%);}' +
+			'div.cp-rgb-b{background:linear-gradient(to right, rgba(220,220,220,1) 0%,rgba(0,0,255,1) 100%);}',
+
+
+		renderCallback: function($elm, toggled) {
+			var colors = this.color.colors,
+				rgb = colors.RND.rgb;
+
+			$('.cp-patch div').css({'background-color': $elm[0].style.backgroundColor});
+			$('.cp-disp').text(this.color.options.colorNames[colors.HEX] || $elm.val());
+
+			this.currentWidth = this.currentWidth || this.$UI.find('.cp-rgb-r')[0].clientWidth;
+			this.$cursorR.css({left: rgb.r / 255 * this.currentWidth});
+			this.$cursorG.css({left: rgb.g / 255 * this.currentWidth});
+			this.$cursorB.css({left: rgb.b / 255 * this.currentWidth});
+		}
+	};
+
+
 	$pluginSelect.val(type || 'desktop').
 	on('change', function(e) {
-		window.location = './?type=' + this.value + '#demo'
+		window.location = 'index.html?type=' + this.value + '#demo'
 	});
 
 
