@@ -1,4 +1,4 @@
-;(function(window, undefined){
+window.Colors = (function(window, undefined){
 	"use strict"
 
 	var _valueRanges = {
@@ -15,7 +15,7 @@
 		grey = {r: 0.298954, g: 0.586434, b: 0.114612}, // CIE-XYZ 1931
 		luminance = {r: 0.2126, g: 0.7152, b: 0.0722}, // W3C 2.0
 
-		Colors = window.Colors = function(options) {
+		Colors = function(options) {
 			this.colors = {RND: {}};
 			this.options = {
 				color: 'rgba(204, 82, 37, 0.8)', // init value(s)...
@@ -415,4 +415,6 @@
 		// return Math.max(min, Math.min(max, value)); // faster??
 		return (value > max ? max : value < min ? min : value);
 	}
+
+	return Colors;
 })(window);

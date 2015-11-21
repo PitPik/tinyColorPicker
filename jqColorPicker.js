@@ -1,4 +1,4 @@
-;(function(window, $, Colors, undefined){
+(function(window, $, Colors, undefined){
 	'use strict';
 
 	var $document = $(document),
@@ -331,5 +331,7 @@
 		_instance = null;
 		_selector = '';
 	};
+
+	return $;
 
 })(window, jQuery, Colors);
