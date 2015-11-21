@@ -4,6 +4,8 @@
 Looking for mobile first, tiny foot print, fast, scaleable, flexible, pluggable and a rich color model...<br>
 This small (4.9KB gZip, 10.8KB minified, no HTML, images or css needed) HSB color picker is based on a subset of [colors.js](https://github.com/PitPik/colorPicker/blob/master/colors.js) from it's big brother [colorPicker](https://github.com/PitPik/colorPicker/) for a precise and rich color model, supports all modern features like touch and MS pointer, GPU accelerated rendering, battery friendly requestAnimationFrame and provides a lot of hooks for developers to write plugins.
 
+tinyColorPicker now supports AMD. See colors-amd-wrapper.js and jqColorPicker-amd-wrapper.js for more information.
+
 ##Demo
 See **demo** at [dematte.at/tinyColorPicker](http://dematte.at/tinyColorPicker)
 
@@ -20,6 +22,23 @@ Supported color spaces are: rgb, hsv(b), hsl, HEX
     $('.color').colorPicker(); // that's it
     // $().colorPicker.destroy(); // for singlePageApps
 </script>
+```
+
+## AMD wrapper
+tinyColorPicker now supports AMD (thanks to [Munawwar](https://github.com/Munawwar)). Both files colors.js and jqColorPicker.js return their constructors so that it is easy to wrap them inside colors-amd-wrapper.js and jqColorPicker-amd-wrapper.js. So, if you want to use require.js or other module loaders just follow the instructions inside those 2 files. (Maybe someone of you wants to write a grunt task to automate this ;o)
+
+If you don't want to use AMD but would like to store the constructor `Colors` on a different name space you can change this in color.js where you find:
+```javascript
+window.Colors = (function...
+// change this to what you want
+window.myNameSpace.ColorTool = (function...
+```
+If you do so you also need to change this reference in jqColorPicker.js at the very end:
+
+```javascript
+})(window, jQuery, Colors);
+// changes to
+})(window, jQuery, myNameSpace.ColorTool);
 ```
 
 ##jqColorPicker.js
