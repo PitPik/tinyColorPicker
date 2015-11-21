@@ -508,13 +508,14 @@
 			this.$cursorG = $elm.find('.cp-rgb-g-cursor');
 			this.$cursorB = $elm.find('.cp-rgb-b-cursor');
 
-			$elm.on('mousedown', '.cp-rgb-r-cursor, .cp-rgb-g-cursor, .cp-rgb-b-cursor', function(e) {
+			$elm.on('mousedown', '.cp-rgb-r, .cp-rgb-g, .cp-rgb-b', function(e) {
 				$currentSlider = $(this);
-				currentRGB = this.className.replace(/cp-rgb-(\D){1}-cursor/, "$1");
-				currentOffset = $currentSlider.parent().offset();
-				that.currentWidth = $currentSlider.parent()[0].clientWidth;
+				currentRGB = this.className.replace(/cp-rgb-(\D){1}/, "$1");
+				currentOffset = $currentSlider.offset();
+				that.currentWidth = $currentSlider[0].clientWidth;
 				$window.on('mousemove.rgb', mouseMove);
 				e.preventDefault && e.preventDefault();
+				mouseMove(e);
 				return false;
 			});
 			$window.on('mouseup', function(e) {
