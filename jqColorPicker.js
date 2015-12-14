@@ -299,7 +299,7 @@
 
 			if ($.inArray($target.closest(_selector)[0], _instance) === -1 &&
 				!$target.closest(_$UI).length) {
-				toggle();
+				_instance.colorPicker.$trigger && toggle();
 			}
 		}).
 		on('focusin.a click.a', _selector, toggle).
