@@ -104,8 +104,8 @@
 		} else {
 			$(_$UI).hide(_options.animationSpeed, function() {
 				_$trigger.blur();
-				_colorPicker.$trigger = null;
 				preRender(false);
+				_colorPicker.$trigger = null;
 			});
 		}
 	}
