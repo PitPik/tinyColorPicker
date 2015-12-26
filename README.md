@@ -17,7 +17,7 @@ Supported color spaces are: rgb, hsv(b), hsl, HEX
 ## Usage
 
 ```javascript
-<script type="text/javascript" src="jqColorPicker.min.js">
+<script type="text/javascript" src="jqColorPicker.min.js"></script>
 <script type="text/javascript">
     $('.color').colorPicker(); // that's it
     // $().colorPicker.destroy(); // for singlePageApps
