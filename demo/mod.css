@@ -1,0 +1,149 @@
+.cp-patch {
+	float: left;
+	margin: 9px 0 0;
+	height: 24px;
+	width: 24px;
+	border: 1px solid #aaa;
+}
+
+.cp-patch {
+	background-image: url('data:image/gif;base64,R0lGODlhDAAMAIABAMzMzP///yH5BAEAAAEALAAAAAAMAAwAAAIWhB+ph5ps3IMyQFBvzVRq3zmfGC5QAQA7');
+}
+
+.cp-patch div {
+	height: 24px;
+	width: 24px;
+}
+
+.cp-disp {
+	padding: 4px 0 4px 4px;
+	margin-top: 10px;
+	font-size: 12px;
+	height: 16px;
+	line-height: 16px;
+	color: #333;
+}
+
+.cp-color-picker {
+	border: 1px solid #999;
+	padding: 8px;
+	box-shadow: 5px 5px 16px rgba(0,0,0,0.4);
+	background: #eee;
+	overflow: visible;
+	border-radius: 3px;
+	margin: 5px 0 0;
+}
+
+.cp-color-picker:after {
+	content: "";
+	display: block;
+	position: absolute;
+	top: -8px;
+	left: 8px;
+	border: 8px solid #eee;
+	border-width: 0px 8px 8px;
+	border-color: transparent transparent #eee;
+}
+
+.cp-color-picker:before {
+	content: "";
+	display: block;
+
+	position: absolute;
+	top: -9px;
+	left: 8px;
+	border: 8px solid #eee;
+	border-width: 0px 8px 8px;
+	border-color: transparent transparent #999;
+}
+
+.cp-xy-slider {
+	border: 1px solid #aaa;
+	margin-bottom: 10px;
+	width: 150px;
+	height: 150px;
+}
+.cp-xy-slider:active {
+	cursor: none;
+}
+
+.cp-xy-cursor{
+	width: 12px;
+	height: 12px;
+	margin: -6px;
+}
+
+.cp-z-slider {
+	margin-left: 8px;
+	border: 1px solid #aaa;
+	height: 150px;
+	width: 24px;
+}
+
+.cp-z-cursor{
+	border-width: 5px;
+	margin-top: -5px;
+}
+
+.cp-color-picker .cp-alpha,
+.cp-color-picker .cp-rgb-r,
+.cp-color-picker .cp-rgb-g,
+.cp-color-picker .cp-rgb-b {
+	overflow: visible;
+	width: 152px;
+	margin: 12px 0 0;
+	height: 6px;
+	border-radius: 6px;
+	overflow: visible;
+	border: 1px solid #aaa;
+	box-sizing: border-box;
+	background-image: linear-gradient(to right, rgba(238,238,238,1) 0%, rgba(238,238,238,0) 100%);
+}
+.cp-alpha-cursor,
+.cp-rgb-r-cursor,
+.cp-rgb-g-cursor,
+.cp-rgb-b-cursor{
+	box-sizing: border-box;
+	position: absolute;
+	background: #eee;
+	border-radius: 100%;
+	width: 14px;
+	height: 14px;
+	margin: -5px -7px;
+	border: 1px solid #999!important;
+	box-shadow: inset -2px -4px 3px #ccc;
+}
+
+.cp-alpha:after,
+.cp-rgb-r:after,
+.cp-rgb-g:after,
+.cp-rgb-b:after {
+	position: relative;
+	content: "α";
+	color: #666;
+	font-size: 16px;
+	font-family: monospace;
+	position: absolute;
+	right: -26px;
+	top: -8px
+}
+
+.cp-rgb-r:after {
+	content: "R";
+}
+.cp-rgb-g:after {
+	content: "G";
+}
+.cp-rgb-b:after {
+	content: "B";
+}
+
+div.cp-rgb-r {
+	background-color: red;
+}
+div.cp-rgb-g {
+	background-color: green;
+}
+div.cp-rgb-b {
+	background-color: blue;
+}

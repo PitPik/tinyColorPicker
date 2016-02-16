@@ -1,3 +1,6 @@
+html, body {
+	height: 100%;
+}
 body {
 	color: #ccc;
 	padding: .5em 1em;
