@@ -141,6 +141,8 @@
 		var action = this.className.
 				replace(/cp-(.*?)(?:\s*|$)/, '$1').replace('-', '_');
 
+		if ((e.button || e.which) > 1) return;
+
 		e.preventDefault && e.preventDefault();
 		e.returnValue = false;
 
@@ -207,7 +209,7 @@
 			a = alpha * _$alpha._width,
 			translate3d = _GPU ? 'translate3d' : '',
 			triggerValue = _$trigger[0].value,
-			hasNoValue = _$trigger[0].hasAttribute('value') &&
+			hasNoValue = _$trigger[0].hasAttribute('value') && // question this
 				triggerValue === '' && toggled !== undefined;
 
 		_$xy_slider._css = {
