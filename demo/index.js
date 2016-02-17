@@ -83,7 +83,6 @@ $(function(){
 		}
 	};
 
-
 	window.myColorPicker =
 	$('.color').colorPicker(options);
 	$('.trigger').colorPicker();
