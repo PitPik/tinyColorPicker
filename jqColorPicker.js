@@ -323,7 +323,7 @@
 
 	$.fn.colorPicker.destroy = function() {
 		_colorPicker.$UI.off('.a');
-		this.off('.a');
+		_instance.off('.a');
 		$(_colorPicker.color.options.body).off('.a');
 		_colorPicker.toggle(false);
 		_instance = null;
