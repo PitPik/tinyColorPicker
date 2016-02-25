@@ -99,12 +99,13 @@
 				_color.setColor(extractValue(_$trigger[0]));
 
 				preRender(true);
-			});
+			}).on(_pointerdown,
+				'.cp-xy-slider,.cp-z-slider,.cp-alpha', pointerdown);
 		} else {
 			$(_$UI).hide(_options.animationSpeed, function() {
 				preRender(false);
 				_colorPicker.$trigger = null;
-			});
+			}).off('.a');
 		}
 	}
 
@@ -130,9 +131,7 @@
 				);
 				this._width = this.offsetWidth;
 				this._height = this.offsetHeight;
-			}).hide().
-			on(_pointerdown,
-				'.cp-xy-slider,.cp-z-slider,.cp-alpha', pointerdown);
+			}).hide();
 	}
 
 	function pointerdown(e) {
@@ -322,7 +321,7 @@
 	};
 
 	$.fn.colorPicker.destroy = function() {
-		_instance.add(_colorPicker.$UI).add(_options.body).off('.a'); // saver
+		_instance.add(_options.body).off('.a'); // saver
 		_colorPicker.toggle(false);
 		_instance = null;
 	};
