@@ -322,9 +322,7 @@
 	};
 
 	$.fn.colorPicker.destroy = function() {
-		_colorPicker.$UI.off('.a');
-		_instance.off('.a');
-		$(_colorPicker.color.options.body).off('.a');
+		_instance.add(_colorPicker.$UI).add(_options.body).off('.a'); // saver
 		_colorPicker.toggle(false);
 		_instance = null;
 	};
