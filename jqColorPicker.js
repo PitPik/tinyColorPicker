@@ -6,7 +6,6 @@
 		_colorPicker,
 		_color,
 		_options,
-		_selector = '',
 
 		_$trigger,
 		_$UI, _$xy_slider, _$xy_cursor, _$z_cursor , _$alpha , _$alpha_cursor,
@@ -103,7 +102,6 @@
 			});
 		} else {
 			$(_$UI).hide(_options.animationSpeed, function() {
-				_$trigger.blur();
 				preRender(false);
 				_colorPicker.$trigger = null;
 			});
@@ -267,7 +265,7 @@
 	$.fn.colorPicker = function(options) {
 		var noop = function(){};
 
- 		options = $.extend({
+		options = $.extend({
 			animationSpeed: 150,
 			GPU: true,
 			doRender: true,
@@ -293,19 +291,15 @@
 		_instance = _instance ? _instance.add(this) : this;
 		_instance.colorPicker = _colorPicker ||
 			(_colorPicker = new ColorPicker(options));
-		_selector += (_selector ? ', ' : '') + this.selector;
 
- 		$(options.body).off('.a').
- 		on(_pointerdown, function(e) {
-			var $target = $(e.target);
+		$(options.body).off('.a').
+		on(_pointerdown, function(e) {
+			!_instance.add(_$UI).find(e.target).
+				add(_instance.filter(e.target))[0] && toggle();
+		});
 
-			if ($.inArray($target.closest(_selector)[0], _instance) === -1 &&
-				!$target.closest(_$UI).length) {
-				_instance.colorPicker.$trigger && toggle();
-			}
-		}).
-		on('focusin.a click.a', _selector, toggle).
-		on('change.a', _selector, function() {
+		this.on('focusin.a click.a', toggle).
+		on('change.a', function() {
 			_color.setColor(this.value || '#FFF');
 			_instance.colorPicker.render(true);
 		});
@@ -328,10 +322,11 @@
 	};
 
 	$.fn.colorPicker.destroy = function() {
+		_colorPicker.$UI.off('.a');
+		this.off('.a');
 		$(_colorPicker.color.options.body).off('.a');
 		_colorPicker.toggle(false);
 		_instance = null;
-		_selector = '';
 	};
 
 	return $;
