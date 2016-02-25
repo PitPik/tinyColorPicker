@@ -2,7 +2,7 @@
 # tinyColorPicker and colors
 
 Looking for mobile first, tiny foot print, fast, scaleable, flexible, pluggable and a rich color model...<br>
-This small (4.9KB gZip, 10.8KB minified, no HTML, images or css needed) HSB color picker is based on a subset of [colors.js](https://github.com/PitPik/colorPicker/blob/master/colors.js) from it's big brother [colorPicker](https://github.com/PitPik/colorPicker/) for a precise and rich color model, supports all modern features like touch and MS pointer, GPU accelerated rendering, battery friendly requestAnimationFrame and provides a lot of hooks for developers to write plugins.
+This small (4.9KB gZip, 10.8KB minified, no HTML, images or css needed) HSB colorpicker is based on a subset of [colors.js](https://github.com/PitPik/colorPicker/blob/master/colors.js) from it's big brother [colorPicker](https://github.com/PitPik/colorPicker/) for a precise and rich color model, supports all modern features like touch and MS pointer, GPU accelerated rendering, battery friendly requestAnimationFrame and provides a lot of hooks for developers to write plugins.
 
 tinyColorPicker now supports AMD. See colors-amd-wrapper.js and jqColorPicker-amd-wrapper.js for more information.
 
