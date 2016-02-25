@@ -2,7 +2,7 @@
 	'use strict';
 
 	var $document = $(document),
-		_instance,
+		_instance = $(),
 		_colorPicker,
 		_color,
 		_options,
@@ -44,6 +44,7 @@
 		ColorPicker = function(options) {
 			_color = this.color = new Colors(options);
 			_options = _color.options;
+			_colorPicker = this;
 		};
 
 	ColorPicker.prototype = {
@@ -99,13 +100,12 @@
 				_color.setColor(extractValue(_$trigger[0]));
 
 				preRender(true);
-			}).on(_pointerdown,
-				'.cp-xy-slider,.cp-z-slider,.cp-alpha', pointerdown);
+			});
 		} else {
 			$(_$UI).hide(_options.animationSpeed, function() {
 				preRender(false);
 				_colorPicker.$trigger = null;
-			}).off('.a');
+			});
 		}
 	}
 
@@ -114,9 +114,9 @@
 			(_options.css || _css) + (_options.cssAddon || '') + '</style>');
 
 		return _colorPicker.$UI = _$UI =
-			$(_html).css({'margin': _options.margin}).
-			appendTo('body').
-			show(0, function() {
+			$(_html).css({'margin': _options.margin})
+			.appendTo('body')
+			.show(0, function() {
 				var $this = $(this);
 
 				_GPU = _options.GPU && $this.css('perspective') !== undefined;
@@ -131,12 +131,14 @@
 				);
 				this._width = this.offsetWidth;
 				this._height = this.offsetHeight;
-			}).hide();
+			}).hide()
+			.on(_pointerdown,
+				'.cp-xy-slider,.cp-z-slider,.cp-alpha', pointerdown);
 	}
 
 	function pointerdown(e) {
-		var action = this.className.
-				replace(/cp-(.*?)(?:\s*|$)/, '$1').replace('-', '_');
+		var action = this.className
+				.replace(/cp-(.*?)(?:\s*|$)/, '$1').replace('-', '_');
 
 		if ((e.button || e.which) > 1) return;
 
@@ -281,40 +283,38 @@
 			// preventFocus: false
 		}, options);
 
-		!_colorPicker && options.scrollResize && $(window).
-		on('resize.a scroll.a', function() {
+		!_colorPicker && options.scrollResize && $(window)
+		.on('resize.a scroll.a', function() {
 			if (_colorPicker.$trigger) {
 				_colorPicker.toggle.call(_colorPicker.$trigger[0], true);
 			}
 		});
-		_instance = _instance ? _instance.add(this) : this;
-		_instance.colorPicker = _colorPicker ||
-			(_colorPicker = new ColorPicker(options));
+		_instance = _instance.add(this);
+		this.colorPicker = _instance.colorPicker =
+			_colorPicker || new ColorPicker(options);
 
-		$(options.body).off('.a').
-		on(_pointerdown, function(e) {
-			!_instance.add(_$UI).find(e.target).
-				add(_instance.filter(e.target))[0] && toggle();
+		$(options.body).off('.a').on(_pointerdown, function(e) {
+			!_instance.add(_$UI).find(e.target)
+				.add(_instance.filter(e.target))[0] && toggle();
 		});
 
-		this.on('focusin.a click.a', toggle).
-		on('change.a', function() {
+		return this.on('focusin.a click.a', toggle)
+		.on('change.a', function() {
 			_color.setColor(this.value || '#FFF');
 			_instance.colorPicker.render(true);
-		});
-
-		return this.each(function() {
+		})
+		.each(function() {
 			var value = extractValue(this),
 				mode = value.split('('),
 				$elm = findElement($(this));
 
-			$elm.data('colorMode', mode[1] ? mode[0].substr(0, 3) : 'HEX').
-				attr('readonly', _options.preventFocus);
+			$elm.data('colorMode', mode[1] ? mode[0].substr(0, 3) : 'HEX')
+				.attr('readonly', _options.preventFocus);
 			options.doRender &&
 			$elm.css({'background-color': value,
 				'color': function() {
-					return _color.setColor(value).
-						rgbaMixBGMixCustom.luminance > 0.22 ? '#222' : '#ddd'
+					return _color.setColor(value)
+						.rgbaMixBGMixCustom.luminance > 0.22 ? '#222' : '#ddd'
 				}
 			});
 		});
@@ -323,7 +323,7 @@
 	$.fn.colorPicker.destroy = function() {
 		_instance.add(_options.body).off('.a'); // saver
 		_colorPicker.toggle(false);
-		_instance = null;
+		_instance = $();
 	};
 
 	return $;
