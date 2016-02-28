@@ -3,7 +3,7 @@
   "description": "Tiny jQuery color picker for mobile and desktop with alpha channel",
   "main": "jqColorPicker.min.js",
   "authors": [
-    "peterd <peter@dematte.at>"
+    "Peter Dematté <peter@dematte.at>"
   ],
   "license": "MIT",
   "keywords": [
@@ -18,7 +18,9 @@
   ],
   "homepage": "https://github.com/PitPik/tinyColorPicker",
   "moduleType": [
-    "globals"
+    "amd",
+    "globals",
+    "node"
   ],
   "ignore": [
     "**/.*",

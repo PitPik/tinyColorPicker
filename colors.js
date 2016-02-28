@@ -1,4 +1,14 @@
-window.Colors = (function(window, undefined){
+(function (root, factory) {
+	if (typeof exports === 'object') {
+		module.exports = factory(root);
+	} else if (typeof define === 'function' && define.amd) {
+		define([], function () {
+			return factory(root);
+		});
+	} else {
+		root.Colors = factory(root);
+	}
+}(this, function(window, undefined) {
 	"use strict"
 
 	var _valueRanges = {
@@ -417,4 +427,4 @@ window.Colors = (function(window, undefined){
 	}
 
 	return Colors;
-})(window);
+}));

@@ -24,21 +24,14 @@ Supported color spaces are: rgb, hsv(b), hsl, HEX
 </script>
 ```
 
-## AMD wrapper
-tinyColorPicker now supports AMD (thanks to [Munawwar](https://github.com/Munawwar)). Both files colors.js and jqColorPicker.js return their constructors so that it is easy to wrap them inside colors-amd-wrapper.js and jqColorPicker-amd-wrapper.js. So, if you want to use require.js or other module loaders just follow the instructions inside those 2 files. (Maybe someone of you wants to write a grunt task to automate this ;o)
+## AMD / CommonJS wrapper
+tinyColorPicker now supports AMD and CommonJS import (thanks to [Munawwar](https://github.com/Munawwar)).
 
-If you don't want to use AMD but would like to store the constructor `Colors` on a different name space you can change this in color.js where you find:
-```javascript
-window.Colors = (function...
-// change this to what you want
-window.myNameSpace.ColorTool = (function...
-```
-If you do so you also need to change this reference in jqColorPicker.js at the very end:
+## bower support
+tinyColorPicker can be received by bower:
 
 ```javascript
-})(window, jQuery, Colors);
-// changes to
-})(window, jQuery, myNameSpace.ColorTool);
+bower install tinyColorPicker
 ```
 
 ##jqColorPicker.js
