@@ -1,0 +1,33 @@
+{
+  "name": "tinyColorPicker",
+  "description": "Tiny jQuery color picker for mobile and desktop with alpha channel",
+  "main": "jqColorPicker.min.js",
+  "authors": [
+    "peterd <peter@dematte.at>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "jquery",
+    "javascript",
+    "color",
+    "picker",
+    "colorpicker",
+    "mobile",
+    "WCAG2.0",
+    "requestAnimationFrame"
+  ],
+  "homepage": "https://github.com/PitPik/tinyColorPicker",
+  "moduleType": [
+    "globals"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jQuery": "^2.2.1"
+  }
+}

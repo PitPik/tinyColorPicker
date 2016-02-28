@@ -534,9 +534,9 @@
 			'.cp-alpha:after{', '.cp-alpha:after, .cp-rgb-r:after, .cp-rgb-g:after, .cp-rgb-b:after{') +
 		
 			'.cp-rgb-r:after{content:"R";}.cp-rgb-g:after{content:"G";}.cp-rgb-b:after{content:"B";}' +
-			'div.cp-rgb-r{background:linear-gradient(to right, rgba(220,220,220,1) 0%,rgba(255,0,0,1) 100%);}' +
-			'div.cp-rgb-g{background:linear-gradient(to right, rgba(220,220,220,1) 0%,rgba(0,255,0,1) 100%);}' +
-			'div.cp-rgb-b{background:linear-gradient(to right, rgba(220,220,220,1) 0%,rgba(0,0,255,1) 100%);}',
+			'div.cp-rgb-r{background-color: red;}' +
+			'div.cp-rgb-g{background-color: green;}' +
+			'div.cp-rgb-b{background-color: blue;}',
 
 
 		renderCallback: function($elm, toggled) {

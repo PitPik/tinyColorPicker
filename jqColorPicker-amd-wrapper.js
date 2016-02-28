@@ -1,6 +1,6 @@
 (function (factory) {
 	if (typeof define === 'function' && define.amd) {
-		define(['jquery', './colors'], function (jQuery, Colors) {
+		define(['jquery', 'colors'], function (jQuery, Colors) {
 			return factory(window, jQuery, Colors);
 		});
 	} else {
