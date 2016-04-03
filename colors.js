@@ -87,7 +87,7 @@
 	};
 
 	Colors.prototype.toString = function(colorMode, forceAlpha) {
-		return ColorConverter.color2text(colorMode.toLowerCase() || 'rgb', this.colors, forceAlpha);
+		return ColorConverter.color2text((colorMode || 'rgb').toLowerCase(), this.colors, forceAlpha);
 	};
 
 	// ------------------------------------------------------ //

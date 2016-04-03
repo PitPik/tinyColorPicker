@@ -56,7 +56,7 @@ $('.color').colorPicker({
     gap: 4 // gap to right and bottom edge of view port if repositioned to fit
     preventFocus: false // prevents default on focus of input fields (e.g. no keyboard on mobile)
     body: document.body // the element where the events are attached to (touchstart, mousedown, pointerdown, focus, click, change),
-    forceAlpha: force printing alpha channel (undefined = auto; false = never print alpha)
+    forceAlpha: // force printing alpha channel (undefined = auto; false = never print alpha)
 });
 ```
 ####Some tips
