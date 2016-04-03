@@ -87,7 +87,7 @@
 	};
 
 	Colors.prototype.toString = function(colorMode, forceAlpha) {
-		return ColorConverter.color2text(colorMode || 'rgba', this.colors, forceAlpha);
+		return ColorConverter.color2text(colorMode.toLowerCase() || 'rgb', this.colors, forceAlpha);
 	};
 
 	// ------------------------------------------------------ //
@@ -259,17 +259,15 @@
 					forceAlpha !== false && (forceAlpha || alpha !== 1),
 				RGB = colors.RND.rgb,
 				HSL = colors.RND.hsl,
-				mode = colorMode.toLowerCase().substr(0, 3),
-				shouldBeHex = mode === 'hex' && hasAlpha,
-				isHex = mode === 'hex' && !shouldBeHex,
-				isRgb = mode === 'rgb' || shouldBeHex,
+				shouldBeHex = colorMode === 'hex' && hasAlpha,
+				isHex = colorMode === 'hex' && !shouldBeHex,
+				isRgb = colorMode === 'rgb' || shouldBeHex,
 				innerText = isRgb ? RGB.r + ', ' + RGB.g + ', ' + RGB.b :
-					HSL.h + ', ' + HSL.s + '%, ' + HSL.l + '%',
-				text = isHex ? '#' + colors.HEX : (shouldBeHex ? 'rgb' : mode) + 
-					(hasAlpha ? 'a' : '') + '(' + innerText +
-					(hasAlpha ? ', ' + alpha : '') + ')';
+					!isHex ? HSL.h + ', ' + HSL.s + '%, ' + HSL.l + '%' :
+					'#' + colors.HEX;
 
-			return text;
+			return isHex ? innerText : (shouldBeHex ? 'rgb' : colorMode) + 
+					(hasAlpha ? 'a' : '') + '(' + innerText + (hasAlpha ? ', ' + alpha : '') + ')';
 		},
 
 		RGB2HEX: function(RGB) {

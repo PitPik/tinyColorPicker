@@ -200,7 +200,7 @@
             HSL = colors.RND.hsl,
             dark = '#222',
             light = '#ddd',
-            colorText = _color.toString(_$trigger._colorMode),
+            colorText = _color.toString(_$trigger._colorMode, _options.forceAlpha),
             HUEContrast = colors.HUELuminance > 0.22 ? dark : light,
             alphaContrast = colors.rgbaMixBlack.luminance > 0.22 ? dark : light,
             h = (1 - colors.hsv.h) * _$xy_slider._height,
@@ -277,7 +277,8 @@
             buildCallback: noop,
             body: document.body,
             scrollResize: true,
-            gap: 4
+            gap: 4,
+            // forceAlpha: undefined,
             // css: '',
             // cssAddon: '',
             // margin: '',
