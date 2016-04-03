@@ -120,7 +120,7 @@
     }
 
     function build() {
-        $('head').append('<style type="text/css">' +
+        $('head').append('<style type="text/css" id="tinyColorPickerStyles">' +
             (_options.css || _css) + (_options.cssAddon || '') + '</style>');
 
         return _colorPicker.$UI = _$UI =
@@ -200,22 +200,13 @@
             HSL = colors.RND.hsl,
             dark = '#222',
             light = '#ddd',
-            colorMode = _$trigger._colorMode,
-            isAlpha = colors.alpha !== 1,
-            alpha = _round(colors.alpha * 100) / 100,
-            RGBInnerText = RGB.r + ', ' + RGB.g + ', ' + RGB.b,
-            text = (colorMode === 'HEX' && !isAlpha ? '#' + colors.HEX :
-                colorMode === 'rgb' || (colorMode === 'HEX' && isAlpha) ?
-                (!isAlpha ? 'rgb(' + RGBInnerText + ')' :
-                    'rgba(' + RGBInnerText + ', ' + alpha + ')') :
-                ('hsl' + (isAlpha ? 'a(' : '(') + HSL.h + ', ' + HSL.s + '%, ' +
-                    HSL.l + '%' + (isAlpha ? ', ' + alpha : '') + ')')),
+            colorText = _color.toString(_$trigger._colorMode),
             HUEContrast = colors.HUELuminance > 0.22 ? dark : light,
             alphaContrast = colors.rgbaMixBlack.luminance > 0.22 ? dark : light,
             h = (1 - colors.hsv.h) * _$xy_slider._height,
             s = colors.hsv.s * _$xy_slider._width,
             v = (1 - colors.hsv.v) * _$xy_slider._height,
-            a = alpha * _$alpha._width,
+            a = colors.alpha * _$alpha._width,
             translate3d = _GPU ? 'translate3d' : '',
             triggerValue = _$trigger[0].value,
             hasNoValue = _$trigger[0].hasAttribute('value') && // question this
@@ -235,18 +226,18 @@
             top: !_GPU ? h : '',
             borderColor : 'transparent ' + HUEContrast
         };
-        _$alpha._css = {backgroundColor: 'rgb(' + RGBInnerText + ')'};
+        _$alpha._css = {backgroundColor: '#' + colors.HEX};
         _$alpha_cursor._css = {
             transform: translate3d + '(' + a + 'px, 0, 0)',
             left: !_GPU ? a : '',
             borderColor : alphaContrast + ' transparent'
         };
         _$trigger._css = {
-            backgroundColor : hasNoValue ? '' : text,
+            backgroundColor : hasNoValue ? '' : colorText,
             color: hasNoValue ? '' :
                 colors.rgbaMixBGMixCustom.luminance > 0.22 ? dark : light
         };
-        _$trigger.text = hasNoValue ? '' : triggerValue !== text ? text : '';
+        _$trigger.text = hasNoValue ? '' : triggerValue !== colorText ? colorText : '';
 
         toggled !== undefined ? render(toggled) : _animate(render);
     }

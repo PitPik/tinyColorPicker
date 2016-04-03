@@ -19,6 +19,9 @@
 			HEX:   {HEX: [0, 16777215]} // maybe we don't need this
 		},
 
+		_Math = window.Math,
+		_round = _Math.round,
+
 		_instance = {},
 		_colors = {},
 
@@ -83,6 +86,10 @@
 		return setColor(this.colors, undefined, 'rgb', true);
 	};
 
+	Colors.prototype.toString = function(colorMode, forceAlpha) {
+		return ColorConverter.color2text(colorMode || 'rgba', this.colors, forceAlpha);
+	};
+
 	// ------------------------------------------------------ //
 	// ---------- Color calculation related stuff  ---------- //
 	// -------------------------------------------------------//
@@ -112,7 +119,7 @@
 		color.rgb = {r: rgb.r, g: rgb.g, b: rgb.b};
 		color.alpha = alpha;
 		// color.RGBLuminance = getLuminance(RGB);
-		color.equivalentGrey = Math.round(grey.r * RGB.r + grey.g * RGB.g + grey.b * RGB.b);
+		color.equivalentGrey = _round(grey.r * RGB.r + grey.g * RGB.g + grey.b * RGB.b);
 
 		color.rgbaMixBlack = mixColors(rgb, {r: 0, g: 0, b: 0}, alpha, 1);
 		color.rgbaMixWhite = mixColors(rgb, {r: 1, g: 1, b: 1}, alpha, 1);
@@ -151,7 +158,7 @@
 					if (!RND[typ]) RND[typ] = {};
 					modes = colors[typ];
 					for(mode in modes) {
-						RND[typ][mode] = Math.round(modes[mode] * ranges[typ][mode][1]);
+						RND[typ][mode] = _round(modes[mode] * ranges[typ][mode][1]);
 					}
 				}
 			}
@@ -198,7 +205,7 @@
 				background.rgbaMixCustom[luminance]);
 			colors.rgbaMixBGMixCustom = rgbaMixBGMixCustom;
 			/* ------ */
-			rgbaMixBGMixCustom.luminanceDelta = Math.abs(
+			rgbaMixBGMixCustom.luminanceDelta = _Math.abs(
 				rgbaMixBGMixCustom[luminance] - background.rgbaMixCustom[luminance]);
 			rgbaMixBGMixCustom.hueDelta = getHueDelta(background.rgbaMixCustom, rgbaMixBGMixCustom, true);
 			/* ------ */
@@ -246,6 +253,25 @@
 			return color;
 		},
 
+		color2text: function(colorMode, colors, forceAlpha) {
+			var alpha = forceAlpha !== false && _round(colors.alpha * 100) / 100,
+				hasAlpha = typeof alpha === 'number' &&
+					forceAlpha !== false && (forceAlpha || alpha !== 1),
+				RGB = colors.RND.rgb,
+				HSL = colors.RND.hsl,
+				mode = colorMode.toLowerCase().substr(0, 3),
+				shouldBeHex = mode === 'hex' && hasAlpha,
+				isHex = mode === 'hex' && !shouldBeHex,
+				isRgb = mode === 'rgb' || shouldBeHex,
+				innerText = isRgb ? RGB.r + ', ' + RGB.g + ', ' + RGB.b :
+					HSL.h + ', ' + HSL.s + '%, ' + HSL.l + '%',
+				text = isHex ? '#' + colors.HEX : (shouldBeHex ? 'rgb' : mode) + 
+					(hasAlpha ? 'a' : '') + '(' + innerText +
+					(hasAlpha ? ', ' + alpha : '') + ')';
+
+			return text;
+		},
+
 		RGB2HEX: function(RGB) {
 			return (
 				(RGB.r < 16 ? '0' : '') + RGB.r.toString(16) +
@@ -257,21 +283,21 @@
 		HEX2rgb: function(HEX) {
 			HEX = HEX.split(''); // IE7
 			return {
-				r: parseInt(HEX[0] + HEX[HEX[3] ? 1 : 0], 16) / 255,
-				g: parseInt(HEX[HEX[3] ? 2 : 1] + (HEX[3] || HEX[1]), 16) / 255,
-				b: parseInt((HEX[4] || HEX[2]) + (HEX[5] || HEX[2]), 16) / 255
+				r: +('0x' + HEX[0] + HEX[HEX[3] ? 1 : 0]) / 255,
+				g: +('0x' + HEX[HEX[3] ? 2 : 1] + (HEX[3] || HEX[1])) / 255,
+				b: +('0x' + (HEX[4] || HEX[2]) + (HEX[5] || HEX[2])) / 255
 			};
 		},
 
 		hue2RGB: function(hue) {
 			var h = hue * 6,
-				mod = ~~h % 6, // Math.floor(h) -> faster in most browsers
+				mod = ~~h % 6, // _Math.floor(h) -> faster in most browsers
 				i = h === 6 ? 0 : (h - mod);
 
 			return {
-				r: Math.round([1, 1 - i, 0, 0, i, 1][mod] * 255),
-				g: Math.round([i, 1, 1, 1 - i, 0, 0][mod] * 255),
-				b: Math.round([0, 0, i, 1, 1, 1 - i][mod] * 255)
+				r: _round([1, 1 - i, 0, 0, i, 1][mod] * 255),
+				g: _round([i, 1, 1, 1 - i, 0, 0][mod] * 255),
+				b: _round([0, 0, i, 1, 1, 1 - i][mod] * 255)
 			};
 		},
 
@@ -291,13 +317,13 @@
 			if (r < g) {
 				r = g + (g = r, 0);
 				k = -2 / 6 - k;
-				min = Math.min(g, b); // g < b ? g : b; ???
+				min = _Math.min(g, b); // g < b ? g : b; ???
 			}
 			chroma = r - min;
 			s = r ? (chroma / r) : 0;
 			return {
 				h: s < 1e-15 ? ((_colors && _colors.hsl && _colors.hsl.h) || 0) :
-					chroma ? Math.abs(k + (g - b) / (6 * chroma)) : 0,
+					chroma ? _Math.abs(k + (g - b) / (6 * chroma)) : 0,
 				s: r ? (chroma / r) : ((_colors && _colors.hsv && _colors.hsv.s) || 0), // ??_colors.hsv.s || 0
 				v: r
 			};
@@ -307,7 +333,7 @@
 			var h = hsv.h * 6,
 				s = hsv.s,
 				v = hsv.v,
-				i = ~~h, // Math.floor(h) -> faster in most browsers
+				i = ~~h, // _Math.floor(h) -> faster in most browsers
 				f = h - i,
 				p = v * (1 - s),
 				q = v * (1 - f * s),
@@ -349,7 +375,7 @@
 				v = l < 0.5 ? l * (1 + s) : (l + s) - (s * l),
 				m = l + l - v,
 				sv = v ? ((v - m) / v) : 0,
-				sextant = ~~h, // Math.floor(h) -> faster in most browsers
+				sextant = ~~h, // _Math.floor(h) -> faster in most browsers
 				fract = h - sextant,
 				vsf = v * sv * fract,
 				t = m + vsf,
@@ -381,9 +407,9 @@
 	}
 
 	function getHueDelta(rgb1, rgb2, nominal) {
-		return (Math.max(rgb1.r - rgb2.r, rgb2.r - rgb1.r) +
-				Math.max(rgb1.g - rgb2.g, rgb2.g - rgb1.g) +
-				Math.max(rgb1.b - rgb2.b, rgb2.b - rgb1.b)) * (nominal ? 255 : 1) / 765;
+		return (_Math.max(rgb1.r - rgb2.r, rgb2.r - rgb1.r) +
+				_Math.max(rgb1.g - rgb2.g, rgb2.g - rgb1.g) +
+				_Math.max(rgb1.b - rgb2.b, rgb2.b - rgb1.b)) * (nominal ? 255 : 1) / 765;
 	}
 
 	function getLuminance(rgb, normalized) {
@@ -392,7 +418,7 @@
 			luminance = _instance.options.luminance;
 
 		for (var i = RGB.length; i--; ) {
-			RGB[i] = RGB[i] <= 0.03928 ? RGB[i] / 12.92 : Math.pow(((RGB[i] + 0.055) / 1.055), 2.4);
+			RGB[i] = RGB[i] <= 0.03928 ? RGB[i] / 12.92 : _Math.pow(((RGB[i] + 0.055) / 1.055), 2.4);
 		}
 		return ((luminance.r * RGB[0]) + (luminance.g * RGB[1]) + (luminance.b * RGB[2]));
 	}
@@ -418,11 +444,11 @@
 		} else {
 			ratio = (lum2 + 0.05) / (lum1 + 0.05);
 		}
-		return Math.round(ratio * 100) / 100;
+		return _round(ratio * 100) / 100;
 	}
 
 	function limitValue(value, min, max) {
-		// return Math.max(min, Math.min(max, value)); // faster??
+		// return _Math.max(min, _Math.min(max, value)); // faster??
 		return (value > max ? max : value < min ? min : value);
 	}
 

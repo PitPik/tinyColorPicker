@@ -99,10 +99,13 @@ After initializing Color or ColorPicker you'll get a clean but rhich model of th
 myColors: {
     colors: { all kinds of color values...  see later},
     options: { all the options you set or that are set as default... },
-    __proto__: { // all methods Color uses
+    __proto__: { // all methods Color uses (See https://github.com/PitPik/colorPicker for details)
         setColor: function(newCol, type, alpha) {},
         setCustomBackground: function(col) {},
         saveAsBackground: function() {},
+        // new method: converts current color to HTML-String like: rgba(123, 234, 0, 0.89)
+        // forceAlpha === true / false -> alway / never print alpha, === undefined -> auto
+        toString: function('rgb' || 'hsl' || 'hex' || '' -> 'rgb', forceAlpha) {},
     }
 }
 ```

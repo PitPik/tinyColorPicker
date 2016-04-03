@@ -36,12 +36,14 @@ $(function(){
 				'<div class="cp-rgb-b"><div class="cp-rgb-b-cursor"></div></div>' +
 				'<div class="cp-patch"><div></div></div><div class="cp-disp"></div>');
 
-			this.cursorRStyle = $elm.find('.cp-rgb-r-cursor')[0].style; // caching for faster render renderCallback
-			this.cursorGStyle = $elm.find('.cp-rgb-g-cursor')[0].style;
-			this.cursorBStyle = $elm.find('.cp-rgb-b-cursor')[0].style;
+			this.$sliders = $elm.find('.cp-rgb-r, .cp-rgb-g, .cp-rgb-b');
+			this.cursorRStyle = this.$sliders.find('.cp-rgb-r-cursor')[0].style; // caching for faster render renderCallback
+			this.cursorGStyle = this.$sliders.find('.cp-rgb-g-cursor')[0].style;
+			this.cursorBStyle = this.$sliders.find('.cp-rgb-b-cursor')[0].style;
 
 			this.patchStyle = $('.cp-patch div')[0].style;
 			this.$display = $('.cp-disp');
+			this.$alpha = $elm.find('.cp-alpha');
 
 			$elm.on('mousedown', '.cp-rgb-r, .cp-rgb-g, .cp-rgb-b', function(e) { // event delegation
 				$currentSlider = $(this); // well ;o)
@@ -72,6 +74,11 @@ $(function(){
 			// } else if (toggled === false) { // just hiding (only on hide)
 			// 	$elm.closest('.trigger').removeClass('active');
 			// }
+
+			if (toggled === true) { // on show colorPicker
+				this.$alpha.toggle(!$elm.hasClass('no-alpha'));
+				this.$sliders.toggle(!$elm.hasClass('no-sliders'));
+			}
 
 			this.patchStyle.backgroundColor = $elm[0].style.backgroundColor; // set patch color...
 			this.$display.text(this.color.options.colorNames[colors.HEX] || $elm.val()); // ...and text aside

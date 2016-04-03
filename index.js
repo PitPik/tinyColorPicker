@@ -43,14 +43,12 @@
 			'.cp-alpha-cursor{border-width: 8px; margin-left:-8px;}',
 
 		renderCallback: function($elm, toggled) {
-			var colors = this.color.colors,
-				rgb = colors.RND.rgb;
+			var colors = this.color.colors;
 
 			$('.cp-disp').css({
 				backgroundColor: '#' + colors.HEX,
 				color: colors.RGBLuminance > 0.22 ? '#222' : '#ddd'
-			}).text('rgba(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b +
-				', ' + (Math.round(colors.alpha * 100) / 100) + ')');
+			}).text(this.color.toString($elm._colorMode)); // $elm.val();
 		}
 	};
 

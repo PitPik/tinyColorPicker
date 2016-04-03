@@ -57,6 +57,7 @@
 .cp-color-picker .cp-rgb-r,
 .cp-color-picker .cp-rgb-g,
 .cp-color-picker .cp-rgb-b {
+	clear: both;
 	overflow: visible;
 	width: 152px;
 	margin: 12px 0 0;

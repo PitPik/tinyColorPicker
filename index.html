@@ -12,6 +12,13 @@
 	<link rel="icon" type="image/x-icon" href="development/favicon.ico">
 	<!-- <link rel="stylesheet" type="text/css" href="development/colorPicker.css"> -->
 	<link rel="stylesheet" type="text/css" href="development/compatibility.css">
+
+	<!-- <script type="text/javascript" src="jquery-1.11.2.js"></script> -->
+	<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="colors.js"></script>
+	<script type="text/javascript" src="jqColorPicker.js"></script>
+	<!-- <script type="text/javascript" src="jqColorPicker.min.js"></script> -->
+
 	<title>tiny jQuery color picker</title>
 </head>
 <body>
@@ -48,7 +55,8 @@ On all elements with className 'color': <pre>$('.color').colorPicker();</pre>
 	<div class="trigger" value="#556B2F"><div><div></div></div></div>
 	<div class="trigger" value="rgb(100, 86, 70)"><div><div></div></div></div>
 	<div class="trigger" value="hsla(167, 29%, 68%, 0.8)"><div><div></div></div></div>
-<img id="qr" style="float: right; display: block; display: none; margin-right: -200px;" src="./development/qr.png" alt="QR code for http://www.dematte.at/tinyColorPicker/?type=mobile#demo"></div>
+	<img id="qr" style="float: right; display: block; display: none; margin-right: -200px;" src="./development/qr.png" alt="QR code for http://www.dematte.at/tinyColorPicker/?type=mobile#demo">
+</div>
 <h2>Usage</h2>
 <p>There is only one file you need to load... No images and no CSS required.</p>
 <pre style="display: block; overflow: auto;">
@@ -77,29 +85,21 @@ window.myColorPicker = $('input.color').colorPicker({
         '.cp-alpha-cursor {border-width:8px; margin-left:-8px;}',
 
     renderCallback: function($elm, toggled) {
-        var colors = this.color.colors,
-            rgb = colors.RND.rgb;
+        var colors = this.color.colors;
 
         $('.cp-disp').css({
             backgroundColor: '#' + colors.HEX,
             color: colors.RGBLuminance > 0.22 ? '#222' : '#ddd'
-        }).text('rgba(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b +
-            ', ' + (Math.round(colors.alpha * 100) / 100) + ')');
+        }).text(this.color.toString($elm._colorMode));
     }
 });
 </pre>
 <h2>API and usage</h2>
 <p>Will follow... See <a href="https://github.com/PitPik/tinyColorPicker">tinyColorPicker on GitHub</a> for now.</p>
 </div>
-
-
-
-<!-- <script type="text/javascript" src="jquery-1.11.2.js"></script> -->
-<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
-<script type="text/javascript" src="colors.js"></script>
-<script type="text/javascript" src="jqColorPicker.js"></script>
-<!-- <script type="text/javascript" src="jqColorPicker.min.js"></script> -->
-<script type="text/javascript" src="index.js"></script>
 <a class="a-inline" href="https://github.com/PitPik/tinyColorPicker"><img style="position: absolute; top: 0; right: 0; border: 0;" src="development/fmog.png" alt="Fork me on GitHub"></a>
+
+<script type="text/javascript" src="index.js"></script>
+
 </body>
 </html>
