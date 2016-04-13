@@ -46,8 +46,8 @@ $('.color').colorPicker({
     GPU: true, // use transform: translate3d
     doRender: true | 'selector', // manipulate color and bgColor of input field (on certain elements if selector)
     opacity: true, // enable / disable alpha slider
-    renderCallback: function($elm, toggled) {}, // this === instance; $elm: the input field;toggle === true -> just appeared; false -> opposite; else -> is rendering on pointer move
-    // toggled true/false can for example be used to check if the $elm has a certain className and then hide alpha,...
+    renderCallback: function($elm, toggled) {}, // this === instance; $elm: the input field;toggle === 'opened' -> just appeared; 'closed' -> just closed; else -> is rendering on pointer move
+    // toggled 'opened'/'closed' can for example be used to check if the $elm has a certain className and then hide alpha,...
     buildCallback: function($elm) {}, // this === instance; $elm: the UI
     css: '', // replaces existing css
     cssAddon: '', // adds css to existing
@@ -65,10 +65,12 @@ The renderCallback can be used as openCallback and closeCallback:
 
 ```javascript
 renderCallback: function($elm, toggled) {
-    if (toggled === true) { // simple, lightweight check
+    if (toggled === 'opened') { // simple, lightweight check
         // ... like an open callback
-    } else if (toggled === false) {
+    } else if (toggled === 'closed') {
         // ... like a close callback
+    } else {
+        // ..on pointer move
     }
 }
 ```
