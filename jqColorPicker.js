@@ -110,11 +110,13 @@
                 _color.setColor(extractValue(_$trigger[0]));
 
                 preRender('opened');
+                _options.doRender = true;
             });
         } else {
             $(_$UI).hide(_options.animationSpeed, function() {
                 preRender('closed');
                 _colorPicker.$trigger = null;
+                _options.doRender = false;
             });
         }
     }
