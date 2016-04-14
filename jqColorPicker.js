@@ -109,12 +109,14 @@
                 _$xy_slider._height = _$xy_slider.height();
                 _color.setColor(extractValue(_$trigger[0]));
 
-                preRender(true);
+                preRender('opened');
+                _options.doRender = true;
             });
         } else if (_colorPicker.$trigger) {
             $(_$UI).hide(_options.animationSpeed, function() {
-                preRender(false);
+                preRender('closed');
                 _colorPicker.$trigger = null;
+                _options.doRender = false;
             });
         }
     }
@@ -260,7 +262,7 @@
         _options.renderCallback.call(
             _colorPicker,
             _$trigger,
-            typeof toggled === 'boolean' ? toggled : undefined
+            typeof toggled === 'string' ? toggled : undefined
         );
     }
 
@@ -303,7 +305,7 @@
         return this.on('focusin.a click.a', toggle)
         .on('change.a', function() {
             _color.setColor(this.value || '#FFF');
-            _instance.colorPicker.render(true);
+            _instance.colorPicker.render('opened');
         })
         .each(function() {
             var value = extractValue(this),
