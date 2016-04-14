@@ -111,7 +111,7 @@
 
                 preRender(true);
             });
-        } else {
+        } else if (_colorPicker.$trigger) {
             $(_$UI).hide(_options.animationSpeed, function() {
                 preRender(false);
                 _colorPicker.$trigger = null;
