@@ -267,7 +267,8 @@
 					'#' + colors.HEX;
 
 			return isHex ? innerText : (shouldBeHex ? 'rgb' : colorMode) + 
-					(hasAlpha ? 'a' : '') + '(' + innerText + (hasAlpha ? ', ' + alpha : '') + ')';
+				(hasAlpha ? 'a' : '') + '(' + innerText +
+				(hasAlpha ? ', ' + alpha : '') + ')';
 		},
 
 		RGB2HEX: function(RGB) {

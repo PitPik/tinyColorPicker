@@ -17,12 +17,13 @@
         _color,
         _options,
 
-        _$trigger,
-        _$UI, _$xy_slider, _$xy_cursor, _$z_cursor , _$alpha , _$alpha_cursor,
+        _$trigger, _$UI, 
+        _$z_slider, _$xy_slider,
+        _$xy_cursor, _$z_cursor , _$alpha , _$alpha_cursor,
 
-        _pointermove = 'touchmove.a mousemove.a pointermove.a',
-        _pointerdown = 'touchstart.a mousedown.a pointerdown.a',
-        _pointerup = 'touchend.a mouseup.a pointerup.a',
+        _pointermove = 'touchmove.tcp mousemove.tcp pointermove.tcp',
+        _pointerdown = 'touchstart.tcp mousedown.tcp pointerdown.tcp',
+        _pointerup = 'touchend.tcp mouseup.tcp pointerup.tcp',
         _GPU = false,
         _round = Math.round,
         _animate = window.requestAnimationFrame ||
@@ -93,29 +94,32 @@
             (_$UI || build()).css({
                 // 'width': _$UI[0]._width,
                 'left': (_$UI[0]._left = position.left) -
-                    ((_$UI[0]._left = _$UI[0]._left + _$UI[0]._width -
+                    ((_$UI[0]._left += _$UI[0]._width -
                     ($window.scrollLeft() + $window.width())) + gap > 0 ?
                     _$UI[0]._left + gap : 0),
                 'top': (_$UI[0]._top = position.top + $this.outerHeight()) -
-                    ((_$UI[0]._top = _$UI[0]._top + _$UI[0]._height -
+                    ((_$UI[0]._top += _$UI[0]._height -
                     ($window.scrollTop() + $window.height())) + gap > 0 ?
                     _$UI[0]._top + gap : 0)
             }).show(_options.animationSpeed, function() {
-                if (event === true) {
+                if (event === true) { // resize, scroll
                     return;
                 }
                 _$alpha._width = _$alpha.width();
                 _$xy_slider._width = _$xy_slider.width();
                 _$xy_slider._height = _$xy_slider.height();
+                _$z_slider._height = _$z_slider.height();
                 _color.setColor(extractValue(_$trigger[0]));
 
                 preRender(true);
-            });
+            })
+            .off('.tcp').on(_pointerdown,
+                '.cp-xy-slider,.cp-z-slider,.cp-alpha', pointerdown);
         } else if (_colorPicker.$trigger) {
             $(_$UI).hide(_options.animationSpeed, function() {
                 preRender(false);
                 _colorPicker.$trigger = null;
-            });
+            }).off('.tcp');
         }
     }
 
@@ -130,6 +134,7 @@
                 var $this = $(this);
 
                 _GPU = _options.GPU && $this.css('perspective') !== undefined;
+                _$z_slider = $('.cp-z-slider', this);
                 _$xy_slider = $('.cp-xy-slider', this);
                 _$xy_cursor = $('.cp-xy-cursor', this);
                 _$z_cursor = $('.cp-z-cursor', this);
@@ -141,9 +146,7 @@
                 );
                 this._width = this.offsetWidth;
                 this._height = this.offsetHeight;
-            }).hide()
-            .on(_pointerdown,
-                '.cp-xy-slider,.cp-z-slider,.cp-alpha', pointerdown);
+            }).hide();
     }
 
     function pointerdown(e) {
@@ -162,7 +165,7 @@
         preRender();
 
         $document.on(_pointerup, function(e) {
-            $document.off('.a');
+            $document.off('.tcp');
         }).on(_pointermove, function(e) {
             action(e);
             preRender();
@@ -183,7 +186,7 @@
     function z_slider(event) {
         var z = resolveEventType(event).pageY - _$trigger._offset.top;
 
-        _color.setColor({h: 360 - (z / _$xy_slider._height * 360)}, 'hsv');
+        _color.setColor({h: 360 - (z / _$z_slider._height * 360)}, 'hsv');
     }
 
     function alpha(event) {
@@ -205,7 +208,7 @@
             alphaContrast = colors.rgbaMixBlack.luminance > 0.22 ? dark : light,
             h = (1 - colors.hsv.h) * _$xy_slider._height,
             s = colors.hsv.s * _$xy_slider._width,
-            v = (1 - colors.hsv.v) * _$xy_slider._height,
+            v = (1 - colors.hsv.v) * _$z_slider._height,
             a = colors.alpha * _$alpha._width,
             translate3d = _GPU ? 'translate3d' : '',
             triggerValue = _$trigger[0].value,
@@ -286,7 +289,7 @@
         }, options);
 
         !_colorPicker && options.scrollResize && $(window)
-        .on('resize.a scroll.a', function() {
+        .on('resize.tcp scroll.tcp', function() {
             if (_colorPicker.$trigger) {
                 _colorPicker.toggle.call(_colorPicker.$trigger[0], true);
             }
@@ -295,13 +298,13 @@
         this.colorPicker = _instance.colorPicker =
             _colorPicker || new ColorPicker(options);
 
-        $(options.body).off('.a').on(_pointerdown, function(e) {
+        $(options.body).off('.tcp').on(_pointerdown, function(e) {
             !_instance.add(_$UI).find(e.target)
                 .add(_instance.filter(e.target))[0] && toggle();
         });
 
-        return this.on('focusin.a click.a', toggle)
-        .on('change.a', function() {
+        return this.on('focusin.tcp click.tcp', toggle)
+        .on('change.tcp', function() {
             _color.setColor(this.value || '#FFF');
             _instance.colorPicker.render(true);
         })
@@ -316,16 +319,17 @@
             $elm.css({'background-color': value,
                 'color': function() {
                     return _color.setColor(value)
-                        .rgbaMixBGMixCustom.luminance > 0.22 ? '#222' : '#ddd'
+                        .rgbaMixBGMixCustom.luminance > 0.22 ? '#222' : '#DDD'
                 }
             });
         });
     };
 
     $.fn.colorPicker.destroy = function() {
-        _instance.add(_options.body).off('.a'); // saver
+        $('*').off('.tcp'); // slower but saver
         _colorPicker.toggle(false);
         _instance = $();
+        // destroy _colorPicker
     };
 
 }));

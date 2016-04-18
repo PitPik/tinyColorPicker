@@ -80,7 +80,8 @@ $(function(){
 				this.$sliders.toggle(!$elm.hasClass('no-sliders'));
 			}
 
-			this.patchStyle.backgroundColor = $elm[0].style.backgroundColor; // set patch color...
+			// this.patchStyle.backgroundColor = $elm[0].style.backgroundColor; // set patch color...
+			this.patchStyle.backgroundColor = this.color.toString(); // no DOM access
 			this.$display.text(this.color.options.colorNames[colors.HEX] || $elm.val()); // ...and text aside
 
 			this.currentWidth = this.currentWidth || this.$UI.find('.cp-rgb-r')[0].clientWidth; // first time
