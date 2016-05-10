@@ -17,7 +17,7 @@
         _color,
         _options,
 
-        _$trigger, _$UI, 
+        _$trigger, _$UI,
         _$z_slider, _$xy_slider,
         _$xy_cursor, _$z_cursor , _$alpha , _$alpha_cursor,
 
@@ -105,7 +105,7 @@
                 if (event === true) { // resize, scroll
                     return;
                 }
-                _$alpha._width = _$alpha.width();
+                _$alpha.toggle(!!_options.opacity)._width = _$alpha.width();
                 _$xy_slider._width = _$xy_slider.width();
                 _$xy_slider._height = _$xy_slider.height();
                 _$z_slider._height = _$z_slider.height();
@@ -138,7 +138,7 @@
                 _$xy_slider = $('.cp-xy-slider', this);
                 _$xy_cursor = $('.cp-xy-cursor', this);
                 _$z_cursor = $('.cp-z-cursor', this);
-                _$alpha = $('.cp-alpha', this).toggle(!!_options.opacity);
+                _$alpha = $('.cp-alpha', this);
                 _$alpha_cursor = $('.cp-alpha-cursor', this);
                 _options.buildCallback.call(_colorPicker, $this);
                 $this.prepend('<div>').children().eq(0).css('width',
@@ -268,7 +268,8 @@
     }
 
     $.fn.colorPicker = function(options) {
-        var noop = function(){};
+        var _this = this,
+            noop = function(){};
 
         options = $.extend({
             animationSpeed: 150,
@@ -295,18 +296,22 @@
             }
         });
         _instance = _instance.add(this);
-        this.colorPicker = _instance.colorPicker =
-            _colorPicker || new ColorPicker(options);
+        this.colorPicker = _colorPicker || new ColorPicker(options);
+        this.options = options;
 
         $(options.body).off('.tcp').on(_pointerdown, function(e) {
             !_instance.add(_$UI).find(e.target)
                 .add(_instance.filter(e.target))[0] && toggle();
         });
 
-        return this.on('focusin.tcp click.tcp', toggle)
+        return this.on('focusin.tcp click.tcp', function(event) {
+            _colorPicker.color.options = // swap options to fake new instance
+                $.extend(_colorPicker.color.options, _options = _this.options);
+            toggle.call(this, event);
+        })
         .on('change.tcp', function() {
             _color.setColor(this.value || '#FFF');
-            _instance.colorPicker.render(true);
+            _this.colorPicker.render(true);
         })
         .each(function() {
             var value = extractValue(this),

@@ -34,7 +34,7 @@ tinyColorPicker can be received by bower:
 bower install tinyColorPicker
 ```
 
-##jqColorPicker.js
+## jqColorPicker.js
 
 colorPicker uses an instance of Colors and passes the options to it, so some values are the same...
 
@@ -59,7 +59,7 @@ $('.color').colorPicker({
     forceAlpha: // force printing alpha channel (undefined = auto; false = never print alpha)
 });
 ```
-####Some tips
+#### Some tips
 
 The renderCallback can be used as openCallback and closeCallback:
 
@@ -69,6 +69,8 @@ renderCallback: function($elm, toggled) {
         // ... like an open callback
     } else if (toggled === false) {
         // ... like a close callback
+    } else {
+        // rendering...
     }
 }
 ```
@@ -77,7 +79,7 @@ Here you can fire events if necessary or check for a className or data attribute
 this.$UI.find('.cp-alpha').toggle(!$elm.hasClass('no-alpha'));
 ```
 
-##colors.js
+## colors.js
 
 This section only shows the options for color.js. They are picked up automatically if set in $('.color').colorPicker
 
@@ -92,7 +94,7 @@ Colors({ // all options have a default value...
 });
 ```
 
-##The color model, the methods and more
+## The color model, the methods and more
 
 After initializing Color or ColorPicker you'll get a clean but rhich model of the instance:
 
@@ -129,7 +131,7 @@ myColorPicker: {
 ```
 
 
-The color model
+## The color model
 
 ```javascript
 HEX: // current color as HEX (upper case, 6 digits)

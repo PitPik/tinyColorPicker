@@ -408,17 +408,17 @@
 			var that = this;
 
 			$elm.append('<div class="cp-patch"><div></div></div><div class="cp-disp"></div>');
-			$('.trigger').parent().on('click', '.trigger', function(e) {
-				if (e.target === this && $(this).hasClass('active')) {
-					e.cancelBubble = true;
-					e.stopPropagation && e.stopPropagation();
-					that.toggle();
-				}
-			});
+			// $('.trigger').parent().on('click', '.trigger', function(e) {
+			// 	if (e.target === this && $(this).hasClass('active')) {
+			// 		e.cancelBubble = true;
+			// 		e.stopPropagation && e.stopPropagation();
+			// 		that.toggle();
+			// 	}
+			// });
 			// if input type="color"
-			$('.color').on('click', function(e){
-				e.preventDefault && e.preventDefault();
-			});
+			// $('.color').on('click', function(e){
+			// 	e.preventDefault && e.preventDefault();
+			// });
 		},
 
 		cssAddon: // could also be in a css file instead
@@ -567,6 +567,6 @@
 	window.myColorPicker = $('.color').colorPicker(
 		plugin[type] || plugin.desktop
 	);
-	$('.trigger').colorPicker();
-	$('pre').colorPicker({doRender: false});
+	$('.trigger').colorPicker(plugin[type] || plugin.desktop);
+	$('pre').colorPicker(plugin[type] || plugin.desktop);
 })(window, jQuery);
