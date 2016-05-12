@@ -28,7 +28,7 @@
 
 		// demo on how to make plugins... mobile support plugin
 		buildCallback: function($elm) {
-			$elm.prepend('<div class="cp-disp"></div>');
+			this.$colorPatch = $elm.prepend('<div class="cp-disp">').find('.cp-disp');
 			$('.color').on('click', function(e) {
 				e.preventDefault && e.preventDefault();
 			});
@@ -45,7 +45,7 @@
 		renderCallback: function($elm, toggled) {
 			var colors = this.color.colors;
 
-			$('.cp-disp').css({
+			this.$colorPatch.css({
 				backgroundColor: '#' + colors.HEX,
 				color: colors.RGBLuminance > 0.22 ? '#222' : '#ddd'
 			}).text(this.color.toString($elm._colorMode)); // $elm.val();

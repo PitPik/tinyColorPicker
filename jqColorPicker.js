@@ -25,7 +25,6 @@
         _pointerdown = 'touchstart.tcp mousedown.tcp pointerdown.tcp',
         _pointerup = 'touchend.tcp mouseup.tcp pointerup.tcp',
         _GPU = false,
-        _round = Math.round,
         _animate = window.requestAnimationFrame ||
             window.webkitRequestAnimationFrame || function(cb){cb()},
         _html = '<div class="cp-color-picker"><div class="cp-z-slider"><div c' +
@@ -92,15 +91,14 @@
             _colorPicker.$trigger = $this;
 
             (_$UI || build()).css({
-                // 'width': _$UI[0]._width,
-                'left': (_$UI[0]._left = position.left) -
-                    ((_$UI[0]._left += _$UI[0]._width -
+                'left': (_$UI._left = position.left) -
+                    ((_$UI._left += _$UI._width -
                     ($window.scrollLeft() + $window.width())) + gap > 0 ?
-                    _$UI[0]._left + gap : 0),
-                'top': (_$UI[0]._top = position.top + $this.outerHeight()) -
-                    ((_$UI[0]._top += _$UI[0]._height -
+                    _$UI._left + gap : 0),
+                'top': (_$UI._top = position.top + $this.outerHeight()) -
+                    ((_$UI._top += _$UI._height -
                     ($window.scrollTop() + $window.height())) + gap > 0 ?
-                    _$UI[0]._top + gap : 0)
+                    _$UI._top + gap : 0)
             }).show(_options.animationSpeed, function() {
                 if (event === true) { // resize, scroll
                     return;
@@ -127,25 +125,23 @@
         $('head').append('<style type="text/css" id="tinyColorPickerStyles">' +
             (_options.css || _css) + (_options.cssAddon || '') + '</style>');
 
-        return _colorPicker.$UI = _$UI =
-            $(_html).css({'margin': _options.margin})
+        return $(_html).css({'margin': _options.margin})
             .appendTo('body')
             .show(0, function() {
-                var $this = $(this);
+                _colorPicker.$UI = _$UI = $(this);
 
-                _GPU = _options.GPU && $this.css('perspective') !== undefined;
+                _GPU = _options.GPU && _$UI.css('perspective') !== undefined;
                 _$z_slider = $('.cp-z-slider', this);
                 _$xy_slider = $('.cp-xy-slider', this);
                 _$xy_cursor = $('.cp-xy-cursor', this);
                 _$z_cursor = $('.cp-z-cursor', this);
                 _$alpha = $('.cp-alpha', this);
                 _$alpha_cursor = $('.cp-alpha-cursor', this);
-                _options.buildCallback.call(_colorPicker, $this);
-                $this.prepend('<div>').children().eq(0).css('width',
-                    $this.children().eq(0).width() // stabilizer
-                );
-                this._width = this.offsetWidth;
-                this._height = this.offsetHeight;
+                _options.buildCallback.call(_colorPicker, _$UI);
+                _$UI.prepend('<div>').children().eq(0).css('width',
+                    _$UI.children().eq(0).width()); // stabilizer
+                _$UI._width = this.offsetWidth;
+                _$UI._height = this.offsetHeight;
             }).hide();
     }
 
@@ -201,8 +197,8 @@
             hueRGB = colors.hueRGB,
             RGB = colors.RND.rgb,
             HSL = colors.RND.hsl,
-            dark = '#222',
-            light = '#ddd',
+            dark = _options.dark,
+            light = _options.light,
             colorText = _color.toString(_$trigger._colorMode, _options.forceAlpha),
             HUEContrast = colors.HUELuminance > 0.22 ? dark : light,
             alphaContrast = colors.rgbaMixBlack.luminance > 0.22 ? dark : light,
@@ -282,6 +278,8 @@
             body: document.body,
             scrollResize: true,
             gap: 4,
+            dark: '#222',
+            light: '#DDD'
             // forceAlpha: undefined,
             // css: '',
             // cssAddon: '',
@@ -324,7 +322,8 @@
             $elm.css({'background-color': value,
                 'color': function() {
                     return _color.setColor(value)
-                        .rgbaMixBGMixCustom.luminance > 0.22 ? '#222' : '#DDD'
+                        .rgbaMixBGMixCustom.luminance > 0.22 ?
+                        options.dark : options.light
                 }
             });
         });

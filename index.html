@@ -73,7 +73,7 @@ As Tiny jQuery colorPicker uses <a href="https://github.com/PitPik/colorPicker/b
 <pre style="display: block; overflow: auto;">
 window.myColorPicker = $('input.color').colorPicker({
     buildCallback: function($elm) {
-        $elm.prepend('&lt;div class="cp-disp">&lt;/div>');
+        this.$colorPatch = $elm.prepend('&lt;div class="cp-disp">').find('.cp-disp');
     },
     cssAddon:
         '.cp-disp {padding:10px; margin-bottom:6px; font-size:19px; height:20px; line-height:20px}' +
@@ -87,10 +87,10 @@ window.myColorPicker = $('input.color').colorPicker({
     renderCallback: function($elm, toggled) {
         var colors = this.color.colors;
 
-        $('.cp-disp').css({
+        this.$colorPatch.css({
             backgroundColor: '#' + colors.HEX,
             color: colors.RGBLuminance > 0.22 ? '#222' : '#ddd'
-        }).text(this.color.toString($elm._colorMode));
+        }).text(this.color.toString($elm._colorMode)); // $elm.val();
     }
 });
 </pre>

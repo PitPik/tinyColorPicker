@@ -54,6 +54,8 @@ $('.color').colorPicker({
     margin: '', // positioning margin (can also be set in cssAddon)
     scrollResize: true // toggle for reposition colorPicker on window.resize/scroll
     gap: 4 // gap to right and bottom edge of view port if repositioned to fit
+    dark: '#222' // default font color if background is light
+    light: '#DDD' // default font color if background is dark
     preventFocus: false // prevents default on focus of input fields (e.g. no keyboard on mobile)
     body: document.body // the element where the events are attached to (touchstart, mousedown, pointerdown, focus, click, change),
     forceAlpha: // force printing alpha channel (undefined = auto; false = never print alpha)
