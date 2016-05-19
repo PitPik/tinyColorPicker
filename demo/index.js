@@ -67,20 +67,25 @@ $(function(){
 			var _$UI = this.$UI, // this is the instance; this.$UI is the colorPicker DOMElement
 				position = $elm.offset(), // $elm is the current trigger / element that opened the colorPicker
 				$window = $(window),
-            	gap = this.color.options.gap; // this.color.options stores all options
+				gap = this.color.options.gap; // this.color.options stores all options
 
 			// _$UI.appendTo('#content-wrapper'); // demonstration only
+			
+			// demonstrates not showing numbers in input field (part 1)
+			// $(this.$oldElm).css({'color': 'transparent'});
+			// this.$oldElm = $elm;
+			// $elm.css({'color': ''});
 
 			return { // this demo is a copy of the internal usage (to show how it works);
 				'left': (_$UI._left = position.left) -
-                    ((_$UI._left += _$UI._width -
-                    ($window.scrollLeft() + $window.width())) + gap > 0 ?
-                    _$UI._left + gap : 0),
-                'top': (_$UI._top = position.top + $elm.outerHeight()) -
-                    ((_$UI._top += _$UI._height -
-                    ($window.scrollTop() + $window.height())) + gap > 0 ?
-                    _$UI._top + gap : 0)
-            }
+					((_$UI._left += _$UI._width -
+					($window.scrollLeft() + $window.width())) + gap > 0 ?
+					_$UI._left + gap : 0),
+				'top': (_$UI._top = position.top + $elm.outerHeight()) -
+					((_$UI._top += _$UI._height -
+					($window.scrollTop() + $window.height())) + gap > 0 ?
+					_$UI._top + gap : 0)
+			}
 		},
 		renderCallback: function($elm, toggled) {
 			var colors = this.color.colors; // the whole color object
@@ -88,10 +93,15 @@ $(function(){
 
 			// the following 6 lines are not necessary if you don't have the trigger icons with the arrows...
 			// if (toggled === true) { // just showing (only on show)
-			// 	$('.trigger').removeClass('active'); // turns arrow of color triggers
-			// 	$elm.closest('.trigger').addClass('active');
+			//  $('.trigger').removeClass('active'); // turns arrow of color triggers
+			//  $elm.closest('.trigger').addClass('active');
 			// } else if (toggled === false) { // just hiding (only on hide)
-			// 	$elm.closest('.trigger').removeClass('active');
+			//  $elm.closest('.trigger').removeClass('active');
+			// }
+
+			// demonstrates not showing numbers in input field (part 2)
+			// if (toggled === false) {
+			//     $elm.css({'color': 'transparent'});
 			// }
 
 			if (toggled === true) { // on show colorPicker
@@ -111,6 +121,7 @@ $(function(){
 	};
 
 	window.myColorPicker =
-	$('.color').colorPicker(options);
+	$('.color').colorPicker(options)
+	// .css({'color': 'transparent'}); // demonstrates not showing numbers in input field (part 3)
 	$('.trigger').colorPicker(options);
 });
