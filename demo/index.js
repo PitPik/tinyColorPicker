@@ -69,6 +69,8 @@ $(function(){
 				$window = $(window),
             	gap = this.color.options.gap; // this.color.options stores all options
 
+			// _$UI.appendTo('#content-wrapper'); // demonstration only
+
 			return { // this demo is a copy of the internal usage (to show how it works);
 				'left': (_$UI._left = position.left) -
                     ((_$UI._left += _$UI._width -

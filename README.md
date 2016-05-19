@@ -83,6 +83,7 @@ positionCallback: function($elm) {
     }
 }
 ```
+This callback is also good if you need to append your colorPicker to a different element then document.body. This way you can calculate the coordinates relative to the appended container...
 
 The renderCallback can be used as openCallback and closeCallback:
 

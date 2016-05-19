@@ -8,6 +8,10 @@
 	margin: 5px 0 0;
 }
 
+#content-wrapper {
+	/* position: relative; */
+}
+
 .cp-color-picker:after,
 .cp-color-picker:before {
 	content: "";
