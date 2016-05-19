@@ -71,11 +71,6 @@ $(function(){
 
 			// _$UI.appendTo('#content-wrapper'); // demonstration only
 			
-			// demonstrates not showing numbers in input field (part 1)
-			// $(this.$oldElm).css({'color': 'transparent'});
-			// this.$oldElm = $elm;
-			// $elm.css({'color': ''});
-
 			return { // this demo is a copy of the internal usage (to show how it works);
 				'left': (_$UI._left = position.left) -
 					((_$UI._left += _$UI._width -
@@ -99,7 +94,7 @@ $(function(){
 			//  $elm.closest('.trigger').removeClass('active');
 			// }
 
-			// demonstrates not showing numbers in input field (part 2)
+			// demonstrates not showing numbers in input field (part 1)
 			// if (toggled === false) {
 			//     $elm.css({'color': 'transparent'});
 			// }
@@ -107,6 +102,11 @@ $(function(){
 			if (toggled === true) { // on show colorPicker
 				this.$alpha.toggle(!$elm.hasClass('no-alpha'));
 				this.$sliders.toggle(!$elm.hasClass('no-sliders'));
+
+				// demonstrates not showing numbers in input field (part 2)
+				// $(this.$oldElm).css({'color': 'transparent'});
+				// this.$oldElm = $elm;
+				// $elm.css({'color': colors.RGBLuminance > 0.22 ? '#222' : '#ddd'});
 			}
 
 			// this.patchStyle.backgroundColor = $elm[0].style.backgroundColor; // set patch color...
