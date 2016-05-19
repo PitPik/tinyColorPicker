@@ -63,6 +63,23 @@ $(function(){
 			// append css after just generated / use cssAddon instead if you want
 			$('#colorPickerMod').appendTo('head');
 		},
+		positionCallback: function($elm) { // optional function to position colorPicker on toggle
+			var _$UI = this.$UI, // this is the instance; this.$UI is the colorPicker DOMElement
+				position = $elm.offset(), // $elm is the current trigger / element that opened the colorPicker
+				$window = $(window),
+            	gap = this.color.options.gap; // this.color.options stores all options
+
+			return { // this demo is a copy of the internal usage (to show how it works);
+				'left': (_$UI._left = position.left) -
+                    ((_$UI._left += _$UI._width -
+                    ($window.scrollLeft() + $window.width())) + gap > 0 ?
+                    _$UI._left + gap : 0),
+                'top': (_$UI._top = position.top + $elm.outerHeight()) -
+                    ((_$UI._top += _$UI._height -
+                    ($window.scrollTop() + $window.height())) + gap > 0 ?
+                    _$UI._top + gap : 0)
+            }
+		},
 		renderCallback: function($elm, toggled) {
 			var colors = this.color.colors; // the whole color object
 			var rgb = colors.RND.rgb; // the RGB color in 0-255

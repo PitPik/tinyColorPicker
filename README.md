@@ -49,6 +49,7 @@ $('.color').colorPicker({
     renderCallback: function($elm, toggled) {}, // this === instance; $elm: the input field;toggle === true -> just appeared; false -> opposite; else -> is rendering on pointer move
     // toggled true/false can for example be used to check if the $elm has a certain className and then hide alpha,...
     buildCallback: function($elm) {}, // this === instance; $elm: the UI
+    positionCallback: function($elm) {return {top: y, left: x}}, // this === instance; $elm: the trigger element;
     css: '', // replaces existing css
     cssAddon: '', // adds css to existing
     margin: '', // positioning margin (can also be set in cssAddon)
@@ -62,6 +63,26 @@ $('.color').colorPicker({
 });
 ```
 #### Some tips
+
+The positionCallback can be used to optionally position the colorPicker different from its default; in case you want it to also show above or to the left of the input field etc.
+The callback will also be called on scroll.
+You need to return an object that holds ```left``` and ```top``` to position the colorPicker. See ./demo/index.js for an example:
+
+```javascript
+positionCallback: function($elm) {
+    var _$UI = this.$UI, // this is the instance; this.$UI is the colorPicker DOMElement
+        position = $elm.offset(), // $elm is the current trigger that opened the UI
+        gap = this.color.options.gap, // this.color.options stores all options
+        top = 0,
+        left = 0;
+
+    // do here your calculations with top and left and...
+    return { // the object will be used as in $('.something').css({...});
+        left: left,
+        top: top
+    }
+}
+```
 
 The renderCallback can be used as openCallback and closeCallback:
 

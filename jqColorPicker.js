@@ -64,7 +64,7 @@
 
     function extractValue(elm) {
         return elm.value || elm.getAttribute('value') ||
-            $(elm).css('background-color') || '#fff';
+            $(elm).css('background-color') || '#FFF';
     }
 
     function resolveEventType(event) {
@@ -90,8 +90,9 @@
 
             _colorPicker.$trigger = $this;
 
-            (_$UI || build()).css({
-                'left': (_$UI._left = position.left) -
+            (_$UI || build()).css(
+                _options.positionCallback.call(_colorPicker, $this) ||
+                {'left': (_$UI._left = position.left) -
                     ((_$UI._left += _$UI._width -
                     ($window.scrollLeft() + $window.width())) + gap > 0 ?
                     _$UI._left + gap : 0),
@@ -275,6 +276,7 @@
             opacity: true,
             renderCallback: noop,
             buildCallback: noop,
+            positionCallback: noop,
             body: document.body,
             scrollResize: true,
             gap: 4,
