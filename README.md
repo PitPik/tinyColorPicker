@@ -66,7 +66,7 @@ $('.color').colorPicker({
 
 The positionCallback can be used to optionally position the colorPicker different from its default; in case you want it to also show above or to the left of the input field etc.
 The callback will also be called on scroll.
-You need to return an object that holds ```left``` and ```top``` to position the colorPicker. See ./demo/index.js for an example:
+If you return an object (```{left: x, top: y}``` to position the colorPicker) then those coordinates will be taken, otherwhise the function just executes (what you need to do: re-append for example) and it takes the internal algorithm to position the color picker. See ./demo/index.js for an example:
 
 ```javascript
 positionCallback: function($elm) {
