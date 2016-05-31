@@ -69,7 +69,7 @@ $(function(){
 				$window = $(window),
 				gap = this.color.options.gap; // this.color.options stores all options
 
-			// _$UI.appendTo('#content-wrapper'); // demonstration only
+			// _$UI.appendTo($elm.closest('.wrapper').eq(0)); // demonstration only
 			
 			return { // this demo is a copy of the internal usage (to show how it works);
 				'left': (_$UI._left = position.left) -
@@ -85,6 +85,8 @@ $(function(){
 		renderCallback: function($elm, toggled) {
 			var colors = this.color.colors; // the whole color object
 			var rgb = colors.RND.rgb; // the RGB color in 0-255
+			var oldValue = '';
+			var currentValue = '';
 
 			// the following 6 lines are not necessary if you don't have the trigger icons with the arrows...
 			// if (toggled === true) { // just showing (only on show)
@@ -99,6 +101,23 @@ $(function(){
 			//     $elm.css({'color': 'transparent'});
 			// }
 
+			// following section (13 lines) show how to get values on every switch to an other
+			// input field and on close...
+/*
+			if (toggled === true) { // this happens on open (first time or when switching to another one)
+				if (this.$oldElement && this.$oldElement[0] !== $elm[0]) { // previously closed while opening this one
+					currentValue = this.color.toString(); // store current value
+					oldValue = this.$oldElement.val(); // actual value of previous element
+					oldValue = this.color.setColor(oldValue); // set color to that old value
+					console.log(this.color.toString()); // show color of previously opened in rgba mode
+					this.color.setColor(currentValue); // set it back to normal
+				}
+				this.$oldElement = $elm; // store for next switch...
+			} else if (toggled === false) { // this happens on close (only)
+				console.log(this.color.toString()); // show color model of just closed
+				this.$oldElement = null; // delete $oldElement as there is no other swich possible
+			}
+*/
 			if (toggled === true) { // on show colorPicker
 				this.$alpha.toggle(!$elm.hasClass('no-alpha'));
 				this.$sliders.toggle(!$elm.hasClass('no-sliders'));
