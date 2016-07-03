@@ -272,7 +272,7 @@
             animationSpeed: 150,
             GPU: true,
             doRender: true,
-            customBG: '#FFF',
+            customBG: $(this).css('background-color') || '#FFF',
             opacity: true,
             renderCallback: noop,
             buildCallback: noop,
@@ -304,6 +304,8 @@
                 .add(_instance.filter(e.target))[0] && toggle();
         });
 
+        var customBG = options.customBG;
+
         return this.on('focusin.tcp click.tcp', function(event) {
             _colorPicker.color.options = // swap options to fake new instance
                 $.extend(_colorPicker.color.options, _options = _this.options);
@@ -314,7 +316,7 @@
             _this.colorPicker.render(true);
         })
         .each(function() {
-            var value = extractValue(this),
+            var value = customBG || extractValue(this),
                 mode = value.split('('),
                 $elm = findElement($(this));
 

@@ -31,7 +31,7 @@
 		Colors = function(options) {
 			this.colors = {RND: {}};
 			this.options = {
-				color: 'rgba(0,0,0,0)', // init value(s)...
+				color: options.color || 'rgba(0,0,0,0)', // init value(s)...
 				grey: grey,
 				luminance: luminance,
 				valueRanges: _valueRanges
