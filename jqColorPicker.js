@@ -300,8 +300,8 @@
         this.options = options;
 
         $(options.body).off('.tcp').on(_pointerdown, function(e) {
-            !_instance.add(_$UI).find(e.target)
-                .add(_instance.filter(e.target))[0] && toggle();
+            _instance.add(_$UI).add($(_$UI).find(e.target)).
+                index(e.target) === -1 && toggle();
         });
 
         return this.on('focusin.tcp click.tcp', function(event) {
