@@ -123,8 +123,9 @@
     }
 
     function build() {
-        $('head').append('<style type="text/css" id="tinyColorPickerStyles">' +
-            (_options.css || _css) + (_options.cssAddon || '') + '</style>');
+        $('head')[_options.cssPrepend ? 'prepend' : 'append']
+            ('<style type="text/css" id="tinyColorPickerStyles">' +
+                (_options.css || _css) + (_options.cssAddon || '') + '</style>');
 
         return $(_html).css({'margin': _options.margin})
             .appendTo('body')
@@ -281,7 +282,8 @@
             scrollResize: true,
             gap: 4,
             dark: '#222',
-            light: '#DDD'
+            light: '#DDD',
+            // cssPrepend: true,
             // forceAlpha: undefined,
             // css: '',
             // cssAddon: '',

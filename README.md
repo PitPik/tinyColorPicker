@@ -106,7 +106,8 @@ $('.color').colorPicker({
     light: '#DDD' // default font color if background is dark
     preventFocus: false // prevents default on focus of input fields (e.g. no keyboard on mobile)
     body: document.body // the element where the events are attached to (touchstart, mousedown, pointerdown, focus, click, change),
-    forceAlpha: // force printing alpha channel (undefined = auto; false = never print alpha)
+    forceAlpha: // force printing alpha channel (undefined = auto; false = never print alpha),
+    cssPrepend: // makes add CSS being added to the beginning of the <head> instead of to the end
 });
 ```
 See the following section or the demos on how the callbacks work and what you can do with them...
