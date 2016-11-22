@@ -1,5 +1,6 @@
 .cp-color-picker {
 	position: absolute;
+	z-index: 9999;
 	padding: 6px 6px 0;
 	background-color: #444;
 	color: #bbb;
